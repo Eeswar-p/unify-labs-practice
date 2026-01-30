@@ -1,0 +1,4 @@
+# PLACEHOLDER IMAGE
+# This file represents sponsor-gold2.png - SecureCode Systems
+# Replace with actual logo: 250x85 pixels (approx)
+# Format: PNG with transparent background

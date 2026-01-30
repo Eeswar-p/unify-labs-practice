@@ -1,0 +1,4 @@
+# PLACEHOLDER IMAGE
+# This file represents sponsor-platinum1.png - TechGiant Corporation
+# Replace with actual logo: 300x100 pixels (approx)
+# Format: PNG with transparent background

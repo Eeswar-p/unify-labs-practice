@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speakers - DevConf 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 1rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        nav ul {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #764ba2;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin: 2rem 0 1rem;
+            font-size: 2rem;
+        }
+        
+        /* Article Styles for Speaker Profiles */
+        article {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        article .speaker-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            padding: 2rem;
+            align-items: start;
+        }
+        
+        article .speaker-photo {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 8px;
+            background: #f0f0f0;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+        
+        article .speaker-info h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        article .speaker-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        article .speaker-bio {
+            margin: 1rem 0;
+            line-height: 1.8;
+        }
+        
+        article .expertise {
+            margin-top: 1rem;
+        }
+        
+        article .expertise strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        article .expertise ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        article .expertise li {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Video Styles */
+        article .video-container {
+            background: #000;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        article video {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            article .speaker-header {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header>
+        <div class="container">
+            <div class="logo">DevConf 2026</div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="speakers.html">Speakers</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="sponsors.html">Sponsors</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Section: Speakers Overview -->
+        <section>
+            <h1>Meet Our Expert Speakers</h1>
+            <p>DevConf 2026 features industry-leading speakers who are at the forefront of technological innovation and professional development. Learn from the best in the business.</p>
+        </section>
+
+        <!-- Section: Featured Speakers with Videos -->
+        <section>
+            <h2>Featured Keynote Speakers</h2>
+
+            <!-- Speaker 1: Dr. Sarah Chen -->
+            <article>
+                <!-- Article: Dr. Sarah Chen - AI & Machine Learning Expert -->
+                <div class="speaker-header">
+                    <img src="data:image/jpeg;base64,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" alt="Dr. Sarah Chen, AI & Machine Learning Expert" class="speaker-photo">
+                    <div class="speaker-info">
+                        <h3>Dr. Sarah Chen</h3>
+                        <div class="speaker-title">AI & Machine Learning Innovation Director</div>
+                        <p class="speaker-bio">
+                            Dr. Sarah Chen is a pioneering AI researcher with over 15 years of experience in machine learning and artificial intelligence. As the director of innovation at TechVision Labs, she leads groundbreaking projects in deep learning and neural networks. Her work has been published in leading AI conferences worldwide.
+                        </p>
+                        <div class="expertise">
+                            <strong>Areas of Expertise:</strong>
+                            <ul>
+                                <li>Machine Learning</li>
+                                <li>Deep Learning</li>
+                                <li>Neural Networks</li>
+                                <li>AI Ethics</li>
+                                <li>Computer Vision</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video Introduction for Dr. Sarah Chen -->
+                <div class="video-container">
+                    <video width="500" height="300" controls poster="../assets/images/phone-4060860_1920.jpg">
+                        <source src="../assets/videos/42921-434300911_medium.mp4" type="video/mp4">
+                        Video introduction for Dr. Sarah Chen is not available. Please use a modern browser to view this content.
+                    </video>
+                </div>
+            </article>
+
+            <!-- Speaker 2: Mark Johnson -->
+            <article>
+                <!-- Article: Mark Johnson - Cloud Architecture Expert -->
+                <div class="speaker-header">
+                    <img src="../assets/images/mark-johnson.jpg" alt="Mark Johnson, Cloud Architecture Strategist" class="speaker-photo">
+                    <div class="speaker-info">
+                        <h3>Mark Johnson</h3>
+                        <div class="speaker-title">Cloud Architecture Strategist & Solutions Architect</div>
+                        <p class="speaker-bio">
+                            Mark Johnson is a visionary cloud architect with 12 years of experience designing and implementing enterprise-scale cloud solutions. He specializes in helping organizations migrate to cloud platforms and optimize their infrastructure for maximum efficiency and cost savings. Mark is a certified cloud architect across multiple platforms.
+                        </p>
+                        <div class="expertise">
+                            <strong>Areas of Expertise:</strong>
+                            <ul>
+                                <li>Cloud Architecture</li>
+                                <li>AWS Solutions</li>
+                                <li>Azure Infrastructure</li>
+                                <li>Kubernetes</li>
+                                <li>DevOps Strategies</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video Introduction for Mark Johnson -->
+                <div class="video-container">
+                    <video width="500" height="300" controls poster="../assets/images/phone-4060860_1920.jpg">
+                        <source src="../assets/videos/42921-434300911_medium.mp4" type="video/mp4">
+                        Video introduction for Mark Johnson is not available. Please use a modern browser to view this content.
+                    </video>
+                </div>
+            </article>
+
+            <!-- Speaker 3: Elena Rodriguez -->
+            <article>
+                <!-- Article: Elena Rodriguez - Cybersecurity Expert -->
+                <div class="speaker-header">
+                    <img src="../assets/images/elena-rodriguez.jpg" alt="Elena Rodriguez, Chief Security Officer" class="speaker-photo">
+                    <div class="speaker-info">
+                        <h3>Elena Rodriguez</h3>
+                        <div class="speaker-title">Chief Security Officer & Cybersecurity Strategist</div>
+                        <p class="speaker-bio">
+                            Elena Rodriguez is an accomplished cybersecurity leader with 18 years of experience protecting organizations against evolving threats. As CSO of SecureWorks International, she develops comprehensive security strategies and leads teams in implementing world-class security practices. Elena is a thought leader in zero-trust security and incident response.
+                        </p>
+                        <div class="expertise">
+                            <strong>Areas of Expertise:</strong>
+                            <ul>
+                                <li>Cybersecurity</li>
+                                <li>Zero-Trust Architecture</li>
+                                <li>Incident Response</li>
+                                <li>Security Compliance</li>
+                                <li>Cloud Security</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video Introduction for Elena Rodriguez -->
+                <div class="video-container">
+                    <video width="500" height="300" controls poster="../assets/images/phone-4060860_1920.jpg">
+                        <source src="../assets/videos/42921-434300911_medium.mp4" type="video/mp4">
+                        Video introduction for Elena Rodriguez is not available. Please use a modern browser to view this content.
+                    </video>
+                </div>
+            </article>
+        </section>
+
+        <!-- Additional Speakers Section -->
+        <section>
+            <h2>Additional Expert Speakers</h2>
+            <p>We have curated a diverse lineup of speakers from various industries and expertise areas. All speakers bring unique perspectives and real-world experiences to their sessions.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 DevConf. All rights reserved.</p>
+            <p>Contact: <a href="mailto:info@devconf2026.com">info@devconf2026.com</a> | Phone: <a href="tel:+1-555-0100">+1 (555) 0100</a></p>
+            <p><a href="contact.html">Contact Us</a> | <a href="faq.html">FAQ</a> | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+        </div>
+    </footer>
+</body>
+</html>

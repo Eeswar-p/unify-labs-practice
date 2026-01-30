@@ -1,0 +1,4 @@
+# PLACEHOLDER IMAGE
+# This file represents sponsor-platinum2.png - CloudMasters Inc
+# Replace with actual logo: 300x100 pixels (approx)
+# Format: PNG with transparent background

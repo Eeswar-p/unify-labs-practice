@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - DevConf 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 1rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        nav ul {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #764ba2;
+        }
+        
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.75rem;
+        }
+        
+        /* Definition List Styles */
+        dl {
+            margin-bottom: 1.5rem;
+        }
+        
+        dt {
+            font-weight: bold;
+            color: #333;
+            margin-top: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+        
+        dt::before {
+            content: "Q: ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        dd {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        dd::before {
+            content: "A: ";
+            color: #764ba2;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        /* Contact Mini-Form Section */
+        .contact-mini-form {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            border-left: 4px solid #667eea;
+        }
+        
+        .contact-mini-form h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        form {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        label .required {
+            color: red;
+            margin-left: 0.25rem;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        button {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            align-self: flex-start;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Back to Top Link */
+        .back-to-top {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .back-to-top:hover {
+            background: #764ba2;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            dt {
+                font-size: 1rem;
+            }
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header>
+        <div class="container">
+            <div class="logo">DevConf 2026</div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="speakers.html">Speakers</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="sponsors.html">Sponsors</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Heading -->
+        <h1>Frequently Asked Questions</h1>
+        <div class="intro">
+            <p>Find answers to common questions about DevConf 2026. If your question isn't answered below, please don't hesitate to <a href="contact.html">contact us</a>.</p>
+        </div>
+
+        <!-- Section: Registration Questions -->
+        <section id="registration">
+            <!-- Section: Registration Questions FAQ -->
+            <h2>Registration Questions</h2>
+            
+            <dl>
+                <dt>When is the registration deadline?</dt>
+                <dd>
+                    The early bird registration deadline is June 30, 2026. Standard registration closes on August 15, 2026. We accept late registrations up until September 1, 2026, subject to availability and at a premium rate.
+                </dd>
+
+                <dt>What's included in the registration fee?</dt>
+                <dd>
+                    Your registration includes full access to all conference sessions, workshops, keynote presentations, networking events, conference materials, and a conference t-shirt. Meals and refreshments are provided throughout the event. Some premium ticket tiers include additional benefits such as VIP lounge access and exclusive networking dinners.
+                </dd>
+
+                <dt>Can I change my ticket type after registration?</dt>
+                <dd>
+                    Yes, you can change your ticket type up to 30 days before the event. Please log into your account or contact our registration team at register@devconf2026.com to make changes. Any price differences will be refunded or charged accordingly.
+                </dd>
+
+                <dt>Is there a group discount available?</dt>
+                <dd>
+                    Yes! Groups of 5 or more attendees receive a 15% discount on early bird tickets and 10% discount on standard tickets. Contact our sales team at sponsors@devconf2026.com for group registration details and bulk licensing options.
+                </dd>
+
+                <dt>What's your refund policy?</dt>
+                <dd>
+                    We offer full refunds for cancellations made before August 1, 2026. Cancellations between August 1-15 will receive a 50% refund. No refunds are available for cancellations after August 15. Transfers to another person are available free of charge at any time before the event.
+                </dd>
+            </dl>
+        </section>
+
+        <!-- Section: Event Details -->
+        <section id="event-details">
+            <!-- Section: Event Details FAQ -->
+            <h2>Event Details</h2>
+            
+            <dl>
+                <dt>Where is DevConf 2026 taking place?</dt>
+                <dd>
+                    DevConf 2026 will be held at the San Francisco Convention Center, 123 Innovation Drive, San Francisco, CA 94105. The venue is easily accessible by public transportation and offers on-site parking. For virtual attendees, we'll provide Zoom links and access to our online platform.
+                </dd>
+
+                <dt>What are the conference dates?</dt>
+                <dd>
+                    DevConf 2026 runs from September 8-11, 2026. Registration opens at 8:00 AM on September 8th. Keynote sessions begin at 9:00 AM. The conference concludes with a closing ceremony on September 11th at 5:00 PM.
+                </dd>
+
+                <dt>Will the sessions be recorded?</dt>
+                <dd>
+                    Yes, all keynote sessions and main track sessions will be recorded and made available to registered attendees within 48 hours of each session. Recordings will be available for one year after the conference. Note that some specialized workshops may not be recorded per speaker request.
+                </dd>
+
+                <dt>Can I attend virtually?</dt>
+                <dd>
+                    Absolutely! We offer three ticket types: In-Person, Virtual, and Hybrid. Virtual attendees get live access to all keynotes and main track sessions, plus recorded access to all sessions for one year. However, networking events and hands-on workshops are exclusive to in-person attendees.
+                </dd>
+
+                <dt>How do I get my conference materials?</dt>
+                <dd>
+                    Conference materials including speaker presentations, workshop guides, and resource lists will be provided in digital format via our conference mobile app and website. In-person attendees will receive a physical information packet at registration.
+                </dd>
+            </dl>
+        </section>
+
+        <!-- Section: Accommodation -->
+        <section id="accommodation">
+            <!-- Section: Accommodation FAQ -->
+            <h2>Accommodation</h2>
+            
+            <dl>
+                <dt>Are accommodations included in the ticket price?</dt>
+                <dd>
+                    No, hotel accommodations are not included in your conference ticket. However, we have negotiated special rates with several hotels near the venue. You'll receive details about partner hotels during the registration process.
+                </dd>
+
+                <dt>What hotels are recommended?</dt>
+                <dd>
+                    We have partnerships with the Marriott San Francisco, The Fairmont, Hilton Union Square, and several boutique hotels in the area. All partner hotels offer 20% discounts for DevConf attendees. Visit our conference website to view the complete list and book your accommodation.
+                </dd>
+
+                <dt>Do you offer shuttle service from hotels to the venue?</dt>
+                <dd>
+                    Yes! Complimentary shuttle service is available from all partner hotels to the convention center. Shuttles run every 30 minutes starting at 7:30 AM on conference days. Return shuttles depart the venue every 30 minutes from 5:30 PM to 8:00 PM.
+                </dd>
+
+                <dt>Is parking available at the venue?</dt>
+                <dd>
+                    The convention center offers on-site parking for $25 per day. Nearby parking garages offer rates ranging from $15-$30 per day. We recommend using public transportation or ride-sharing services, which many attendees find more convenient.
+                </dd>
+            </dl>
+        </section>
+
+        <!-- Section: Technical Requirements -->
+        <section id="technical">
+            <!-- Section: Technical Requirements FAQ -->
+            <h2>Technical Requirements</h2>
+            
+            <dl>
+                <dt>What internet speed do I need for the virtual sessions?</dt>
+                <dd>
+                    We recommend a minimum of 5 Mbps download speed for HD video streaming. For optimal experience, 10 Mbps or higher is preferred. Most standard home and office broadband connections will be sufficient. If you experience buffering, lowering your video quality in the Zoom settings can help.
+                </dd>
+
+                <dt>Which devices are supported for virtual attendance?</dt>
+                <dd>
+                    Virtual attendees can access the conference via desktop computers, laptops, tablets, and smartphones. We support Windows, macOS, iOS, and Android devices. You'll need to download the Zoom app or use your web browser to access live sessions.
+                </dd>
+
+                <dt>What's the best way to access the conference app?</dt>
+                <dd>
+                    The DevConf mobile app is available on iOS and Android. Download it from the App Store or Google Play before the event and log in with your registration credentials. The app provides session schedules, speaker bios, networking features, and real-time notifications.
+                </dd>
+
+                <dt>Will I need to download any special software?</dt>
+                <dd>
+                    For virtual attendance, you'll need Zoom (free version available). The conference app is recommended but optional. All other content is accessible through your web browser without additional downloads.
+                </dd>
+            </dl>
+        </section>
+
+        <!-- Section: Networking -->
+        <section id="networking">
+            <!-- Section: Networking FAQ -->
+            <h2>Networking</h2>
+            
+            <dl>
+                <dt>Are there networking events during the conference?</dt>
+                <dd>
+                    Yes! We have several networking opportunities including a welcome reception on the evening of September 8th, daily coffee breaks with networking areas, a networking lunch on September 9th, and an exclusive networking dinner for premium ticket holders on September 10th.
+                </dd>
+
+                <dt>How do I connect with other attendees before the conference?</dt>
+                <dd>
+                    We provide a private Slack workspace for registered attendees where you can introduce yourself, find people in your industry, and plan meetups. Access details will be sent to your registration email one week before the conference.
+                </dd>
+
+                <dt>Can I schedule one-on-one meetings with speakers?</dt>
+                <dd>
+                    Many speakers have designated office hours during the conference. Check the conference app or website for speaker availability. You can also request to meet speakers through the app, and we'll help facilitate introductions based on availability.
+                </dd>
+
+                <dt>Are there any social events in the evenings?</dt>
+                <dd>
+                    Yes! Beyond formal events, many attendees organize informal meetups and social activities. The conference app has a community board where you can find or organize these events. Local restaurants and bars near the venue are popular gathering spots.
+                </dd>
+            </dl>
+        </section>
+
+        <!-- Contact Mini-Form Section -->
+        <section id="contact-form">
+            <div class="contact-mini-form">
+                <h3>Still Have Questions?</h3>
+                <p>Can't find the answer you're looking for? Send us a message and our team will get back to you within 24 hours.</p>
+                
+                <form method="POST" action="/api/contact-faq" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="faqName">Your Name <span class="required">*</span></label>
+                            <input type="text" id="faqName" name="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="faqEmail">Email Address <span class="required">*</span></label>
+                            <input type="email" id="faqEmail" name="email" required placeholder="john@example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="faqQuestion">Your Question <span class="required">*</span></label>
+                        <textarea id="faqQuestion" name="question" required placeholder="Please describe your question in detail..."></textarea>
+                    </div>
+
+                    <button type="submit">Send Question</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 DevConf. All rights reserved.</p>
+            <p>Contact: <a href="mailto:info@devconf2026.com">info@devconf2026.com</a> | Phone: <a href="tel:+1-555-0100">+1 (555) 0100</a></p>
+            <p><a href="contact.html">Contact Us</a> | <a href="faq.html">FAQ</a> | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+        </div>
+    </footer>
+</body>
+</html>

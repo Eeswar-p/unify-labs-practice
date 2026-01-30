@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsors - DevConf 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 1rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        nav ul {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #764ba2;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin: 2rem 0 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        /* Sponsor Grid */
+        .sponsors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* Sponsor Card - Article */
+        article {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .sponsor-logo-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .sponsor-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sponsor-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sponsor-level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .platinum {
+            background: #e6e6fa;
+            color: #667eea;
+        }
+        
+        .gold {
+            background: #ffd700;
+            color: #333;
+        }
+        
+        .silver {
+            background: #c0c0c0;
+            color: #333;
+        }
+        
+        .bronze {
+            background: #cd7f32;
+            color: white;
+        }
+        
+        .sponsor-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        
+        .sponsor-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .sponsor-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        /* Tier Sections */
+        .tier-section {
+            margin: 3rem 0;
+        }
+        
+        .tier-title {
+            font-size: 1.5rem;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+        }
+        
+        .platinum-section .tier-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gold-section .tier-title {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+        }
+        
+        .silver-section .tier-title {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+            color: #333;
+        }
+        
+        .bronze-section .tier-title {
+            background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%);
+            color: white;
+        }
+        
+        /* Become a Sponsor Section */
+        .become-sponsor {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .become-sponsor h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .become-sponsor p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .become-sponsor a {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .become-sponsor a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .sponsors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header>
+        <div class="container">
+            <div class="logo">DevConf 2026</div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="speakers.html">Speakers</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="sponsors.html">Sponsors</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Section: Sponsors Introduction -->
+        <section>
+            <h1>Our Sponsors</h1>
+            <p>DevConf 2026 is made possible through the support of leading companies and organizations committed to professional development and innovation. We're proud to partner with industry leaders who share our vision of fostering knowledge sharing and collaboration.</p>
+        </section>
+
+        <!-- Section: Platinum Sponsors -->
+        <section class="platinum-section">
+            <h2 class="tier-title">Platinum Sponsors</h2>
+            
+            <div class="sponsors-grid">
+                <!-- Sponsor 1: TechVision Labs -->
+                <article>
+                    <!-- Article: TechVision Labs Sponsor Entry -->
+                    <div class="sponsor-logo-container">🏢 TechVision</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">TechVision Labs</div>
+                        <span class="sponsor-level platinum">PLATINUM SPONSOR</span>
+                        <p class="sponsor-description">
+                            TechVision Labs is a pioneering research and development company focused on AI and machine learning innovation. They're committed to advancing technology and supporting the professional community.
+                        </p>
+                        <a href="https://example.com/techvision" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+
+                <!-- Sponsor 2: CloudFirst Solutions -->
+                <article>
+                    <!-- Article: CloudFirst Solutions Sponsor Entry -->
+                    <div class="sponsor-logo-container">☁️ CloudFirst</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">CloudFirst Solutions</div>
+                        <span class="sponsor-level platinum">PLATINUM SPONSOR</span>
+                        <p class="sponsor-description">
+                            CloudFirst Solutions specializes in enterprise cloud infrastructure and digital transformation. They're dedicated to helping organizations modernize their technology stack.
+                        </p>
+                        <a href="https://example.com/cloudfirst" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+
+                <!-- Sponsor 3: SecureWorks International -->
+                <article>
+                    <!-- Article: SecureWorks International Sponsor Entry -->
+                    <div class="sponsor-logo-container">🔒 SecureWorks</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">SecureWorks International</div>
+                        <span class="sponsor-level platinum">PLATINUM SPONSOR</span>
+                        <p class="sponsor-description">
+                            SecureWorks International leads the industry in cybersecurity solutions and best practices. Their commitment to security innovation drives the industry forward.
+                        </p>
+                        <a href="https://example.com/secureworks" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section: Gold Sponsors -->
+        <section class="gold-section">
+            <h2 class="tier-title">Gold Sponsors</h2>
+            
+            <div class="sponsors-grid">
+                <!-- Sponsor 4: DevTools Pro -->
+                <article>
+                    <!-- Article: DevTools Pro Sponsor Entry -->
+                    <div class="sponsor-logo-container">🛠️ DevTools</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">DevTools Pro</div>
+                        <span class="sponsor-level gold">GOLD SPONSOR</span>
+                        <p class="sponsor-description">
+                            DevTools Pro provides industry-leading development tools and IDE solutions used by millions of developers worldwide.
+                        </p>
+                        <a href="https://example.com/devtools" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+
+                <!-- Sponsor 5: DataStack Analytics -->
+                <article>
+                    <!-- Article: DataStack Analytics Sponsor Entry -->
+                    <div class="sponsor-logo-container">📊 DataStack</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">DataStack Analytics</div>
+                        <span class="sponsor-level gold">GOLD SPONSOR</span>
+                        <p class="sponsor-description">
+                            DataStack Analytics delivers cutting-edge data analytics and business intelligence solutions for enterprises.
+                        </p>
+                        <a href="https://example.com/datastack" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+
+                <!-- Sponsor 6: InnvovateTech -->
+                <article>
+                    <!-- Article: InnovateTech Sponsor Entry -->
+                    <div class="sponsor-logo-container">💡 Innovate</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">InnovateTech</div>
+                        <span class="sponsor-level gold">GOLD SPONSOR</span>
+                        <p class="sponsor-description">
+                            InnovateTech specializes in emerging technologies and next-generation computing solutions.
+                        </p>
+                        <a href="https://example.com/innovatetech" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section: Silver Sponsors -->
+        <section class="silver-section">
+            <h2 class="tier-title">Silver Sponsors</h2>
+            
+            <div class="sponsors-grid">
+                <!-- Sponsor 7: TechConsulting Partners -->
+                <article>
+                    <!-- Article: TechConsulting Partners Sponsor Entry -->
+                    <div class="sponsor-logo-container">🤝 Consulting</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">TechConsulting Partners</div>
+                        <span class="sponsor-level silver">SILVER SPONSOR</span>
+                        <p class="sponsor-description">
+                            TechConsulting Partners guides enterprises through digital transformation initiatives.
+                        </p>
+                        <a href="https://example.com/consulting" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+
+                <!-- Sponsor 8: CodeMentor Academy -->
+                <article>
+                    <!-- Article: CodeMentor Academy Sponsor Entry -->
+                    <div class="sponsor-logo-container">📚 CodeMentor</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">CodeMentor Academy</div>
+                        <span class="sponsor-level silver">SILVER SPONSOR</span>
+                        <p class="sponsor-description">
+                            CodeMentor Academy provides professional training and mentorship programs for developers.
+                        </p>
+                        <a href="https://example.com/codementor" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section: Bronze Sponsors -->
+        <section class="bronze-section">
+            <h2 class="tier-title">Bronze Sponsors</h2>
+            
+            <div class="sponsors-grid">
+                <!-- Sponsor 9: StartupHub -->
+                <article>
+                    <!-- Article: StartupHub Sponsor Entry -->
+                    <div class="sponsor-logo-container">🚀 StartupHub</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">StartupHub</div>
+                        <span class="sponsor-level bronze">BRONZE SPONSOR</span>
+                        <p class="sponsor-description">
+                            StartupHub is a platform connecting innovative startups with investors and resources.
+                        </p>
+                        <a href="https://example.com/startuphub" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+
+                <!-- Sponsor 10: TechCareers -->
+                <article>
+                    <!-- Article: TechCareers Sponsor Entry -->
+                    <div class="sponsor-logo-container">💼 TechCareers</div>
+                    <div class="sponsor-content">
+                        <div class="sponsor-name">TechCareers</div>
+                        <span class="sponsor-level bronze">BRONZE SPONSOR</span>
+                        <p class="sponsor-description">
+                            TechCareers helps technology professionals advance their careers through job placement and development.
+                        </p>
+                        <a href="https://example.com/techcareers" target="_blank" class="sponsor-link">Visit Website →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section: Become a Sponsor -->
+        <div class="become-sponsor">
+            <h3>Interested in Becoming a Sponsor?</h3>
+            <p>DevConf 2026 offers excellent sponsorship opportunities to align your brand with industry leaders and reach thousands of professionals. Join us in making this the best conference yet!</p>
+            <a href="mailto:sponsors@devconf2026.com?subject=Sponsorship%20Inquiry">Contact Our Sponsorship Team</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 DevConf. All rights reserved.</p>
+            <p>Contact: <a href="mailto:info@devconf2026.com">info@devconf2026.com</a> | Phone: <a href="tel:+1-555-0100">+1 (555) 0100</a></p>
+            <p><a href="contact.html">Contact Us</a> | <a href="faq.html">FAQ</a> | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+        </div>
+    </footer>
+</body>
+</html>
