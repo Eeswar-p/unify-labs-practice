@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAY18 - Virtual Pet Simulator: JavaScript Classes, Getters, and Setters">
+    <title>DAY18 - Virtual Pet Simulator | OOP Mastery</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">
+                    <span class="icon">🐾</span>
+                    Virtual Pet Simulator
+                </h1>
+                <p class="header-subtitle">Master JavaScript Classes with Getters & Setters</p>
+            </div>
+            
+            <div class="learning-badges">
+                <span class="badge badge-class">
+                    <span class="badge-icon">🏗️</span>
+                    <span>Classes</span>
+                </span>
+                <span class="badge badge-getter">
+                    <span class="badge-icon">📥</span>
+                    <span>Getters</span>
+                </span>
+                <span class="badge badge-setter">
+                    <span class="badge-icon">📤</span>
+                    <span>Setters</span>
+                </span>
+                <span class="badge badge-encapsulation">
+                    <span class="badge-icon">🔒</span>
+                    <span>Encapsulation</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Create Pet Section -->
+            <section class="method-card create-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="method-badge create-badge">Create Pet</span>
+                        Adopt Your Virtual Pet
+                    </h2>
+                    <p class="card-description">
+                        Create a new Pet instance with name and type. The Pet class uses getters and setters to ensure health remains between 0-100.
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <!-- Pet Creation Form -->
+                    <div class="input-section">
+                        <h3 class="section-subtitle">Pet Details</h3>
+                        <div class="pet-input-group">
+                            <input 
+                                type="text" 
+                                id="petName" 
+                                class="input-field" 
+                                placeholder="Pet Name (e.g., Fluffy)"
+                            />
+                            <select id="petType" class="input-field select-field">
+                                <option value="">Select Pet Type</option>
+                                <option value="🐶 Dog">🐶 Dog</option>
+                                <option value="🐱 Cat">🐱 Cat</option>
+                                <option value="🐹 Hamster">🐹 Hamster</option>
+                                <option value="🐰 Rabbit">🐰 Rabbit</option>
+                                <option value="🐦 Bird">🐦 Bird</option>
+                                <option value="🐢 Turtle">🐢 Turtle</option>
+                                <option value="🐠 Fish">🐠 Fish</option>
+                                <option value="🦎 Lizard">🦎 Lizard</option>
+                            </select>
+                            <button id="createPetBtn" class="btn btn-create">
+                                <span class="btn-icon">✨</span>
+                                Adopt Pet
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Active Pets Display -->
+                    <div class="pets-container" id="petsContainer">
+                        <!-- Pets will be dynamically added here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pet Interaction Section -->
+            <section class="method-card interaction-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="method-badge interaction-badge">Interact</span>
+                        Pet Actions & Status
+                    </h2>
+                    <p class="card-description">
+                        Use the feed() and play() methods to interact with your pets. Watch how getters and setters validate health values automatically!
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <div class="info-box">
+                        <div class="info-icon">💡</div>
+                        <div class="info-content">
+                            <strong>How it works:</strong>
+                            <ul>
+                                <li><strong>Feed:</strong> Increases health by 10 (max 100)</li>
+                                <li><strong>Play:</strong> Decreases health by 15 (min 0)</li>
+                                <li><strong>Setters:</strong> Automatically clamp health between 0-100</li>
+                                <li><strong>Getters:</strong> Return current health status</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="noPetsMessage" class="empty-state">
+                        <div class="empty-icon">🐾</div>
+                        <p>No pets yet! Adopt a pet above to get started.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Class Implementation Section -->
+            <section class="code-examples-section">
+                <h2 class="section-title">
+                    <span class="icon">💻</span>
+                    Pet Class Implementation
+                </h2>
+
+                <div class="code-grid">
+                    <!-- Class Definition -->
+                    <div class="code-card class-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🏗️</span>
+                            Class Definition
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>class Pet {
+    constructor(name, type) {
+        this.name = name;
+        this.type = type;
+        this._health = 100;
+    }
+}</code></pre>
+                        </div>
+                        <p class="code-description">
+                            The Pet class has a constructor that initializes name, type, and private _health property (starting at 100).
+                        </p>
+                    </div>
+
+                    <!-- Getter -->
+                    <div class="code-card getter-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">📥</span>
+                            Health Getter
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>get health() {
+    return this._health;
+}
+
+// Usage
+console.log(pet.health); // 100</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Getters allow you to access private properties like regular properties (no parentheses needed).
+                        </p>
+                    </div>
+
+                    <!-- Setter -->
+                    <div class="code-card setter-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">📤</span>
+                            Health Setter
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>set health(value) {
+    if (value > 100) {
+        this._health = 100;
+    } else if (value < 0) {
+        this._health = 0;
+    } else {
+        this._health = value;
+    }
+}</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Setters validate and constrain values. Here, health is clamped between 0-100 automatically.
+                        </p>
+                    </div>
+
+                    <!-- Methods -->
+                    <div class="code-card methods-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">⚙️</span>
+                            Pet Methods
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>feed() {
+    this.health += 10;
+    return `${this.name} has been fed!`;
+}
+
+play() {
+    this.health -= 15;
+    return `${this.name} is playing!`;
+}
+
+getStatus() {
+    return `${this.name} (${this.type})
+    Health: ${this.health}/100`;
+}</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Methods modify health using the setter, which ensures values stay within valid range.
+                        </p>
+                    </div>
+
+                    <!-- Encapsulation -->
+                    <div class="code-card encapsulation-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🔒</span>
+                            Encapsulation
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Private property (by convention)
+this._health = 100;
+
+// Public interface
+get health() { ... }
+set health(value) { ... }
+
+// Direct access bypasses validation
+pet._health = 150; // ❌ Bad
+pet.health = 150;  // ✅ Good (clamped to 100)</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Use underscore prefix for private properties. Access via getters/setters for validation.
+                        </p>
+                    </div>
+
+                    <!-- Usage Example -->
+                    <div class="code-card usage-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🎯</span>
+                            Complete Example
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Create pet
+const myPet = new Pet('Fluffy', '🐶 Dog');
+
+// Feed pet (increases health)
+myPet.feed(); // Health: 100 (capped)
+
+// Play with pet
+myPet.play(); // Health: 85
+
+// Check status
+console.log(myPet.getStatus());
+// Output: Fluffy (🐶 Dog)
+//         Health: 85/100</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Complete workflow showing class instantiation, method calls, and getter/setter validation.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="learning-section">
+                <h2 class="section-title">
+                    <span class="icon">🎓</span>
+                    Learning Outcomes
+                </h2>
+
+                <div class="outcomes-grid">
+                    <div class="outcome-card">
+                        <div class="outcome-icon class-icon">
+                            <span>🏗️</span>
+                        </div>
+                        <h3>Class Mastery</h3>
+                        <p>Understand ES6 classes, constructors, and object-oriented programming fundamentals.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon getter-icon">
+                            <span>📥</span>
+                        </div>
+                        <h3>Getter Methods</h3>
+                        <p>Access private properties safely with getter methods for data retrieval.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon setter-icon">
+                            <span>📤</span>
+                        </div>
+                        <h3>Setter Validation</h3>
+                        <p>Validate and constrain data with setter methods before assignment.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon encapsulation-icon">
+                            <span>🔒</span>
+                        </div>
+                        <h3>Encapsulation</h3>
+                        <p>Hide internal state and expose controlled interfaces for data access.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon methods-icon">
+                            <span>⚙️</span>
+                        </div>
+                        <h3>Instance Methods</h3>
+                        <p>Create reusable methods that operate on class instances.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon oop-icon">
+                            <span>🎯</span>
+                        </div>
+                        <h3>OOP Principles</h3>
+                        <p>Apply object-oriented programming concepts in real-world scenarios.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity Log -->
+            <section class="method-card log-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="method-badge log-badge">Activity Log</span>
+                        Recent Actions
+                    </h2>
+                    <p class="card-description">
+                        Track all interactions with your pets. Each action shows how getters and setters work behind the scenes.
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <div class="button-group">
+                        <button id="clearLogBtn" class="btn btn-secondary">
+                            <span class="btn-icon">🗑️</span>
+                            Clear Log
+                        </button>
+                    </div>
+                    
+                    <div class="log-container" id="activityLog">
+                        <div class="log-entry log-info">
+                            <span class="log-time">[SYSTEM]</span>
+                            <span class="log-message">Welcome to Virtual Pet Simulator! Adopt your first pet to begin.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                DAY18 - Virtual Pet Simulator
+                <span class="separator">|</span>
+                JavaScript Classes & OOP
+                <span class="separator">|</span>
+                <span class="year">2026</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
