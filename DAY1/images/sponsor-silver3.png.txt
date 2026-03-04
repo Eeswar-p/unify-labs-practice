@@ -1,0 +1,4 @@
+# PLACEHOLDER IMAGE
+# This file represents sponsor-silver3.png - MobileTech Solutions
+# Replace with actual logo: 200x70 pixels (approx)
+# Format: PNG with transparent background

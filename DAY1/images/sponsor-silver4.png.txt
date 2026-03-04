@@ -1,0 +1,4 @@
+# PLACEHOLDER IMAGE
+# This file represents sponsor-silver4.png - TestAutomation Hub
+# Replace with actual logo: 200x70 pixels (approx)
+# Format: PNG with transparent background
