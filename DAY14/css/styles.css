@@ -1,0 +1,939 @@
+/* ============================================
+   DAY14 - Number Guessing Game Styles
+   While Loops & Game Logic
+   ============================================ */
+
+:root {
+    /* Primary Colors */
+    --color-primary: #6366f1;
+    --color-primary-light: #818cf8;
+    --color-primary-dark: #4f46e5;
+    
+    /* Status Colors */
+    --color-success: #10b981;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
+    --color-info: #3b82f6;
+    
+    /* Backgrounds */
+    --color-bg: #0f172a;
+    --color-bg-light: #1e293b;
+    --color-bg-lighter: #334155;
+    
+    /* Text Colors */
+    --color-text: #f1f5f9;
+    --color-text-light: #cbd5e1;
+    --color-text-lighter: #94a3b8;
+    
+    /* Code Syntax Highlighting */
+    --code-keyword: #f472b6;
+    --code-string: #86efac;
+    --code-number: #fbbf24;
+    --code-text: #a78bfa;
+    --code-comment: #64748b;
+    
+    /* Game Specific */
+    --too-high: #f87171;
+    --too-low: #60a5fa;
+    --correct: #34d399;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-normal: 200ms ease-in-out;
+    --transition-slow: 300ms ease-in-out;
+}
+
+/* ============================================
+   Global Styles
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   Header
+   ============================================ */
+
+.header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #a060d8 100%);
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -5%;
+    width: 30rem;
+    height: 30rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    50% { transform: translateY(-30px) translateX(20px); }
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -25%;
+    left: -10%;
+    width: 25rem;
+    height: 25rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+}
+
+/* Code Syntax in Header */
+.code-keyword {
+    color: #fecaca;
+}
+
+.code-string {
+    color: #bfdbfe;
+}
+
+.code-text {
+    color: #d1d5db;
+}
+
+/* ============================================
+   Container
+   ============================================ */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* ============================================
+   Sections
+   ============================================ */
+
+section {
+    margin-bottom: var(--spacing-2xl);
+}
+
+section > h2 {
+    font-size: 1.75rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-primary-light);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* ============================================
+   Game Section
+   ============================================ */
+
+.game-section {
+    background: var(--color-bg-light);
+    padding: var(--spacing-xl);
+    border-radius: 0.75rem;
+    border: 2px solid var(--color-bg-lighter);
+    margin-bottom: var(--spacing-2xl);
+}
+
+/* Difficulty Selector */
+.difficulty-selector {
+    margin-bottom: var(--spacing-lg);
+}
+
+.difficulty-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-light);
+}
+
+.difficulty-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.difficulty-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-bg-lighter);
+    color: var(--color-text);
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all var(--transition-normal);
+}
+
+.difficulty-btn:hover {
+    background-color: var(--color-bg);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.difficulty-btn[data-selected="true"] {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+/* Game Card */
+.game-card {
+    background: linear-gradient(135deg, var(--color-bg-lighter) 0%, var(--color-bg-light) 100%);
+    padding: var(--spacing-xl);
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+}
+
+.game-header {
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: var(--spacing-lg);
+}
+
+.game-header h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.game-subtitle {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+}
+
+/* Input Section */
+.input-section {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.guess-input {
+    flex: 1;
+    min-width: 150px;
+    padding: var(--spacing-md);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border: 2px solid var(--color-bg-lighter);
+    border-radius: 0.5rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    transition: all var(--transition-normal);
+}
+
+.guess-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.guess-input::placeholder {
+    color: var(--color-text-lighter);
+}
+
+.guess-button {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    min-width: 150px;
+}
+
+.guess-button:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+}
+
+.guess-button:active {
+    transform: translateY(0);
+}
+
+/* Instructions Box */
+.instructions-box {
+    background-color: rgba(99, 102, 241, 0.1);
+    border-left: 4px solid var(--color-primary);
+    padding: var(--spacing-lg);
+    border-radius: 0.5rem;
+    margin-top: var(--spacing-lg);
+}
+
+.instructions-box p {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary-light);
+}
+
+.instructions-box ol {
+    margin-left: var(--spacing-lg);
+    color: var(--color-text-light);
+}
+
+.instructions-box li {
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Feedback Section */
+.feedback-section {
+    animation: slideIn var(--transition-slow);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hint-box {
+    background: var(--color-bg);
+    padding: var(--spacing-lg);
+    border-radius: 0.5rem;
+    margin-bottom: var(--spacing-lg);
+    border-left: 4px solid var(--color-warning);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.hint-box p {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.hint-box.too-high {
+    border-color: var(--too-high);
+    background: rgba(248, 113, 113, 0.1);
+}
+
+.hint-box.too-high p {
+    color: var(--too-high);
+}
+
+.hint-box.too-low {
+    border-color: var(--too-low);
+    background: rgba(96, 165, 250, 0.1);
+}
+
+.hint-box.too-low p {
+    color: var(--too-low);
+}
+
+/* Game Stats */
+.game-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-item {
+    background-color: var(--color-bg-lighter);
+    padding: var(--spacing-md);
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-primary);
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    color: var(--color-text-light);
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary-light);
+    font-family: 'Fira Code', monospace;
+}
+
+/* Guesses History */
+.guesses-history {
+    background-color: var(--color-bg);
+    padding: var(--spacing-md);
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-bg-lighter);
+}
+
+.history-label {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-light);
+}
+
+.guesses-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.guess-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-bg-lighter);
+    border-radius: 0.25rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--color-primary);
+    animation: popIn var(--transition-fast);
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.guess-item.correct {
+    border-color: var(--color-success);
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+/* Result Section */
+.result-section {
+    animation: slideIn var(--transition-slow);
+}
+
+.result-box {
+    background: linear-gradient(135deg, var(--color-bg-lighter) 0%, var(--color-bg-light) 100%);
+    padding: var(--spacing-xl);
+    border-radius: 0.75rem;
+    text-align: center;
+    border: 2px solid var(--color-primary);
+}
+
+.result-box.won {
+    border-color: var(--color-success);
+}
+
+.result-box.lost {
+    border-color: var(--color-error);
+}
+
+.result-box h3 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.result-box.won h3 {
+    color: var(--color-success);
+}
+
+.result-box.lost h3 {
+    color: var(--color-error);
+}
+
+#resultMessage {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-light);
+}
+
+.result-stats {
+    background-color: var(--color-bg);
+    padding: var(--spacing-lg);
+    border-radius: 0.5rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.result-stats p {
+    margin: var(--spacing-md) 0;
+    font-family: 'Fira Code', monospace;
+    color: var(--color-primary-light);
+}
+
+.play-again-button {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--color-success);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.play-again-button:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   Guide Section
+   ============================================ */
+
+.guide-section {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+/* Concept Cards */
+.concept-card {
+    background: linear-gradient(135deg, var(--color-bg-lighter) 0%, var(--color-bg-light) 100%);
+    padding: var(--spacing-xl);
+    border-radius: 0.75rem;
+    border-left: 4px solid var(--color-primary);
+    transition: all var(--transition-normal);
+}
+
+.concept-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.15);
+}
+
+.concept-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary-light);
+}
+
+.concept-description {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+}
+
+/* Code Blocks */
+.code-block {
+    background-color: var(--color-bg);
+    padding: var(--spacing-lg);
+    border-radius: 0.5rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+    border: 1px solid var(--color-bg-lighter);
+    line-height: 1.5;
+}
+
+.code-keyword {
+    color: var(--code-keyword);
+    font-weight: 700;
+}
+
+.code-string {
+    color: var(--code-string);
+}
+
+.code-number {
+    color: var(--code-number);
+}
+
+.code-comment {
+    color: var(--code-comment);
+    font-style: italic;
+}
+
+.code-text {
+    color: var(--code-text);
+}
+
+/* Concept Features */
+.concept-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.feature-tag {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: rgba(99, 102, 241, 0.2);
+    color: var(--color-primary-light);
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Difficulty Grid */
+.difficulty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.difficulty-info {
+    background-color: var(--color-bg);
+    padding: var(--spacing-lg);
+    border-radius: 0.5rem;
+    text-align: center;
+    border: 1px solid var(--color-bg-lighter);
+}
+
+.difficulty-info h4 {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary-light);
+}
+
+.difficulty-info p {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   Examples Section
+   ============================================ */
+
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.example-card {
+    background: linear-gradient(135deg, var(--color-bg-lighter) 0%, var(--color-bg-light) 100%);
+    padding: var(--spacing-lg);
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-bg-lighter);
+    transition: all var(--transition-normal);
+}
+
+.example-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-primary);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+}
+
+.example-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary-light);
+}
+
+.example-description {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ============================================
+   Concepts Section
+   ============================================ */
+
+.concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.concept-item {
+    background: linear-gradient(135deg, var(--color-bg-lighter) 0%, var(--color-bg-light) 100%);
+    padding: var(--spacing-lg);
+    border-radius: 0.75rem;
+    text-align: center;
+    border: 1px solid var(--color-bg-lighter);
+    transition: all var(--transition-normal);
+}
+
+.concept-item:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
+}
+
+.concept-item h4 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary-light);
+}
+
+.concept-item p {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* ============================================
+   Patterns Section
+   ============================================ */
+
+.patterns-section {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.pattern-card {
+    background: linear-gradient(135deg, var(--color-bg-lighter) 0%, var(--color-bg-light) 100%);
+    padding: var(--spacing-lg);
+    border-radius: 0.75rem;
+    border-left: 4px solid var(--color-info);
+}
+
+.pattern-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-info);
+}
+
+/* ============================================
+   Troubleshooting Section
+   ============================================ */
+
+.troubleshooting-section {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.mistake-card {
+    background: linear-gradient(135deg, var(--color-bg-lighter) 0%, var(--color-bg-light) 100%);
+    padding: var(--spacing-lg);
+    border-radius: 0.75rem;
+    border-left: 4px solid var(--color-error);
+}
+
+.mistake-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-error);
+}
+
+.mistake-description {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.95rem;
+}
+
+.mistake-card .code-block {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.footer {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    border-top: 2px solid var(--color-bg-lighter);
+    margin-top: var(--spacing-2xl);
+}
+
+.footer-text {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.95rem;
+}
+
+.footer-meta {
+    color: var(--color-text-lighter);
+    font-size: 0.85rem;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .title {
+        font-size: 2rem;
+    }
+    
+    section > h2 {
+        font-size: 1.5rem;
+    }
+    
+    .examples-grid,
+    .concepts-grid,
+    .difficulty-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .game-section {
+        padding: var(--spacing-lg);
+    }
+    
+    .game-card {
+        padding: var(--spacing-lg);
+    }
+    
+    .input-section {
+        flex-direction: column;
+    }
+    
+    .guess-input,
+    .guess-button {
+        width: 100%;
+    }
+    
+    .game-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .difficulty-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    section > h2 {
+        font-size: 1.3rem;
+    }
+    
+    .examples-grid,
+    .concepts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .code-block {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .title {
+        font-size: 1.25rem;
+    }
+    
+    section > h2 {
+        font-size: 1.15rem;
+    }
+    
+    .concept-card,
+    .example-card,
+    .pattern-card,
+    .mistake-card {
+        padding: var(--spacing-md);
+    }
+    
+    .game-stats {
+        gap: var(--spacing-sm);
+    }
+    
+    .stat-item {
+        padding: var(--spacing-sm);
+    }
+    
+    .stat-value {
+        font-size: 1.25rem;
+    }
+
+    .code-block {
+        padding: var(--spacing-md);
+        font-size: 0.7rem;
+    }
+}
+
+/* ============================================
+   Scrollbar Styling
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-lighter);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-light);
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+    .header,
+    .difficulty-selector,
+    .input-section,
+    .feedback-section,
+    .result-section {
+        display: none;
+    }
+}

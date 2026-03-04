@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY14 - Number Guessing Game | While Loops & Game Logic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1 class="title">
+            <span class="code-keyword">const</span> <span class="code-text">game</span> = 
+            <span class="code-string">"Guess the Secret Number"</span>
+        </h1>
+        <p class="subtitle">Master while loops, game logic, and interactive gameplay</p>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Game Section -->
+        <section class="game-section">
+            <h2>🎮 Play the Game</h2>
+            
+            <!-- Difficulty Selector -->
+            <div class="difficulty-selector">
+                <p class="difficulty-label">Choose Difficulty:</p>
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn" data-difficulty="easy">
+                        😊 Easy (15 tries)
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="medium" data-selected="true">
+                        🤔 Medium (10 tries)
+                    </button>
+                    <button class="difficulty-btn" data-difficulty="hard">
+                        😤 Hard (5 tries)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Game -->
+            <div class="game-card">
+                <div class="game-header">
+                    <h3>Secret Number between 1 - 100</h3>
+                    <p class="game-subtitle">I've picked a number. Can you guess it?</p>
+                </div>
+
+                <!-- Input Section -->
+                <div class="input-section">
+                    <input 
+                        type="number" 
+                        id="guessInput" 
+                        class="guess-input" 
+                        min="1" 
+                        max="100" 
+                        placeholder="Enter your guess..."
+                        aria-label="Enter guess between 1 and 100"
+                    >
+                    <button id="guessBtn" class="guess-button">
+                        📌 Submit Guess
+                    </button>
+                </div>
+
+                <!-- Feedback Section -->
+                <div id="feedbackSection" class="feedback-section" style="display: none;">
+                    <div id="hintBox" class="hint-box">
+                        <p id="hintText"></p>
+                    </div>
+
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Attempts Left:</span>
+                            <span id="attemptsLeft" class="stat-value">10</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Current Guess:</span>
+                            <span id="currentGuess" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Temperature:</span>
+                            <span id="temperature" class="stat-value">❄️</span>
+                        </div>
+                    </div>
+
+                    <!-- Guesses History -->
+                    <div class="guesses-history">
+                        <p class="history-label">Your Guesses:</p>
+                        <div id="guessesList" class="guesses-list"></div>
+                    </div>
+                </div>
+
+                <!-- Game Over / Won Section -->
+                <div id="resultSection" class="result-section" style="display: none;">
+                    <div id="resultBox" class="result-box">
+                        <h3 id="resultTitle"></h3>
+                        <p id="resultMessage"></p>
+                        <div class="result-stats">
+                            <p id="resultStat1"></p>
+                            <p id="resultStat2"></p>
+                        </div>
+                        <button id="playAgainBtn" class="play-again-button">
+                            🔄 Play Again
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Initial Instructions -->
+                <div id="instructionsBox" class="instructions-box">
+                    <p>🎯 <strong>How to Play:</strong></p>
+                    <ol>
+                        <li>Choose your difficulty level</li>
+                        <li>Enter a number between 1 and 100</li>
+                        <li>I'll tell you if it's Too High or Too Low</li>
+                        <li>Keep guessing until you find it!</li>
+                        <li>You get limited attempts based on difficulty</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guide Section -->
+        <section class="guide-section">
+            <h2>📚 Game Logic Explained</h2>
+
+            <!-- While Loops -->
+            <div class="concept-card">
+                <h3>🔁 While Loops</h3>
+                <p class="concept-description">
+                    A while loop keeps repeating as long as a condition is true. In our game, we keep asking for guesses while the user hasn't guessed correctly and has attempts remaining.
+                </p>
+                <pre class="code-block"><span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">secretNumber !== guess && attemptsLeft > 0</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-comment">// Ask for guess</span>
+    <span class="code-comment">// Check if correct</span>
+    <span class="code-comment">// Update attempts</span>
+<span class="code-number">}</span></pre>
+                <div class="concept-features">
+                    <span class="feature-tag">Loop Control</span>
+                    <span class="feature-tag">Condition Based</span>
+                    <span class="feature-tag">Game Logic</span>
+                </div>
+            </div>
+
+            <!-- Random Number Generation -->
+            <div class="concept-card">
+                <h3>🎲 Random Number Generation</h3>
+                <p class="concept-description">
+                    To create a fair game, we generate a random number between 1 and 100. JavaScript's Math.random() gives us a decimal between 0 and 1, which we convert to our target range.
+                </p>
+                <pre class="code-block"><span class="code-keyword">const</span> <span class="code-text">secret</span> = <span class="code-text">Math</span>.<span class="code-text">floor</span><span class="code-number">(</span>
+    <span class="code-text">Math</span>.<span class="code-text">random</span><span class="code-number">()</span> * <span class="code-number">100</span> + <span class="code-number">1</span>
+<span class="code-number">)</span><span class="code-number">;</span></pre>
+                <div class="concept-features">
+                    <span class="feature-tag">Math Object</span>
+                    <span class="feature-tag">Randomization</span>
+                    <span class="feature-tag">Range Calculation</span>
+                </div>
+            </div>
+
+            <!-- Comparison Logic -->
+            <div class="concept-card">
+                <h3>⚖️ Comparison & Hints</h3>
+                <p class="concept-description">
+                    We compare the guess with the secret number to give helpful hints. These hints guide the player closer to the answer.
+                </p>
+                <pre class="code-block"><span class="code-keyword">if</span> <span class="code-number">(</span><span class="code-text">guess</span> > <span class="code-text">secret</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">hint</span> = <span class="code-string">"Too High! Try lower."</span><span class="code-number">;</span>
+<span class="code-number">}</span> <span class="code-keyword">else</span> <span class="code-keyword">if</span> <span class="code-number">(</span><span class="code-text">guess</span> < <span class="code-text">secret</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">hint</span> = <span class="code-string">"Too Low! Try higher."</span><span class="code-number">;</span>
+<span class="code-number">}</span></pre>
+                <div class="concept-features">
+                    <span class="feature-tag">If/Else Conditions</span>
+                    <span class="feature-tag">Comparison Operators</span>
+                    <span class="feature-tag">User Feedback</span>
+                </div>
+            </div>
+
+            <!-- Game State Management -->
+            <div class="concept-card">
+                <h3>📊 Game State Tracking</h3>
+                <p class="concept-description">
+                    We track important game information: the secret number, attempts remaining, all guesses made, and win/loss status. This state determines the game flow.
+                </p>
+                <pre class="code-block"><span class="code-keyword">let</span> <span class="code-text">gameState</span> = <span class="code-number">{</span>
+    <span class="code-text">secret</span>: <span class="code-number">42</span>,
+    <span class="code-text">attempts</span>: <span class="code-number">10</span>,
+    <span class="code-text">guesses</span>: <span class="code-number">[]</span>,
+    <span class="code-text">won</span>: <span class="code-keyword">false</span>
+<span class="code-number">}</span><span class="code-number">;</span></pre>
+                <div class="concept-features">
+                    <span class="feature-tag">State Management</span>
+                    <span class="feature-tag">Data Structure</span>
+                    <span class="feature-tag">Game Flow</span>
+                </div>
+            </div>
+
+            <!-- Difficulty Levels -->
+            <div class="concept-card">
+                <h3>🎵 Difficulty Levels</h3>
+                <p class="concept-description">
+                    Different difficulty levels change the number of attempts allowed. This affects the game strategy and challenge level.
+                </p>
+                <div class="difficulty-grid">
+                    <div class="difficulty-info">
+                        <h4>😊 Easy</h4>
+                        <p><strong>15 Attempts</strong></p>
+                        <p>Perfect for learning the game mechanics</p>
+                    </div>
+                    <div class="difficulty-info">
+                        <h4>🤔 Medium</h4>
+                        <p><strong>10 Attempts</strong></p>
+                        <p>Balanced challenge - good for most players</p>
+                    </div>
+                    <div class="difficulty-info">
+                        <h4>😤 Hard</h4>
+                        <p><strong>5 Attempts</strong></p>
+                        <p>Expert level - requires strategy</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real-World Examples Section -->
+        <section class="examples-section">
+            <h2>🌍 Real-World Applications</h2>
+
+            <div class="examples-grid">
+                <!-- Binary Search -->
+                <div class="example-card">
+                    <h3>🔍 Binary Search Algorithm</h3>
+                    <p class="example-description">
+                        The optimal strategy for guessing is binary search - always guess the middle number to eliminate half the remaining possibilities.
+                    </p>
+                    <pre class="code-block"><span class="code-comment">// Always guess the middle</span>
+<span class="code-keyword">let</span> <span class="code-text">low</span> = <span class="code-number">1</span>, <span class="code-text">high</span> = <span class="code-number">100</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">low</span> <= <span class="code-text">high</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-keyword">let</span> <span class="code-text">mid</span> = <span class="code-text">Math</span>.<span class="code-text">floor</span><span class="code-number">(</span>
+        <span class="code-number">(</span><span class="code-text">low</span> + <span class="code-text">high</span><span class="code-number">)</span> / <span class="code-number">2</span>
+    <span class="code-number">)</span>;
+<span class="code-number">}</span></pre>
+                </div>
+
+                <!-- Rock Paper Scissors -->
+                <div class="example-card">
+                    <h3>🎮 Rock Paper Scissors Variant</h3>
+                    <p class="example-description">
+                        Similar game logic: generate random computer choice, compare with player input, give feedback, repeat until valid game state.
+                    </p>
+                    <pre class="code-block"><span class="code-keyword">const</span> <span class="code-text">choices</span> = 
+    <span class="code-number">[</span><span class="code-string">"rock"</span>, <span class="code-string">"paper"</span>, <span class="code-string">"scissors"</span><span class="code-number">]</span>;
+<span class="code-keyword">const</span> <span class="code-text">computer</span> = 
+    <span class="code-text">choices</span><span class="code-number">[</span><span class="code-text">Math</span>.<span class="code-text">floor</span><span class="code-number">(</span>
+        <span class="code-text">Math</span>.<span class="code-text">random</span><span class="code-number">()</span> * <span class="code-number">3</span>
+    <span class="code-number">)</span><span class="code-number">]</span>;</pre>
+                </div>
+
+                <!-- Password Attempts -->
+                <div class="example-card">
+                    <h3>🔐 Password Attempts Limit</h3>
+                    <p class="example-description">
+                        Login systems use similar logic: loop while password is wrong and attempts remain. After max attempts, lock the account.
+                    </p>
+                    <pre class="code-block"><span class="code-keyword">let</span> <span class="code-text">attempts</span> = <span class="code-number">3</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">attempts</span> > <span class="code-number">0</span> && 
+       <span class="code-text">password</span> !== <span class="code-text">correct</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">attempts</span>--;
+    <span class="code-comment">// Ask for password</span>
+<span class="code-number">}</span></pre>
+                </div>
+
+                <!-- Quiz Game -->
+                <div class="example-card">
+                    <h3>❓ Quiz Game</h3>
+                    <p class="example-description">
+                        Quiz games use while loops to cycle through questions until all are answered or time runs out.
+                    </p>
+                    <pre class="code-block"><span class="code-keyword">let</span> <span class="code-text">score</span> = <span class="code-number">0</span>;
+<span class="code-keyword">let</span> <span class="code-text">questionIndex</span> = <span class="code-number">0</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">questionIndex</span> < 
+       <span class="code-text">questions</span>.<span class="code-text">length</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-comment">// Display question</span>
+    <span class="code-comment">// Check answer</span>
+    <span class="code-text">questionIndex</span>++;
+<span class="code-number">}</span></pre>
+                </div>
+
+                <!-- Search in List -->
+                <div class="example-card">
+                    <h3>🔎 Search in List</h3>
+                    <p class="example-description">
+                        Looking for an item in a list? While loop iterates through items until it finds a match or reaches the end.
+                    </p>
+                    <pre class="code-block"><span class="code-keyword">let</span> <span class="code-text">i</span> = <span class="code-number">0</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">i</span> < <span class="code-text">items</span>.<span class="code-text">length</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-keyword">if</span> <span class="code-number">(</span><span class="code-text">items</span><span class="code-number">[</span><span class="code-text">i</span><span class="code-number">]</span> === <span class="code-text">target</span><span class="code-number">)</span> <span class="code-number">{</span>
+        <span class="code-comment">// Found!</span>
+        <span class="code-keyword">break</span>;
+    <span class="code-number">}</span>
+    <span class="code-text">i</span>++;
+<span class="code-number">}</span></pre>
+                </div>
+
+                <!-- Continuous Process -->
+                <div class="example-card">
+                    <h3>♾️ Continuous Process</h3>
+                    <p class="example-description">
+                        Game loops, animation frames, and event listeners use similar logic - keep running while certain conditions are true.
+                    </p>
+                    <pre class="code-block"><span class="code-keyword">function</span> <span class="code-text">gameLoop</span><span class="code-number">()</span> <span class="code-number">{</span>
+    <span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">gameRunning</span><span class="code-number">)</span> <span class="code-number">{</span>
+        <span class="code-text">update</span><span class="code-number">()</span>;
+        <span class="code-text">render</span><span class="code-number">()</span>;
+    <span class="code-number">}</span>
+<span class="code-number">}</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Concepts Grid -->
+        <section class="concepts-section">
+            <h2>🎯 Key Concepts</h2>
+            <div class="concepts-grid">
+                <div class="concept-item">
+                    <h4>🔁 Loop Control</h4>
+                    <p>While loops execute as long as a condition is true</p>
+                </div>
+                <div class="concept-item">
+                    <h4>🎲 Randomization</h4>
+                    <p>Math.random() and Math.floor() generate random numbers</p>
+                </div>
+                <div class="concept-item">
+                    <h4>⚖️ Comparison</h4>
+                    <p>Compare values to give feedback and determine game state</p>
+                </div>
+                <div class="concept-item">
+                    <h4>📊 State Tracking</h4>
+                    <p>Track game variables: secret, attempts, guesses, status</p>
+                </div>
+                <div class="concept-item">
+                    <h4>🎮 Game Flow</h4>
+                    <p>Manage game states: setup, playing, won, lost</p>
+                </div>
+                <div class="concept-item">
+                    <h4>🔄 Replay Logic</h4>
+                    <p>Reset game state to play again with new random number</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Patterns Section -->
+        <section class="patterns-section">
+            <h2>💡 Common Patterns</h2>
+
+            <div class="pattern-card">
+                <h3>Pattern 1: Loop Until Correct</h3>
+                <pre class="code-block"><span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">guess</span> !== <span class="code-text">secret</span> && 
+       <span class="code-text">attempts</span> > <span class="code-number">0</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">guess</span> = <span class="code-text">getUserGuess</span><span class="code-number">()</span>;
+    <span class="code-keyword">if</span> <span class="code-number">(</span><span class="code-text">guess</span> === <span class="code-text">secret</span><span class="code-number">)</span> <span class="code-number">{</span>
+        <span class="code-text">won</span> = <span class="code-keyword">true</span>;
+    <span class="code-number">}</span> <span class="code-keyword">else</span> <span class="code-number">{</span>
+        <span class="code-text">attempts</span>--;
+    <span class="code-number">}</span>
+<span class="code-number">}</span></pre>
+            </div>
+
+            <div class="pattern-card">
+                <h3>Pattern 2: List Iteration</h3>
+                <pre class="code-block"><span class="code-keyword">let</span> <span class="code-text">i</span> = <span class="code-number">0</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">i</span> < <span class="code-text">items</span>.<span class="code-text">length</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">console</span>.<span class="code-text">log</span><span class="code-number">(</span><span class="code-text">items</span><span class="code-number">[</span><span class="code-text">i</span><span class="code-number">]</span><span class="code-number">)</span>;
+    <span class="code-text">i</span>++;
+<span class="code-number">}</span></pre>
+            </div>
+
+            <div class="pattern-card">
+                <h3>Pattern 3: Countdown</h3>
+                <pre class="code-block"><span class="code-keyword">let</span> <span class="code-text">countdown</span> = <span class="code-number">10</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">countdown</span> > <span class="code-number">0</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">console</span>.<span class="code-text">log</span><span class="code-number">(</span><span class="code-text">countdown</span><span class="code-number">)</span>;
+    <span class="code-text">countdown</span>--;
+<span class="code-number">}</span></pre>
+            </div>
+
+            <div class="pattern-card">
+                <h3>Pattern 4: Validation Loop</h3>
+                <pre class="code-block"><span class="code-keyword">let</span> <span class="code-text">input</span> = <span class="code-string">""</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">input</span> < <span class="code-number">1</span> || <span class="code-text">input</span> > <span class="code-number">100</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">input</span> = <span class="code-text">prompt</span><span class="code-number">(</span>
+        <span class="code-string">"Enter number 1-100"</span>
+    <span class="code-number">)</span>;
+<span class="code-number">}</span></pre>
+            </div>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section class="troubleshooting-section">
+            <h2>⚠️ Common Mistakes</h2>
+
+            <div class="mistake-card">
+                <h3>❌ Infinite Loop</h3>
+                <p class="mistake-description">Forgetting to update the loop condition leads to infinite loops!</p>
+                <pre class="code-block"><span class="code-comment">// ❌ WRONG - Creates infinite loop</span>
+<span class="code-keyword">let</span> <span class="code-text">i</span> = <span class="code-number">0</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">i</span> < <span class="code-number">10</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">console</span>.<span class="code-text">log</span><span class="code-number">(</span><span class="code-text">i</span><span class="code-number">)</span>;
+    <span class="code-comment">// i++ is missing!</span>
+<span class="code-number">}</span></pre>
+                <pre class="code-block"><span class="code-comment">// ✅ CORRECT - Increments i</span>
+<span class="code-keyword">let</span> <span class="code-text">i</span> = <span class="code-number">0</span>;
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">i</span> < <span class="code-number">10</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-text">console</span>.<span class="code-text">log</span><span class="code-number">(</span><span class="code-text">i</span><span class="code-number">)</span>;
+    <span class="code-text">i</span>++;  <span class="code-comment">// Update condition!</span>
+<span class="code-number">}</span></pre>
+            </div>
+
+            <div class="mistake-card">
+                <h3>❌ Type Confusion</h3>
+                <p class="mistake-description">"50" (string) is different from 50 (number) in comparisons!</p>
+                <pre class="code-block"><span class="code-comment">// ❌ WRONG - String vs Number</span>
+<span class="code-keyword">let</span> <span class="code-text">guess</span> = <span class="code-string">"50"</span>;  <span class="code-comment">// String from input</span>
+<span class="code-keyword">if</span> <span class="code-number">(</span><span class="code-text">guess</span> === <span class="code-number">50</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-comment">// Never true!</span>
+<span class="code-number">}</span></pre>
+                <pre class="code-block"><span class="code-comment">// ✅ CORRECT - Convert to number</span>
+<span class="code-keyword">let</span> <span class="code-text">guess</span> = <span class="code-text">parseInt</span><span class="code-number">(</span><span class="code-string">"50"</span><span class="code-number">)</span>;
+<span class="code-keyword">if</span> <span class="code-number">(</span><span class="code-text">guess</span> === <span class="code-number">50</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-comment">// Now true!</span>
+<span class="code-number">}</span></pre>
+            </div>
+
+            <div class="mistake-card">
+                <h3>❌ Wrong Condition</h3>
+                <p class="mistake-description">Using OR (||) instead of AND (&&) makes the loop run when it shouldn't!</p>
+                <pre class="code-block"><span class="code-comment">// ❌ WRONG - Uses OR</span>
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">guess</span> !== <span class="code-text">secret</span> || 
+       <span class="code-text">attempts</span> > <span class="code-number">0</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-comment">// Runs even when out of attempts!</span>
+<span class="code-number">}</span></pre>
+                <pre class="code-block"><span class="code-comment">// ✅ CORRECT - Uses AND</span>
+<span class="code-keyword">while</span> <span class="code-number">(</span><span class="code-text">guess</span> !== <span class="code-text">secret</span> && 
+       <span class="code-text">attempts</span> > <span class="code-number">0</span><span class="code-number">)</span> <span class="code-number">{</span>
+    <span class="code-comment">// Stops when either condition fails</span>
+<span class="code-number">}</span></pre>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-text">
+            <span class="code-comment">// Keep practicing while loops - they're essential! 💪</span>
+        </p>
+        <p class="footer-meta">DAY14 | While Loops & Game Logic | March 2026</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>
