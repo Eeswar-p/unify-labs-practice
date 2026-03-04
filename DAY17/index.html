@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAY17 - Array Methods Master: map(), filter(), reduce() - Data Processing Lab">
+    <title>DAY17 - Array Methods: map(), filter(), reduce()</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">
+                    <span class="icon">🔄</span>
+                    Array Methods Master
+                </h1>
+                <p class="header-subtitle">Harness the Power of map(), filter(), and reduce()</p>
+            </div>
+            
+            <div class="learning-badges">
+                <span class="badge badge-map">
+                    <span class="badge-icon">🗺️</span>
+                    map()
+                </span>
+                <span class="badge badge-filter">
+                    <span class="badge-icon">🔍</span>
+                    filter()
+                </span>
+                <span class="badge badge-reduce">
+                    <span class="badge-icon">📊</span>
+                    reduce()
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Section 1: FILTER - Task Manager -->
+            <section class="method-card filter-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="method-badge filter-badge">filter()</span>
+                        Task Manager
+                    </h2>
+                    <p class="card-description">Filter tasks into 'Completed' and 'Pending' based on status</p>
+                </div>
+
+                <div class="card-body">
+                    <!-- Task Input Section -->
+                    <div class="input-section">
+                        <h3 class="section-subtitle">Add New Task</h3>
+                        <div class="task-input-group">
+                            <input 
+                                type="text" 
+                                id="taskName" 
+                                class="input-field" 
+                                placeholder="Task name (e.g., Finish project)"
+                            />
+                            <select id="taskStatus" class="input-field select-field">
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                            <button id="addTaskBtn" class="btn btn-filter">
+                                <span class="btn-icon">➕</span>
+                                Add Task
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Current Tasks Display -->
+                    <div class="data-display">
+                        <h3 class="section-subtitle">All Tasks</h3>
+                        <div id="taskList" class="data-list tasks-list">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Filter Actions -->
+                    <div class="button-group">
+                        <button id="filterCompletedBtn" class="btn btn-success">
+                            <span class="btn-icon">✓</span>
+                            Show Completed
+                        </button>
+                        <button id="filterPendingBtn" class="btn btn-warning">
+                            <span class="btn-icon">⏳</span>
+                            Show Pending
+                        </button>
+                        <button id="showAllTasksBtn" class="btn btn-secondary">
+                            <span class="btn-icon">📋</span>
+                            Show All
+                        </button>
+                        <button id="clearTasksBtn" class="btn btn-danger">
+                            <span class="btn-icon">🗑️</span>
+                            Clear All
+                        </button>
+                    </div>
+
+                    <!-- Filtered Results -->
+                    <div id="taskFilterResults" class="result-box" style="display: none;">
+                        <div class="result-header">
+                            <span class="result-icon">🔍</span>
+                            <strong id="taskResultTitle">Filtered Results</strong>
+                        </div>
+                        <div id="taskOutput" class="result-output"></div>
+                        <div id="taskStats" class="stats-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: MAP - Price Calculator -->
+            <section class="method-card map-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="method-badge map-badge">map()</span>
+                        Price Calculator with Tax
+                    </h2>
+                    <p class="card-description">Transform prices by adding tax percentage</p>
+                </div>
+
+                <div class="card-body">
+                    <!-- Price Input Section -->
+                    <div class="input-section">
+                        <h3 class="section-subtitle">Add Product Price</h3>
+                        <div class="price-input-group">
+                            <input 
+                                type="text" 
+                                id="productName" 
+                                class="input-field" 
+                                placeholder="Product name (e.g., Laptop)"
+                            />
+                            <input 
+                                type="number" 
+                                id="productPrice" 
+                                class="input-field" 
+                                placeholder="Price ($)"
+                                step="0.01"
+                                min="0"
+                            />
+                            <button id="addProductBtn" class="btn btn-map">
+                                <span class="btn-icon">➕</span>
+                                Add Product
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tax Rate Setting -->
+                    <div class="input-section">
+                        <h3 class="section-subtitle">Tax Settings</h3>
+                        <div class="tax-input-group">
+                            <label for="taxRate" class="input-label">
+                                Tax Rate: <strong id="taxRateDisplay">10</strong>%
+                            </label>
+                            <input 
+                                type="range" 
+                                id="taxRate" 
+                                class="range-slider" 
+                                min="0" 
+                                max="25" 
+                                value="10" 
+                                step="0.5"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Current Prices Display -->
+                    <div class="data-display">
+                        <h3 class="section-subtitle">Original Prices</h3>
+                        <div id="productList" class="data-list prices-list">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Map Actions -->
+                    <div class="button-group">
+                        <button id="calculateTaxBtn" class="btn btn-map">
+                            <span class="btn-icon">🧮</span>
+                            Calculate Prices with Tax
+                        </button>
+                        <button id="clearProductsBtn" class="btn btn-secondary">
+                            <span class="btn-icon">🗑️</span>
+                            Clear All
+                        </button>
+                    </div>
+
+                    <!-- Map Results -->
+                    <div id="priceResults" class="result-box" style="display: none;">
+                        <div class="result-header">
+                            <span class="result-icon">🗺️</span>
+                            <strong>Prices with Tax Applied</strong>
+                        </div>
+                        <div id="priceOutput" class="result-output"></div>
+                        <div id="priceStats" class="stats-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: REDUCE - Budget Calculator -->
+            <section class="method-card reduce-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="method-badge reduce-badge">reduce()</span>
+                        Company Budget Calculator
+                    </h2>
+                    <p class="card-description">Calculate total expenses and budget from individual amounts</p>
+                </div>
+
+                <div class="card-body">
+                    <!-- Expense Input Section -->
+                    <div class="input-section">
+                        <h3 class="section-subtitle">Add Expense</h3>
+                        <div class="expense-input-group">
+                            <input 
+                                type="text" 
+                                id="expenseCategory" 
+                                class="input-field" 
+                                placeholder="Category (e.g., Marketing)"
+                            />
+                            <input 
+                                type="number" 
+                                id="expenseAmount" 
+                                class="input-field" 
+                                placeholder="Amount ($)"
+                                step="0.01"
+                                min="0"
+                            />
+                            <button id="addExpenseBtn" class="btn btn-reduce">
+                                <span class="btn-icon">➕</span>
+                                Add Expense
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Current Expenses Display -->
+                    <div class="data-display">
+                        <h3 class="section-subtitle">All Expenses</h3>
+                        <div id="expenseList" class="data-list expenses-list">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Reduce Actions -->
+                    <div class="button-group">
+                        <button id="calculateTotalBtn" class="btn btn-reduce">
+                            <span class="btn-icon">💰</span>
+                            Calculate Total Budget
+                        </button>
+                        <button id="calculateAverageBtn" class="btn btn-info">
+                            <span class="btn-icon">📈</span>
+                            Calculate Average
+                        </button>
+                        <button id="clearExpensesBtn" class="btn btn-secondary">
+                            <span class="btn-icon">🗑️</span>
+                            Clear All
+                        </button>
+                    </div>
+
+                    <!-- Reduce Results -->
+                    <div id="budgetResults" class="result-box" style="display: none;">
+                        <div class="result-header">
+                            <span class="result-icon">📊</span>
+                            <strong id="budgetResultTitle">Budget Analysis</strong>
+                        </div>
+                        <div id="budgetOutput" class="result-output"></div>
+                        <div id="budgetStats" class="stats-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Combined Demo Section -->
+            <section class="method-card demo-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="method-badge demo-badge">💡</span>
+                        Combined Array Methods Demo
+                    </h2>
+                    <p class="card-description">See map(), filter(), and reduce() working together</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="demo-scenario">
+                        <h3 class="section-subtitle">Scenario: E-Commerce Order Processing</h3>
+                        <p class="scenario-description">
+                            Process customer orders by filtering shipped orders, applying discount map, 
+                            and calculating total revenue using reduce.
+                        </p>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="runDemoBtn" class="btn btn-gradient">
+                            <span class="btn-icon">⚡</span>
+                            Run Complete Demo
+                        </button>
+                        <button id="clearDemoBtn" class="btn btn-secondary">
+                            <span class="btn-icon">🔄</span>
+                            Reset Demo
+                        </button>
+                    </div>
+
+                    <div id="demoResults" class="demo-results" style="display: none;">
+                        <!-- Results will be dynamically inserted -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Examples Section -->
+            <section class="code-examples-section">
+                <h2 class="section-title">
+                    <span class="icon">📚</span>
+                    Array Methods Explained
+                </h2>
+
+                <div class="code-grid">
+                    <div class="code-card">
+                        <h3 class="code-title">🔍 filter() Method</h3>
+                        <pre class="code-block"><code>// Filter completed tasks
+const completed = tasks.filter(
+  task => task.status === 'completed'
+);
+
+// Creates NEW array with items passing test
+// Original array unchanged</code></pre>
+                        <p class="code-description">Returns new array with elements that pass the test function.</p>
+                    </div>
+
+                    <div class="code-card">
+                        <h3 class="code-title">🗺️ map() Method</h3>
+                        <pre class="code-block"><code>// Add tax to all prices
+const withTax = prices.map(
+  price => price * (1 + taxRate)
+);
+
+// Transforms each element
+// Returns NEW array same length</code></pre>
+                        <p class="code-description">Transforms each element and returns new array of same length.</p>
+                    </div>
+
+                    <div class="code-card">
+                        <h3 class="code-title">📊 reduce() Method</h3>
+                        <pre class="code-block"><code>// Sum all expenses
+const total = expenses.reduce(
+  (sum, expense) => sum + expense.amount,
+  0  // Initial value
+);
+
+// Reduces array to single value</code></pre>
+                        <p class="code-description">Reduces array to a single value using accumulator function.</p>
+                    </div>
+                </div>
+
+                <div class="chaining-example">
+                    <h3 class="code-title">⛓️ Chaining Array Methods</h3>
+                    <pre class="code-block"><code>// Filter → Map → Reduce (all together!)
+const total = orders
+  .filter(order => order.status === 'shipped')    // Keep only shipped
+  .map(order => order.price * 1.1)                // Add 10% tax
+  .reduce((sum, price) => sum + price, 0);        // Calculate total
+
+// Powerful combination for data processing!</code></pre>
+                </div>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="learning-section">
+                <h2 class="section-title">
+                    <span class="icon">🎓</span>
+                    Learning Outcomes
+                </h2>
+
+                <div class="outcomes-grid">
+                    <div class="outcome-card">
+                        <div class="outcome-icon filter-icon">🔍</div>
+                        <h3>filter() Mastery</h3>
+                        <p>Create new arrays containing only elements that pass a test condition</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon map-icon">🗺️</div>
+                        <h3>map() Transformation</h3>
+                        <p>Transform every element in an array using a mapping function</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon reduce-icon">📊</div>
+                        <h3>reduce() Aggregation</h3>
+                        <p>Reduce arrays to single values like sums, averages, or objects</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">⛓️</div>
+                        <h3>Method Chaining</h3>
+                        <p>Combine multiple array methods for complex data processing</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">🎯</div>
+                        <h3>Real-World Application</h3>
+                        <p>Apply array methods to practical scenarios like budgets and inventories</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">🚀</div>
+                        <h3>Functional Programming</h3>
+                        <p>Write cleaner code with pure functions and immutable data patterns</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                <strong>DAY17</strong> - Array Methods: map(), filter(), reduce()
+                <span class="separator">|</span>
+                Data Processing Fundamentals
+                <span class="separator">|</span>
+                <span class="year">2026</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
