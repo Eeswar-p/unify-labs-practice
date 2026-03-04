@@ -207,11 +207,11 @@ async function testStats(db) {
  * Main Test Runner
  */
 async function runAllTests() {
-  log('
+  log(`
 ╔═══════════════════════════════════════════╗
 ║   MongoDB Atlas Connection Test Suite    ║
 ╚═══════════════════════════════════════════╝
-  ', 'blue');
+  `, 'blue');
   
   let db;
   
