@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAY25: MongoDB Update & Delete Operations Interactive Demo</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🚀 DAY25: MongoDB Update & Delete Operations</h1>
+      <p>Interactive Demo - Learn Update & Delete Operations</p>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab-button active" data-tab="overview">📖 Overview</button>
+      <button class="tab-button" data-tab="operators">⚙️ Operators</button>
+      <button class="tab-button" data-tab="examples">💻 Code Examples</button>
+      <button class="tab-button" data-tab="guide">📚 Step-by-Step Guide</button>
+      <button class="tab-button" data-tab="checklist">✅ Checklist</button>
+    </nav>
+
+    <!-- TAB 1: OVERVIEW -->
+    <section id="overview" class="tab-content active">
+      <h2>📖 What You'll Learn Today</h2>
+      
+      <div class="learning-objectives">
+        <h3>Learning Objectives</h3>
+        <ul>
+          <li>✅ <strong>$inc</strong> - Increase prices of Electronics by +10</li>
+          <li>✅ <strong>$set</strong> - Mark expensive items as featured</li>
+          <li>✅ <strong>$push</strong> - Add tags to products</li>
+          <li>✅ <strong>deleteMany()</strong> - Remove zero stock items</li>
+        </ul>
+      </div>
+
+      <div class="schema-info">
+        <h3>Your Data (From DAY24)</h3>
+        <pre><code>{
+  name: "Laptop Pro 15",
+  category: "Electronics",
+  price: 1299.99,
+  stock: 15,
+  specs: { color: "Silver", weight: "2.5kg" },
+  featured: false,
+  tags: []
+}</code></pre>
+      </div>
+
+      <div class="operations-summary">
+        <h3>4 Key Operations</h3>
+        <table>
+          <tr>
+            <th>Operation</th>
+            <th>Operator</th>
+            <th>Purpose</th>
+            <th>Method</th>
+          </tr>
+          <tr>
+            <td>#1: Price Increase</td>
+            <td><code>$inc</code></td>
+            <td>Bump Electronics by 10</td>
+            <td>updateMany()</td>
+          </tr>
+          <tr>
+            <td>#2: Mark Featured</td>
+            <td><code>$set</code></td>
+            <td>Flag items > $500</td>
+            <td>updateMany()</td>
+          </tr>
+          <tr>
+            <td>#3: Add Tags</td>
+            <td><code>$push</code></td>
+            <td>Tag new arrivals</td>
+            <td>updateOne()</td>
+          </tr>
+          <tr>
+            <td>#4: Delete Trash</td>
+            <td><code>deleteMany()</code></td>
+            <td>Remove stock: 0</td>
+            <td>deleteMany()</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="quick-facts">
+        <h3>⚡ Quick Facts</h3>
+        <ul>
+          <li><strong>updateOne()</strong> - Affects FIRST matching document</li>
+          <li><strong>updateMany()</strong> - Affects ALL matching documents</li>
+          <li><strong>deleteMany()</strong> - DELETE is final and irreversible!</li>
+          <li><strong>Always find() first</strong> - Preview before deleting</li>
+          <li><strong>Combine operators</strong> - Use multiple in one command</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TAB 2: OPERATORS -->
+    <section id="operators" class="tab-content">
+      <h2>⚙️ Update Operators Explained</h2>
+      
+      <div class="operator">
+        <h3>1️⃣ $inc - Increment (For Numbers)</h3>
+        <p>Increases a numeric field by specified value</p>
+        
+        <div class="operator-details">
+          <h4>Syntax</h4>
+          <pre><code>{ $inc: { field: number } }</code></pre>
+          
+          <h4>Example</h4>
+          <pre><code>// Increase Electronics price by 10
+db.products.updateMany(
+  { category: "Electronics" },
+  { $inc: { price: 10 } }
+)</code></pre>
+          
+          <h4>Use Cases</h4>
+          <ul>
+            <li>Adjust prices up/down</li>
+            <li>Update stock levels</li>
+            <li>Increment counters (views, sales)</li>
+            <li>Track metrics</li>
+          </ul>
+          
+          <h4>Key Points</h4>
+          <ul>
+            <li>Works with negative numbers: <code>{ $inc: { stock: -5 } }</code></li>
+            <li>Can increment multiple fields at once</li>
+            <li>Creates field if it doesn't exist</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="operator">
+        <h3>2️⃣ $set - Set Value (For Anything)</h3>
+        <p>Sets a field to a specific value (creates if not exists)</p>
+        
+        <div class="operator-details">
+          <h4>Syntax</h4>
+          <pre><code>{ $set: { field: value } }</code></pre>
+          
+          <h4>Example</h4>
+          <pre><code>// Mark expensive items as featured
+db.products.updateMany(
+  { price: { $gt: 500 } },
+  { $set: { featured: true } }
+)</code></pre>
+          
+          <h4>Use Cases</h4>
+          <ul>
+            <li>Add/update boolean flags</li>
+            <li>Change categories</li>
+            <li>Set descriptions</li>
+            <li>Update metadata</li>
+          </ul>
+          
+          <h4>Key Points</h4>
+          <ul>
+            <li>Works with any data type</li>
+            <li>Can set nested fields: <code>{ $set: { "specs.color": "Blue" } }</code></li>
+            <li>Set multiple fields: <code>{ $set: { field1: val1, field2: val2 } }</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="operator">
+        <h3>3️⃣ $push - Add to Array</h3>
+        <p>Adds an item to an array field (creates if not exists)</p>
+        
+        <div class="operator-details">
+          <h4>Syntax</h4>
+          <pre><code>{ $push: { arrayField: value } }
+{ $push: { arrayField: { $each: [val1, val2] } } }</code></pre>
+          
+          <h4>Example</h4>
+          <pre><code>// Add single tag
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $push: { tags: "new-arrival" } }
+)
+
+// Add multiple tags
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $push: { tags: { $each: ["hot-deal", "premium"] } } }
+)</code></pre>
+          
+          <h4>Use Cases</h4>
+          <ul>
+            <li>Add reviews/ratings</li>
+            <li>Track history/activity</li>
+            <li>Manage tags</li>
+            <li>Append comments</li>
+          </ul>
+          
+          <h4>Key Points</h4>
+          <ul>
+            <li>$each adds multiple items</li>
+            <li>Creates array if doesn't exist</li>
+            <li>Can add objects: <code>{ $push: { reviews: { userId: "u1", rating: 5 } } }</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="operator">
+        <h3>4️⃣ deleteMany() - Bulk Delete</h3>
+        <p>Deletes ALL documents matching filter</p>
+        
+        <div class="operator-details">
+          <h4>Syntax</h4>
+          <pre><code>db.collection.deleteMany({ filter })</code></pre>
+          
+          <h4>Example</h4>
+          <pre><code>// Delete all zero stock items
+db.products.deleteMany({ stock: 0 })
+
+// Verify first
+db.products.find({ stock: 0 })  // See what you're deleting
+db.products.deleteMany({ stock: 0 })  // Then delete</code></pre>
+          
+          <h4>Use Cases</h4>
+          <ul>
+            <li>Remove discontinued products</li>
+            <li>Clean up test data</li>
+            <li>Archive old records</li>
+            <li>Bulk clean up</li>
+          </ul>
+          
+          <h4>⚠️ Safety Points</h4>
+          <ul>
+            <li><strong>ALWAYS find() first</strong> to preview</li>
+            <li><strong>DELETE IS FINAL</strong> - No undo!</li>
+            <li>Use specific filters - Never deleteMany({})!</li>
+            <li>Check countDocuments() before/after</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: CODE EXAMPLES -->
+    <section id="examples" class="tab-content">
+      <h2>💻 Complete Code Examples</h2>
+
+      <div class="code-example">
+        <h3>Example 1: Increase Electronics Price (+$10)</h3>
+        <div class="code-wrapper">
+          <div class="code-label">MongoDB Shell (mongosh)</div>
+          <pre><code>db.products.updateMany(
+  { category: "Electronics" },
+  { $inc: { price: 10 } }
+)</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-label">Node.js</div>
+          <pre><code>const result = await collection.updateMany(
+  { category: "Electronics" },
+  { $inc: { price: 10 } }
+);
+console.log(`Modified: ${result.modifiedCount}`);</code></pre>
+        </div>
+        <div class="expected">
+          <strong>Expected Result:</strong>
+          <ul>
+            <li>Laptop Pro 15: $1299.99 → $1309.99</li>
+            <li>Wireless Mouse: $29.99 → $39.99</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h3>Example 2: Mark Expensive Items (> $500)</h3>
+        <div class="code-wrapper">
+          <div class="code-label">MongoDB Shell (mongosh)</div>
+          <pre><code>db.products.updateMany(
+  { price: { $gt: 500 } },
+  { $set: { featured: true } }
+)</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-label">Node.js</div>
+          <pre><code>const result = await collection.updateMany(
+  { price: { $gt: 500 } },
+  { $set: { featured: true } }
+);
+console.log(`Modified: ${result.modifiedCount}`);</code></pre>
+        </div>
+        <div class="expected">
+          <strong>Expected Result:</strong>
+          <ul>
+            <li>Only Laptop Pro 15 (now $1309.99) marked featured: true</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h3>Example 3: Add Tags to Products</h3>
+        <div class="code-wrapper">
+          <div class="code-label">MongoDB Shell - Single Tag</div>
+          <pre><code>db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $push: { tags: "new-arrival" } }
+)</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-label">MongoDB Shell - Multiple Tags</div>
+          <pre><code>db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $push: { tags: { $each: ["hot-deal", "premium", "best-seller"] } } }
+)</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-label">Node.js</div>
+          <pre><code>// Add single tag
+await collection.updateOne(
+  { name: "Wireless Mouse" },
+  { $push: { tags: "new-arrival" } }
+);
+
+// Add multiple tags
+await collection.updateOne(
+  { name: "Laptop Pro 15" },
+  { $push: { tags: { $each: ["hot-deal", "premium"] } } }
+);</code></pre>
+        </div>
+        <div class="expected">
+          <strong>Expected Result:</strong>
+          <ul>
+            <li>Mouse has: tags: ["new-arrival"]</li>
+            <li>Laptop has: tags: ["hot-deal", "premium", "best-seller"]</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h3>Example 4: Delete Zero Stock Items</h3>
+        <div class="code-wrapper">
+          <div class="code-label">MongoDB Shell - Safety First</div>
+          <pre><code>// Step 1: Preview
+db.products.find({ stock: 0 })
+
+// Step 2: Count
+db.products.countDocuments({ stock: 0 })
+
+// Step 3: Delete
+db.products.deleteMany({ stock: 0 })
+
+// Step 4: Verify
+db.products.countDocuments()</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-label">Node.js</div>
+          <pre><code>// Count before
+const countBefore = await collection.countDocuments({ stock: 0 });
+console.log(`Items to delete: ${countBefore}`);
+
+// Delete
+const result = await collection.deleteMany({ stock: 0 });
+console.log(`Deleted: ${result.deletedCount}`);
+
+// Count after
+const countAfter = await collection.countDocuments({ stock: 0 });
+console.log(`Zero stock now: ${countAfter}`);</code></pre>
+        </div>
+        <div class="expected">
+          <strong>Expected Result:</strong>
+          <ul>
+            <li>Test item with stock: 0 deleted</li>
+            <li>countDocuments({ stock: 0 }) returns 0</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="code-example">
+        <h3>Example 5: Combine Multiple Operators</h3>
+        <div class="code-wrapper">
+          <div class="code-label">MongoDB Shell</div>
+          <pre><code>// Update one item with multiple operators
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  {
+    $inc: { price: 50, stock: -2 },
+    $set: { featured: true, lastUpdated: new Date() },
+    $push: { tags: "updated" }
+  }
+)</code></pre>
+        </div>
+        <div class="code-wrapper">
+          <div class="code-label">Node.js</div>
+          <pre><code>const result = await collection.updateOne(
+  { name: "Laptop Pro 15" },
+  {
+    $inc: { price: 50, stock: -2 },
+    $set: { featured: true, lastUpdated: new Date() },
+    $push: { tags: "updated" }
+  }
+);
+console.log(`Modified: ${result.modifiedCount}`);</code></pre>
+        </div>
+        <div class="expected">
+          <strong>Expected Result:</strong>
+          <ul>
+            <li>Price: $1309.99 + 50 = $1359.99</li>
+            <li>Stock: 15 - 2 = 13</li>
+            <li>featured: true</li>
+            <li>tags now includes "updated"</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: STEP-BY-STEP GUIDE -->
+    <section id="guide" class="tab-content">
+      <h2>📚 Step-by-Step Guide</h2>
+
+      <div class="guide-method">
+        <h3>Method 1: MongoDB Shell (mongosh) - 5 minutes</h3>
+        
+        <div class="guide-step">
+          <h4>Step 1: Open mongosh</h4>
+          <pre><code>mongosh
+use unify_labs</code></pre>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 2: Increase Electronics Price</h4>
+          <pre><code>// Increases all Electronics by 10
+db.products.updateMany(
+  { category: "Electronics" },
+  { $inc: { price: 10 } }
+)
+
+// Verify
+db.products.find({ category: "Electronics" })</code></pre>
+          <p>✅ Laptop should be $1309.99, Mouse $39.99</p>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 3: Mark Expensive Items</h4>
+          <pre><code>// Set featured: true for items > 500
+db.products.updateMany(
+  { price: { $gt: 500 } },
+  { $set: { featured: true } }
+)
+
+// Verify
+db.products.find({ featured: true })</code></pre>
+          <p>✅ Only Laptop should be featured</p>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 4: Add Tags</h4>
+          <pre><code>// Add tag to Mouse
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $push: { tags: "new-arrival" } }
+)
+
+// Add multiple tags to Laptop
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $push: { tags: { $each: ["hot-deal", "premium"] } } }
+)
+
+// Verify
+db.products.find({ tags: { $exists: true } })</code></pre>
+          <p>✅ Both items should have tags</p>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 5: Delete Zero Stock (Optional - for demo)</h4>
+          <pre><code>// Insert test item first
+db.products.insertOne({
+  name: "Test Out of Stock",
+  category: "Electronics",
+  price: 49.99,
+  stock: 0,
+  specs: { color: "Gray" }
+})
+
+// Count before
+db.products.countDocuments()
+
+// Find what you'll delete
+db.products.find({ stock: 0 })
+
+// Delete it
+db.products.deleteMany({ stock: 0 })
+
+// Verify
+db.products.countDocuments()
+db.products.find({ stock: 0 })  // Should be empty</code></pre>
+          <p>✅ Count should decrease by 1</p>
+        </div>
+      </div>
+
+      <div class="guide-method">
+        <h3>Method 2: Node.js Scripts - 2 minutes</h3>
+        
+        <div class="guide-step">
+          <h4>Step 1: Install Dependencies</h4>
+          <pre><code>cd d:\Projects\unify-labs-practice\DAY25
+npm install</code></pre>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 2: Run Updates</h4>
+          <pre><code>npm run updates
+// Outputs all three update operations with verification</code></pre>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 3: Run Cleanup</h4>
+          <pre><code>npm run cleanup
+// Inserts test item and deletes it, shows before/after counts</code></pre>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 4: Run Everything</h4>
+          <pre><code>npm run all
+// Or see complete step-by-step:
+npm run demo</code></pre>
+        </div>
+      </div>
+
+      <div class="guide-method">
+        <h3>Method 3: MongoDB Compass (GUI) - 10 minutes</h3>
+        
+        <div class="guide-step">
+          <h4>Step 1: Connect</h4>
+          <p>Open MongoDB Compass → Connection: mongodb://localhost:27017 → Click Connect</p>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 2: Navigate</h4>
+          <p>unify_labs database → products collection</p>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 3: Perform Updates</h4>
+          <p>Use "UPDATE" button for each operation, preview results with "RUN"</p>
+        </div>
+
+        <div class="guide-step">
+          <h4>Step 4: Perform Delete</h4>
+          <p>Insert test item, then use DELETE operation to remove it</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: CHECKLIST -->
+    <section id="checklist" class="tab-content">
+      <h2>✅ Completion Checklist</h2>
+
+      <div class="checklist-section">
+        <h3>Learning Objectives</h3>
+        <label><input type="checkbox"> Understand $inc operator</label>
+        <label><input type="checkbox"> Understand $set operator</label>
+        <label><input type="checkbox"> Understand $push operator</label>
+        <label><input type="checkbox"> Know updateOne vs updateMany</label>
+        <label><input type="checkbox"> Understand deleteMany() safety</label>
+      </div>
+
+      <div class="checklist-section">
+        <h3>Hands-On: Increase Electronics Price</h3>
+        <label><input type="checkbox"> Executed: db.products.updateMany({ category: "Electronics" }, { $inc: { price: 10 } })</label>
+        <label><input type="checkbox"> Verified: Laptop now $1309.99</label>
+        <label><input type="checkbox"> Verified: Mouse now $39.99</label>
+      </div>
+
+      <div class="checklist-section">
+        <h3>Hands-On: Mark Featured Items</h3>
+        <label><input type="checkbox"> Executed: db.products.updateMany({ price: { $gt: 500 } }, { $set: { featured: true } })</label>
+        <label><input type="checkbox"> Verified: Only Laptop marked featured</label>
+        <label><input type="checkbox"> Verified: Count of featured items = 1</label>
+      </div>
+
+      <div class="checklist-section">
+        <h3>Hands-On: Add Tags</h3>
+        <label><input type="checkbox"> Added "new-arrival" tag to Wireless Mouse</label>
+        <label><input type="checkbox"> Added multiple tags to Laptop Pro 15</label>
+        <label><input type="checkbox"> Verified: Both items have tags array</label>
+      </div>
+
+      <div class="checklist-section">
+        <h3>Hands-On: Delete Operations</h3>
+        <label><input type="checkbox"> Inserted test item with stock: 0</label>
+        <label><input type="checkbox"> Verified item would be deleted with find()</label>
+        <label><input type="checkbox"> Executed: db.products.deleteMany({ stock: 0 })</label>
+        <label><input type="checkbox"> Verified: deletedCount = 1</label>
+        <label><input type="checkbox"> Verified: No more zero stock items</label>
+      </div>
+
+      <div class="checklist-section">
+        <h3>All Three Methods</h3>
+        <label><input type="checkbox"> Completed using MongoDB Compass</label>
+        <label><input type="checkbox"> Completed using MongoDB Shell (mongosh)</label>
+        <label><input type="checkbox"> Completed using Node.js scripts</label>
+      </div>
+
+      <div class="checklist-section">
+        <h3>Final Verification</h3>
+        <label><input type="checkbox"> All 5 original products still present</label>
+        <label><input type="checkbox"> Test item has been deleted</label>
+        <label><input type="checkbox"> Price updates applied correctly</label>
+        <label><input type="checkbox"> Featured flag set correctly</label>
+        <label><input type="checkbox"> Tags added successfully</label>
+        <label><input type="checkbox"> No zero stock items remain</label>
+      </div>
+
+      <div class="success-message">
+        <p>✅ When all boxes are checked, you've mastered DAY25!</p>
+        <p>You're ready for DAY26: Express + MongoDB REST APIs 🚀</p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

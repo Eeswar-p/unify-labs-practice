@@ -1,0 +1,632 @@
+# DAY25: MongoDB Update & Delete Operations - Command Reference
+
+## 🎯 Quick Copy-Paste Commands
+
+All commands for mongosh console. Copy paste directly.
+
+---
+
+## UPDATE OPERATIONS
+
+### $inc - Increment Numeric Fields
+
+```javascript
+// Increase Electronics price by 10
+db.products.updateMany(
+  { category: "Electronics" },
+  { $inc: { price: 10 } }
+)
+
+// Decrease stock by 5
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $inc: { stock: -5 } }
+)
+
+// Increment multiple fields
+db.products.updateMany(
+  { featured: true },
+  { $inc: { price: 50, views: 1 } }
+)
+
+// Increment view count
+db.products.updateOne(
+  { _id: ObjectId("...") },
+  { $inc: { views: 1 } }
+)
+
+// Add to sales counter
+db.products.updateMany(
+  { category: "Electronics" },
+  { $inc: { totalSales: 1 } }
+)
+```
+
+---
+
+### $set - Set Field Values
+
+```javascript
+// Set featured flag
+db.products.updateMany(
+  { price: { $gt: 500 } },
+  { $set: { featured: true } }
+)
+
+// Set single field
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $set: { inStock: true } }
+)
+
+// Set multiple fields
+db.products.updateMany(
+  { category: "Clearance" },
+  { $set: { onSale: true, discount: 0.25 } }
+)
+
+// Set nested field
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $set: { "specs.warranty": "2 years" } }
+)
+
+// Set with timestamp
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $set: { lastUpdated: new Date() } }
+)
+
+// Add description
+db.products.updateMany(
+  { description: { $exists: false } },
+  { $set: { description: "No description available" } }
+)
+```
+
+---
+
+### $push - Add to Arrays
+
+```javascript
+// Add single tag
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $push: { tags: "new-arrival" } }
+)
+
+// Add multiple tags
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $push: { tags: { $each: ["hot-deal", "premium", "best-seller"] } } }
+)
+
+// Add review
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $push: { 
+    reviews: {
+      userId: "user123",
+      rating: 5,
+      comment: "Great product!",
+      date: new Date()
+    }
+  }}
+)
+
+// Add to favorites (used by user)
+db.users.updateOne(
+  { _id: ObjectId("...") },
+  { $push: { favorites: "product123" } }
+)
+
+// Add with $position (insert at beginning)
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $push: { tags: { $each: ["featured"], $position: 0 } } }
+)
+
+// Add with $slice (keep last 10)
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $push: { viewHistory: { $each: [...], $slice: -10 } } }
+)
+
+// Append activity log
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $push: { activity: { type: "viewed", date: new Date() } } }
+)
+```
+
+---
+
+### $unset - Remove Fields
+
+```javascript
+// Remove field from single document
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $unset: { deprecated: "" } }
+)
+
+// Remove field from all documents
+db.products.updateMany(
+  {},
+  { $unset: { oldField: "" } }
+)
+
+// Remove multiple fields
+db.products.updateMany(
+  { status: "discontinued" },
+  { $unset: { promotion: "", discount: "" } }
+)
+
+// Remove nested field
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $unset: { "specs.color": "" } }
+)
+```
+
+---
+
+### $pull - Remove from Array
+
+```javascript
+// Remove specific tag
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $pull: { tags: "new-arrival" } }
+)
+
+// Remove multiple values
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $pull: { tags: { $in: ["old", "deprecated"] } } }
+)
+
+// Remove review by userId
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $pull: { reviews: { userId: "user123" } } }
+)
+
+// Remove all items matching condition
+db.products.updateMany(
+  {},
+  { $pull: { tags: { $regex: "seasonal" } } }
+)
+
+// Remove by array index (use $unset instead)
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $unset: { "reviews.0": 1 } }
+)
+```
+
+---
+
+### $rename - Rename Fields
+
+```javascript
+// Rename single field
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $rename: { "oldName": "newName" } }
+)
+
+// Rename across all documents
+db.products.updateMany(
+  {},
+  { $rename: { "color": "colours" } }
+)
+
+// Rename multiple fields
+db.products.updateMany(
+  {},
+  { $rename: { "oldPrice": "price", "oldStock": "stock" } }
+)
+
+// Rename nested field
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $rename: { "specs.color": "specs.colour" } }
+)
+```
+
+---
+
+## COMBINED OPERATIONS
+
+```javascript
+// Mix multiple operators in one update
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  {
+    $inc: { price: 50, stock: -2 },
+    $set: { featured: true, lastModified: new Date() },
+    $push: { tags: "updated" }
+  }
+)
+
+// Complex update
+db.products.updateMany(
+  { category: "Electronics", stock: { $gt: 0 } },
+  {
+    $inc: { views: 1 },
+    $set: { status: "available" },
+    $push: { activity: { action: "viewed", date: new Date() } }
+  }
+)
+```
+
+---
+
+## DELETE OPERATIONS
+
+### deleteOne - Delete Single Document
+
+```javascript
+// Delete by name
+db.products.deleteOne({ name: "Test Product" })
+
+// Delete by ID
+db.products.deleteOne({ _id: ObjectId("...") })
+
+// Delete first matching
+db.products.deleteOne({ stock: 0 })
+
+// Delete with multiple conditions
+db.products.deleteOne({
+  $and: [
+    { stock: 0 },
+    { featured: false }
+  ]
+})
+```
+
+---
+
+### deleteMany - Delete Multiple Documents
+
+```javascript
+// Delete all zero stock items
+db.products.deleteMany({ stock: 0 })
+
+// Delete all discontinued items
+db.products.deleteMany({ status: "discontinued" })
+
+// Delete all items in category
+db.products.deleteMany({ category: "Clearance" })
+
+// Delete with $and operator
+db.products.deleteMany({
+  $and: [
+    { stock: 0 },
+    { price: { $lt: 10 } }
+  ]
+})
+
+// Delete with $or operator
+db.products.deleteMany({
+  $or: [
+    { stock: 0 },
+    { status: "discontinued" }
+  ]
+})
+
+// Delete with regex
+db.products.deleteMany({ name: { $regex: "test" } })
+
+// Delete all (dangerous!)
+db.products.deleteMany({})
+```
+
+---
+
+## VERIFICATION COMMANDS
+
+```javascript
+// Count all documents
+db.products.countDocuments()
+
+// Count with filter
+db.products.countDocuments({ category: "Electronics" })
+
+// Count featured items
+db.products.countDocuments({ featured: true })
+
+// Count zero stock
+db.products.countDocuments({ stock: 0 })
+
+// Count items with tags
+db.products.countDocuments({ tags: { $exists: true } })
+
+// Count items with specific tag
+db.products.countDocuments({ tags: "new-arrival" })
+
+// Find all documents
+db.products.find()
+
+// Find with filter
+db.products.find({ category: "Electronics" })
+
+// Find with projection (select fields)
+db.products.find({}, { name: 1, price: 1, stock: 1 })
+
+// Find one document
+db.products.findOne({ name: "Laptop Pro 15" })
+
+// Pretty print
+db.products.find().pretty()
+
+// Count and show
+db.products.find({ featured: true }).pretty()
+```
+
+---
+
+## PRE-DELETE VERIFICATION
+
+Always run before deleteMany:
+
+```javascript
+// Step 1: View what you're about to delete
+db.products.find({ stock: 0 })
+
+// Step 2: Count it
+db.products.countDocuments({ stock: 0 })
+
+// Step 3: Get current total
+db.products.countDocuments()
+
+// Step 4: Only then delete
+db.products.deleteMany({ stock: 0 })
+
+// Step 5: Verify deletion
+db.products.countDocuments()
+db.products.find({ stock: 0 })  // Should be empty
+```
+
+---
+
+## AGGREGATION EXAMPLES
+
+### Preview Updates with Aggregation
+
+```javascript
+// See what will be updated
+db.products.aggregate([
+  { $match: { category: "Electronics" } },
+  {
+    $project: {
+      name: 1,
+      price: 1,
+      newPrice: { $add: ["$price", 10] }
+    }
+  }
+])
+
+// Compare before/after
+db.products.aggregate([
+  { $match: { price: { $gt: 500 } } },
+  {
+    $project: {
+      name: 1,
+      price: 1,
+      willBeFeatured: true
+    }
+  }
+])
+
+// Show items to delete
+db.products.aggregate([
+  { $match: { stock: 0 } },
+  { $count: "itemsToDelete" }
+])
+```
+
+---
+
+## BATCH UPDATE PATTERNS
+
+### Update Items in Bulk
+
+```javascript
+// All Electronics
+db.products.updateMany(
+  { category: "Electronics" },
+  { $inc: { price: 10 } }
+)
+
+// All expired promotions
+db.products.updateMany(
+  { promotionEnd: { $lt: new Date() } },
+  { $set: { onPromotion: false } }
+)
+
+// All items matching multiple conditions
+db.products.updateMany(
+  {
+    $and: [
+      { stock: { $lt: 10 } },
+      { featured: false }
+    ]
+  },
+  { $set: { lowStock: true } }
+)
+
+// All items from January 2024
+db.products.updateMany(
+  {
+    createdAt: {
+      $gte: new Date("2024-01-01"),
+      $lt: new Date("2024-02-01")
+    }
+  },
+  { $set: { year: 2024, month: 1 } }
+)
+```
+
+---
+
+## FILTER OPERATORS REFERENCE
+
+Use these in your $match (filter) clause:
+
+```javascript
+// Comparison
+{ price: { $eq: 100 } }         // Equal
+{ price: { $ne: 100 } }         // Not equal
+{ price: { $gt: 500 } }         // Greater than
+{ price: { $gte: 500 } }        // Greater than or equal
+{ price: { $lt: 100 } }         // Less than
+{ price: { $lte: 100 } }        // Less than or equal
+{ price: { $in: [100, 200] } }  // In array
+{ price: { $nin: [10, 20] } }   // Not in array
+
+// Logical
+{ $and: [{ price: { $gt: 100 } }, { category: "Electronics" }] }
+{ $or: [{ stock: 0 }, { featured: false }] }
+{ $nor: [{ onSale: true }, { onPromotion: true }] }
+{ $not: { price: { $lt: 100 } } }
+
+// Array
+{ tags: "new-arrival" }                           // Contains
+{ tags: { $all: ["tag1", "tag2"] } }            // Contains all
+{ tags: { $size: 3 } }                          // Array size
+{ tags: { $elemMatch: { index: 0 } } }          // Element match
+
+// Field existence
+{ field: { $exists: true } }
+{ field: { $exists: false } }
+
+// Type
+{ field: { $type: "string" } }
+{ field: { $type: "array" } }
+
+// Text search
+{ $text: { $search: "laptop" } }
+
+// Regular expression
+{ name: { $regex: "laptop", $options: "i" } }
+
+// Null
+{ field: null }
+```
+
+---
+
+## COMMON PATTERNS
+
+### Pattern: Mark All Old Items
+
+```javascript
+// Mark items created before 2024
+db.products.updateMany(
+  { createdAt: { $lt: new Date("2024-01-01") } },
+  { $set: { archived: true } }
+)
+```
+
+### Pattern: Batch Archive
+
+```javascript
+// Archive all discontinued products
+db.products.updateMany(
+  { status: "discontinued" },
+  { $set: { archived: true, lastArchived: new Date() } }
+)
+
+// Then delete archived items with no recent activity
+db.products.deleteMany({
+  $and: [
+    { archived: true },
+    { lastSold: { $lt: new Date("2023-01-01") } }
+  ]
+})
+```
+
+### Pattern: Bulk Price Adjustment
+
+```javascript
+// Increase all prices by 10%
+db.products.updateMany(
+  {},
+  [
+    {
+      $set: {
+        originalPrice: "$price",
+        price: { $multiply: ["$price", 1.10] }
+      }
+    }
+  ]
+)
+```
+
+### Pattern: Tag Management
+
+```javascript
+// Add seasonal tag
+db.products.updateMany(
+  { category: { $in: ["Clothing", "Accessories"] } },
+  { $push: { tags: "seasonal" } }
+)
+
+// Remove seasonal tag after season
+db.products.updateMany(
+  { tags: "seasonal" },
+  { $pull: { tags: "seasonal" } }
+)
+```
+
+---
+
+## ERROR HANDLING
+
+```javascript
+// Check operation result
+const result = db.products.updateMany(...);
+console.log(result.matchedCount);   // Docs matched
+console.log(result.modifiedCount);  // Docs changed
+
+// Check delete result
+const delResult = db.products.deleteMany(...);
+console.log(delResult.deletedCount); // Docs deleted
+
+// Transaction example
+const session = db.getMongo().startSession();
+session.startTransaction();
+try {
+  db.products.updateMany(..., { session });
+  db.products.deleteMany(..., { session });
+  session.commitTransaction();
+} finally {
+  session.endSession();
+}
+```
+
+---
+
+## MONGODB OPERATORS QUICK REFERENCE
+
+| Operator | Use | Example |
+|----------|-----|---------|
+| $inc | Increment number | `{ $inc: { stock: -1 } }` |
+| $set | Set value | `{ $set: { featured: true } }` |
+| $push | Add to array | `{ $push: { tags: "new" } }` |
+| $pull | Remove from array | `{ $pull: { tags: "old" } }` |
+| $unset | Remove field | `{ $unset: { temp: "" } }` |
+| $rename | Rename field | `{ $rename: { old: "new" } }` |
+| $gt | Greater than | `{ price: { $gt: 100 } }` |
+| $lt | Less than | `{ price: { $lt: 100 } }` |
+| $in | In array | `{ status: { $in: [...] } }` |
+| $exists | Field exists | `{ tags: { $exists: true } }` |
+| $regex | Pattern match | `{ name: { $regex: "test" } }` |
+
+---
+
+**Complete Reference**: Save this file for quick command lookup!
+
+Use these commands in mongosh or Node.js MongoDB driver.

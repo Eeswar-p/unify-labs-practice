@@ -1,0 +1,29 @@
+{
+  "name": "day25-mongodb-updates",
+  "version": "1.0.0",
+  "description": "DAY25: MongoDB Update & Delete Operations",
+  "main": "demo-all.js",
+  "scripts": {
+    "start": "npm run all",
+    "updates": "node update-products.js",
+    "cleanup": "node cleanup-products.js",
+    "demo": "node demo-all.js",
+    "all": "node update-products.js && node cleanup-products.js"
+  },
+  "keywords": [
+    "mongodb",
+    "update",
+    "delete",
+    "updateMany",
+    "deleteMany",
+    "operators",
+    "$inc",
+    "$set",
+    "$push"
+  ],
+  "author": "Unify Labs",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^6.3.0"
+  }
+}
