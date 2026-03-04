@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAY20 - API Integration Master: Fetch API with async/await and error handling">
+    <title>DAY20 - API Integration Master | async/await</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">
+                    <span class="icon">🌐</span>
+                    API Integration Master
+                </h1>
+                <p class="header-subtitle">Master fetch() with async/await and real-time data</p>
+            </div>
+            
+            <div class="learning-badges">
+                <span class="badge badge-fetch">
+                    <span class="badge-icon">🔗</span>
+                    <span>fetch()</span>
+                </span>
+                <span class="badge badge-async">
+                    <span class="badge-icon">⏳</span>
+                    <span>async/await</span>
+                </span>
+                <span class="badge badge-errors">
+                    <span class="badge-icon">⚠️</span>
+                    <span>Error Handling</span>
+                </span>
+                <span class="badge badge-data">
+                    <span class="badge-icon">📊</span>
+                    <span>Live Data</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Tabs Navigation -->
+            <div class="tabs-navigation">
+                <button class="tab-btn active" data-tab="weather">
+                    <span class="tab-icon">🌤️</span>
+                    Weather App
+                </button>
+                <button class="tab-btn" data-tab="posts">
+                    <span class="tab-icon">📝</span>
+                    Posts Viewer
+                </button>
+                <button class="tab-btn" data-tab="users">
+                    <span class="tab-icon">👥</span>
+                    Users Directory
+                </button>
+            </div>
+
+            <!-- Weather Tab -->
+            <section id="weather-tab" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="method-badge fetch-badge">Weather API</span>
+                            Real-Time Weather Data
+                        </h2>
+                        <p class="card-description">
+                            Fetch live weather data using the Open-Meteo API. Enter a city name to see current conditions.
+                        </p>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Weather Search -->
+                        <div class="search-section">
+                            <div class="search-group">
+                                <input 
+                                    type="text" 
+                                    id="cityInput" 
+                                    class="input-field" 
+                                    placeholder="Enter city name... (e.g., London, New York, Tokyo)"
+                                    autocomplete="off"
+                                />
+                                <button id="searchBtn" class="btn btn-primary">
+                                    <span class="btn-icon">🔍</span>
+                                    Search
+                                </button>
+                            </div>
+                            <small class="hint-text">💡 Powered by Open-Meteo API (no API key needed)</small>
+                        </div>
+
+                        <!-- Loading Spinner -->
+                        <div id="weatherLoader" class="loader-container hidden">
+                            <div class="spinner"></div>
+                            <p class="loader-text">Fetching weather data...</p>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="weatherError" class="error-message hidden"></div>
+
+                        <!-- Weather Display -->
+                        <div id="weatherDisplay" class="weather-display hidden">
+                            <div class="weather-main">
+                                <div class="weather-info">
+                                    <h3 id="cityName" class="weather-city">London, UK</h3>
+                                    <p id="weatherDesc" class="weather-description">Partly Cloudy</p>
+                                </div>
+                                <div class="weather-temp">
+                                    <span id="temperature" class="temp-value">22°C</span>
+                                </div>
+                            </div>
+
+                            <div class="weather-details-grid">
+                                <div class="weather-detail">
+                                    <div class="detail-icon">💨</div>
+                                    <div class="detail-label">Wind Speed</div>
+                                    <div id="windSpeed" class="detail-value">10 km/h</div>
+                                </div>
+                                <div class="weather-detail">
+                                    <div class="detail-icon">💧</div>
+                                    <div class="detail-label">Humidity</div>
+                                    <div id="humidity" class="detail-value">65%</div>
+                                </div>
+                                <div class="weather-detail">
+                                    <div class="detail-icon">🌡️</div>
+                                    <div class="detail-label">Feels Like</div>
+                                    <div id="feelsLike" class="detail-value">20°C</div>
+                                </div>
+                                <div class="weather-detail">
+                                    <div class="detail-icon">🌍</div>
+                                    <div class="detail-label">Coordinates</div>
+                                    <div id="coordinates" class="detail-value">51.5°N, 0.1°W</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div id="weatherEmpty" class="empty-state">
+                            <div class="empty-icon">🌍</div>
+                            <p>Enter a city name to fetch weather data</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Posts Tab -->
+            <section id="posts-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="method-badge async-badge">JSONPlaceholder</span>
+                            Blog Posts Viewer
+                        </h2>
+                        <p class="card-description">
+                            Fetch posts from JSONPlaceholder API. Filter by user or search posts.
+                        </p>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Posts Controls -->
+                        <div class="controls-section">
+                            <div class="control-group">
+                                <label for="userFilter" class="label">Filter by User:</label>
+                                <select id="userFilter" class="select-field">
+                                    <option value="">All Users</option>
+                                    <option value="1">User 1</option>
+                                    <option value="2">User 2</option>
+                                    <option value="3">User 3</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label for="postSearch" class="label">Search Posts:</label>
+                                <input 
+                                    type="text" 
+                                    id="postSearch" 
+                                    class="input-field" 
+                                    placeholder="Search post titles..."
+                                    autocomplete="off"
+                                />
+                            </div>
+                            <button id="loadPostsBtn" class="btn btn-primary">
+                                <span class="btn-icon">📥</span>
+                                Load All Posts
+                            </button>
+                        </div>
+
+                        <!-- Loading Spinner -->
+                        <div id="postsLoader" class="loader-container hidden">
+                            <div class="spinner"></div>
+                            <p class="loader-text">Loading posts...</p>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="postsError" class="error-message hidden"></div>
+
+                        <!-- Posts List -->
+                        <div id="postsList" class="posts-list"></div>
+
+                        <!-- Empty State -->
+                        <div id="postsEmpty" class="empty-state">
+                            <div class="empty-icon">📝</div>
+                            <p>Click "Load All Posts" to fetch blog posts</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Tab -->
+            <section id="users-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span class="method-badge data-badge">JSONPlaceholder</span>
+                            Users Directory
+                        </h2>
+                        <p class="card-description">
+                            Fetch and display all users from the JSONPlaceholder API with contact information.
+                        </p>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Users Controls -->
+                        <div class="controls-section">
+                            <button id="loadUsersBtn" class="btn btn-primary">
+                                <span class="btn-icon">👥</span>
+                                Load Users
+                            </button>
+                            <input 
+                                type="text" 
+                                id="userSearch" 
+                                class="input-field" 
+                                placeholder="Search users by name..."
+                                autocomplete="off"
+                            />
+                        </div>
+
+                        <!-- Loading Spinner -->
+                        <div id="usersLoader" class="loader-container hidden">
+                            <div class="spinner"></div>
+                            <p class="loader-text">Loading users...</p>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="usersError" class="error-message hidden"></div>
+
+                        <!-- Users Grid -->
+                        <div id="usersList" class="users-grid"></div>
+
+                        <!-- Empty State -->
+                        <div id="usersEmpty" class="empty-state">
+                            <div class="empty-icon">👥</div>
+                            <p>Click "Load Users" to fetch user directory</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Methods Reference Section -->
+            <section class="code-examples-section">
+                <h2 class="section-title">
+                    <span class="icon">💻</span>
+                    API & async/await Reference
+                </h2>
+
+                <div class="code-grid">
+                    <!-- fetch() -->
+                    <div class="code-card fetch-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🔗</span>
+                            fetch() API
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Make HTTP request
+const response = await fetch(url);
+
+// Check if successful
+if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+}
+
+// Parse response
+const data = await response.json();
+
+// Use data
+console.log(data);</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Fetch data from URLs. Returns a Promise that resolves to a Response object.
+                        </p>
+                    </div>
+
+                    <!-- async/await -->
+                    <div class="code-card async-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">⏳</span>
+                            async/await
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Define async function
+async function fetchData() {
+    // await pauses execution
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    // Returns a Promise
+    return data;
+}
+
+// Call async function
+fetchData();</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Async functions return Promises. Use await to pause execution until Promise resolves.
+                        </p>
+                    </div>
+
+                    <!-- try/catch -->
+                    <div class="code-card error-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">⚠️</span>
+                            Error Handling
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Handle errors with try/catch
+async function fetchData() {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error.message);
+        // Handle error gracefully
+    }
+}</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Try/catch blocks handle errors from Promises and async functions.
+                        </p>
+                    </div>
+
+                    <!-- Response Handling -->
+                    <div class="code-card response-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">📦</span>
+                            Response Methods
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Different response types
+const jsonData = await response.json();
+const textData = await response.text();
+const blobData = await response.blob();
+const arrayData = await response.arrayBuffer();
+
+// Response properties
+response.status         // HTTP status code
+response.ok             // true if 200-299
+response.statusText     // "OK", "Not Found", etc.
+response.headers        // Response headers</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Different methods to parse and access response data and metadata.
+                        </p>
+                    </div>
+
+                    <!-- Promise Operations -->
+                    <div class="code-card promise-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🎁</span>
+                            Promise Methods
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Wait for multiple Promises
+const results = await Promise.all([
+    fetch(url1).then(r => r.json()),
+    fetch(url2).then(r => r.json())
+]);
+
+// Wait for first to complete
+const firstDone = await Promise.race([
+    fetch(url1),
+    fetch(url2)
+]);
+
+// Handle all, even if some fail
+const all = await Promise.allSettled([
+    fetch(url1),
+    fetch(url2)
+]);</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Combine multiple Promises with Promise.all(), race(), and allSettled().
+                        </p>
+                    </div>
+
+                    <!-- DOM Updates with Data -->
+                    <div class="code-card dom-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🎨</span>
+                            Update DOM
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Show loading state
+loader.classList.remove('hidden');
+
+// Hide empty state
+emptyState.classList.add('hidden');
+
+// Update DOM with data
+async function display(data) {
+    element.textContent = data.name;
+    element.innerHTML = `<p>${data.description}</p>`;
+    
+    // Remove loading
+    loader.classList.add('hidden');
+}</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Update DOM after fetching data. Manage loading states and error display.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="learning-section">
+                <h2 class="section-title">
+                    <span class="icon">🎓</span>
+                    Learning Outcomes
+                </h2>
+
+                <div class="outcomes-grid">
+                    <div class="outcome-card">
+                        <div class="outcome-icon fetch-icon">
+                            <span>🔗</span>
+                        </div>
+                        <h3>Fetch API</h3>
+                        <p>Use fetch() to make HTTP requests and retrieve data from APIs.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon async-icon">
+                            <span>⏳</span>
+                        </div>
+                        <h3>async/await</h3>
+                        <p>Write clean, readable asynchronous code with async functions and await.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon error-icon">
+                            <span>⚠️</span>
+                        </div>
+                        <h3>Error Handling</h3>
+                        <p>Handle API errors gracefully with try/catch blocks and error messages.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon data-icon">
+                            <span>📊</span>
+                        </div>
+                        <h3>Live Data</h3>
+                        <p>Fetch real-time data from external APIs and display it dynamically.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon loading-icon">
+                            <span>⏱️</span>
+                        </div>
+                        <h3>Loading States</h3>
+                        <p>Implement loading spinners and user feedback during async operations.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon app-icon">
+                            <span>🚀</span>
+                        </div>
+                        <h3>API Integration</h3>
+                        <p>Build real applications that consume external APIs and display live data.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Common Patterns -->
+            <section class="tips-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Common Patterns
+                </h2>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3 class="tip-title">Basic Fetch</h3>
+                        <div class="tip-code">
+                            <code>async function getData() {
+  const res = await fetch(url);
+  if (!res.ok) throw Error(res.status);
+  return res.json();
+}</code>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">With Loading State</h3>
+                        <div class="tip-code">
+                            <code>async function fetchAndDisplay() {
+  loader.hidden = false;
+  try {
+    const data = await fetch(url)
+      .then(r => r.json());
+    render(data);
+  } finally {
+    loader.hidden = true;
+  }
+}</code>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Error Handling</h3>
+                        <div class="tip-code">
+                            <code>async function safeFetch(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw Error(`${res.status}`);
+    }
+    return await res.json();
+  } catch (e) {
+    console.error(e);
+    showError(e.message);
+  }
+}</code>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Parallel Requests</h3>
+                        <div class="tip-code">
+                            <code>// Fetch multiple APIs at once
+const [users, posts] = await Promise.all([
+  fetch(usersUrl).then(r => r.json()),
+  fetch(postsUrl).then(r => r.json())
+]);
+
+// Much faster than sequential</code>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Search & Filter</h3>
+                        <div class="tip-code">
+                            <code>// Filter data client-side
+const filtered = data.filter(item =>
+  item.title.toLowerCase()
+    .includes(query.toLowerCase())
+);
+
+// More efficient for small datasets</code>
+                        </div>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Retry Logic</h3>
+                        <div class="tip-code">
+                            <code>async function fetchWithRetry(url, 
+  retries = 3) {
+  try {
+    return await fetch(url).then(r =>
+      r.json());
+  } catch (e) {
+    if (retries > 0) {
+      return fetchWithRetry(
+        url, retries - 1);
+    }
+    throw e;
+  }
+}</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                DAY20 - API Integration Master
+                <span class="separator">|</span>
+                fetch & async/await
+                <span class="separator">|</span>
+                <span class="year">2026</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
