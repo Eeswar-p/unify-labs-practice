@@ -1,0 +1,875 @@
+/* ============================================
+   DAY11 - Advanced CSS Animations & Particles
+   Frame-by-frame, particles, overlays, masonry
+   ============================================ */
+
+/* ============================================
+   CSS RESET & BASE STYLES
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Color Palette */
+    --primary-neon: #00ff88;
+    --secondary-neon: #00d4ff;
+    --accent-neon: #ff0080;
+    --bg-dark: #0a0a0f;
+    --bg-darker: #050508;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --overlay-bg: rgba(0, 0, 0, 0.85);
+    
+    /* Z-Index Layers */
+    --z-particles: 1;
+    --z-content: 10;
+    --z-modal-overlay: 100;
+    --z-modal-content: 101;
+    --z-fixed-elements: 50;
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    background-color: var(--bg-darker);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============================================
+   PARTICLE BACKGROUND SYSTEM
+   High-performance CSS animations
+   ============================================ */
+.particle-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-particles);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    background: radial-gradient(circle, var(--primary-neon), transparent);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat 20s infinite ease-in-out;
+    will-change: transform, opacity;
+}
+
+/* Particle float animation */
+@keyframes particleFloat {
+    0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Individual particle positioning and timing */
+.particle-1 { width: 4px; height: 4px; left: 10%; top: 20%; --tx: 100px; --ty: -200px; animation-delay: 0s; }
+.particle-2 { width: 6px; height: 6px; left: 20%; top: 80%; --tx: -150px; --ty: -300px; animation-delay: 0.5s; }
+.particle-3 { width: 3px; height: 3px; left: 30%; top: 40%; --tx: 200px; --ty: -250px; animation-delay: 1s; }
+.particle-4 { width: 5px; height: 5px; left: 40%; top: 60%; --tx: -100px; --ty: -400px; animation-delay: 1.5s; }
+.particle-5 { width: 4px; height: 4px; left: 50%; top: 30%; --tx: 150px; --ty: -350px; animation-delay: 2s; }
+.particle-6 { width: 7px; height: 7px; left: 60%; top: 70%; --tx: -200px; --ty: -300px; animation-delay: 2.5s; }
+.particle-7 { width: 3px; height: 3px; left: 70%; top: 50%; --tx: 100px; --ty: -450px; animation-delay: 3s; }
+.particle-8 { width: 5px; height: 5px; left: 80%; top: 20%; --tx: -150px; --ty: -200px; animation-delay: 3.5s; }
+.particle-9 { width: 6px; height: 6px; left: 90%; top: 90%; --tx: 100px; --ty: -500px; animation-delay: 4s; }
+.particle-10 { width: 4px; height: 4px; left: 15%; top: 50%; --tx: -100px; --ty: -300px; animation-delay: 4.5s; }
+.particle-11 { width: 5px; height: 5px; left: 25%; top: 10%; --tx: 200px; --ty: -350px; animation-delay: 0.2s; }
+.particle-12 { width: 3px; height: 3px; left: 35%; top: 75%; --tx: -150px; --ty: -400px; animation-delay: 0.7s; }
+.particle-13 { width: 6px; height: 6px; left: 45%; top: 45%; --tx: 150px; --ty: -250px; animation-delay: 1.2s; }
+.particle-14 { width: 4px; height: 4px; left: 55%; top: 85%; --tx: -100px; --ty: -450px; animation-delay: 1.7s; }
+.particle-15 { width: 5px; height: 5px; left: 65%; top: 15%; --tx: 100px; --ty: -300px; animation-delay: 2.2s; }
+.particle-16 { width: 7px; height: 7px; left: 75%; top: 65%; --tx: -200px; --ty: -350px; animation-delay: 2.7s; }
+.particle-17 { width: 3px; height: 3px; left: 85%; top: 35%; --tx: 150px; --ty: -500px; animation-delay: 3.2s; }
+.particle-18 { width: 6px; height: 6px; left: 95%; top: 55%; --tx: -150px; --ty: -250px; animation-delay: 3.7s; }
+.particle-19 { width: 4px; height: 4px; left: 12%; top: 70%; --tx: 100px; --ty: -400px; animation-delay: 4.2s; }
+.particle-20 { width: 5px; height: 5px; left: 22%; top: 25%; --tx: -100px; --ty: -350px; animation-delay: 0.3s; }
+.particle-21 { width: 3px; height: 3px; left: 32%; top: 90%; --tx: 200px; --ty: -300px; animation-delay: 0.8s; }
+.particle-22 { width: 6px; height: 6px; left: 42%; top: 5%; --tx: -150px; --ty: -450px; animation-delay: 1.3s; }
+.particle-23 { width: 4px; height: 4px; left: 52%; top: 60%; --tx: 100px; --ty: -250px; animation-delay: 1.8s; }
+.particle-24 { width: 5px; height: 5px; left: 62%; top: 40%; --tx: -100px; --ty: -500px; animation-delay: 2.3s; }
+.particle-25 { width: 7px; height: 7px; left: 72%; top: 80%; --tx: 150px; --ty: -350px; animation-delay: 2.8s; }
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: var(--z-content);
+    padding: 80px 20px;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 900px;
+}
+
+/* ============================================
+   NEON FLICKER EFFECT - Frame-by-Frame
+   Using steps() for realistic flicker
+   ============================================ */
+.neon-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 900;
+    color: var(--primary-neon);
+    text-shadow: 
+        0 0 10px var(--primary-neon),
+        0 0 20px var(--primary-neon),
+        0 0 40px var(--primary-neon),
+        0 0 80px var(--primary-neon),
+        0 0 120px var(--primary-neon);
+    letter-spacing: 0.1em;
+    position: relative;
+    animation: neonFlicker 3s steps(10, end) infinite;
+    margin-bottom: 40px;
+}
+
+/* Frame-by-frame flicker using steps() */
+@keyframes neonFlicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 
+            0 0 10px var(--primary-neon),
+            0 0 20px var(--primary-neon),
+            0 0 40px var(--primary-neon),
+            0 0 80px var(--primary-neon),
+            0 0 120px var(--primary-neon);
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        text-shadow: none;
+        opacity: 0.3;
+    }
+    22% {
+        opacity: 0.6;
+    }
+}
+
+.neon-text::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--secondary-neon);
+    text-shadow: 
+        0 0 10px var(--secondary-neon),
+        0 0 20px var(--secondary-neon);
+    animation: neonFlicker 3s steps(8, end) infinite reverse;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+/* ============================================
+   TYPEWRITER EFFECT - Steps Animation
+   ============================================ */
+.typewriter {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--text-secondary);
+    margin-bottom: 60px;
+    font-weight: 300;
+    overflow: hidden;
+    border-right: 3px solid var(--primary-neon);
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+    width: 0;
+    animation: 
+        typing 4s steps(40, end) forwards,
+        blink-caret 0.75s step-end infinite;
+    animation-delay: 0.5s;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; max-width: 700px; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary-neon); }
+}
+
+/* ============================================
+   CTA BUTTON
+   ============================================ */
+.cta-button {
+    position: relative;
+    background: transparent;
+    border: 2px solid var(--primary-neon);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Orbitron', sans-serif;
+    padding: 18px 60px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.button-text {
+    position: relative;
+    z-index: 2;
+}
+
+.button-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--primary-neon), transparent);
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+.cta-button:hover .button-glow {
+    width: 300px;
+    height: 300px;
+    opacity: 0.3;
+}
+
+.cta-button:hover {
+    background: rgba(0, 255, 136, 0.1);
+    box-shadow: 
+        0 0 20px var(--primary-neon),
+        0 0 40px var(--primary-neon),
+        inset 0 0 20px rgba(0, 255, 136, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   SCROLL INDICATOR
+   ============================================ */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 50px;
+    border: 2px solid var(--primary-neon);
+    border-radius: 20px;
+    opacity: 0.7;
+}
+
+.scroll-arrow {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: var(--primary-neon);
+    border-radius: 50%;
+    animation: scrollBounce 2s infinite;
+}
+
+@keyframes scrollBounce {
+    0%, 100% { transform: translate(-50%, 0); opacity: 1; }
+    50% { transform: translate(-50%, 20px); opacity: 0.3; }
+}
+
+/* ============================================
+   GALLERY SECTION
+   ============================================ */
+.gallery-section {
+    padding: 100px 20px;
+    position: relative;
+    z-index: var(--z-content);
+    background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+}
+
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    margin-bottom: 60px;
+}
+
+/* ============================================
+   MASONRY GALLERY - Responsive Grid
+   ============================================ */
+.masonry-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-auto-rows: 280px;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Gallery item variations */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item-tall {
+    grid-row: span 2;
+}
+
+.gallery-item-wide {
+    grid-column: span 2;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    z-index: 10;
+}
+
+/* ============================================
+   GRAYSCALE TO COLOR TRANSITION
+   ============================================ */
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    transition: filter 0.6s ease, transform 0.6s ease;
+    filter: grayscale(100%) brightness(0.7);
+}
+
+.gallery-image svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.gallery-item:hover .gallery-image {
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.05);
+}
+
+/* Gallery overlay */
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    padding: 32px 20px;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-overlay h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: var(--primary-neon);
+}
+
+.gallery-overlay p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   MODAL OVERLAY - Fixed Positioning & Z-Index
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(10px);
+    z-index: var(--z-modal-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--bg-dark);
+    border: 2px solid var(--primary-neon);
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 48px 40px;
+    position: relative;
+    z-index: var(--z-modal-content);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    box-shadow: 0 0 60px rgba(0, 255, 136, 0.3);
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Modal close button */
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-close:hover {
+    color: var(--primary-neon);
+    transform: rotate(90deg);
+}
+
+/* Modal header */
+.modal-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.modal-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 12px;
+    color: var(--primary-neon);
+}
+
+.modal-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* ============================================
+   MODAL FORM
+   ============================================ */
+.modal-form {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: 'Roboto Mono', monospace;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-neon);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.error-message {
+    display: none;
+    color: var(--accent-neon);
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+
+.form-group input:invalid:not(:placeholder-shown) ~ .error-message {
+    display: block;
+}
+
+.form-group input:invalid:not(:placeholder-shown) {
+    border-color: var(--accent-neon);
+}
+
+/* Checkbox styling */
+.checkbox-group {
+    margin-bottom: 28px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    gap: 12px;
+}
+
+.checkbox-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-neon);
+    border-radius: 4px;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+    background: var(--primary-neon);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 4px;
+    height: 10px;
+    border: solid var(--bg-dark);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Submit button */
+.submit-button {
+    width: 100%;
+    padding: 16px 32px;
+    background: transparent;
+    border: 2px solid var(--primary-neon);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background: rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+.submit-button.loading .button-text {
+    opacity: 0;
+}
+
+.button-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--primary-neon);
+    border-radius: 50%;
+    opacity: 0;
+    animation: spin 0.8s linear infinite;
+}
+
+.submit-button.loading .button-loader {
+    opacity: 1;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.form-note {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 20px;
+}
+
+/* ============================================
+   MODAL SUCCESS STATE
+   ============================================ */
+.modal-success {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-success.active {
+    display: block;
+}
+
+.modal-success.active ~ .modal-form {
+    display: none;
+}
+
+.success-icon {
+    margin-bottom: 24px;
+}
+
+.success-circle {
+    animation: drawCircle 0.6s ease-out forwards;
+    stroke-dasharray: 226;
+    stroke-dashoffset: 226;
+}
+
+.success-check {
+    animation: drawCheck 0.4s ease-out 0.6s forwards;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+}
+
+@keyframes drawCircle {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes drawCheck {
+    to { stroke-dashoffset: 0; }
+}
+
+.modal-success h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    color: var(--primary-neon);
+}
+
+.modal-success p {
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    font-size: 1.1rem;
+}
+
+.success-button {
+    padding: 14px 40px;
+    background: var(--primary-neon);
+    border: none;
+    color: var(--bg-dark);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.success-button:hover {
+    background: var(--secondary-neon);
+    box-shadow: 0 0 20px var(--primary-neon);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    background: var(--bg-darker);
+    padding: 40px 0;
+    text-align: center;
+    position: relative;
+    z-index: var(--z-content);
+}
+
+.footer p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .neon-text {
+        font-size: clamp(2rem, 8vw, 4rem);
+    }
+
+    .typewriter {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    .masonry-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-auto-rows: 240px;
+        gap: 16px;
+    }
+
+    .gallery-item-wide {
+        grid-column: span 1;
+    }
+
+    .modal-content {
+        padding: 40px 24px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .hero {
+        padding: 60px 16px;
+    }
+
+    .neon-text {
+        font-size: 2.5rem;
+        letter-spacing: 0.05em;
+    }
+
+    .typewriter {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+
+    .cta-button {
+        padding: 14px 40px;
+        font-size: 1rem;
+    }
+
+    .gallery-section {
+        padding: 60px 16px;
+    }
+
+    .masonry-gallery {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 280px;
+    }
+
+    .gallery-item-tall {
+        grid-row: span 1;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 32px 20px;
+    }
+
+    .modal-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus states */
+*:focus-visible {
+    outline: 2px solid var(--primary-neon);
+    outline-offset: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .particle {
+        display: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .neon-text {
+        text-shadow: none;
+        color: var(--text-primary);
+        border: 2px solid var(--text-primary);
+        padding: 8px 16px;
+    }
+
+    .gallery-image {
+        filter: none;
+    }
+}
+
+/* Screen reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
