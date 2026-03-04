@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DAY9 - 3D transforms, glassmorphism cards, responsive masonry grid, and CSS-only accordion.">
+  <title>DAY9 - Advanced CSS Card Lab</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <p class="kicker">DAY9</p>
+      <h1>3D Cards + Glassmorphism Showcase</h1>
+      <p class="subtitle">Pure CSS interactive components with responsive masonry layout and no JavaScript.</p>
+    </header>
+
+    <section class="card-grid" aria-label="Interactive card showcase">
+      <article class="showcase-card flip-card" style="--span: 34;">
+        <div class="flip-shell">
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h2>3D Flip Card</h2>
+              <p>Hover this card to rotate from front to back using perspective and 3D transforms.</p>
+              <img src="assets/images/masonry-visual.svg" alt="Abstract dashboard visual for 3D card preview">
+              <small>Front Face</small>
+            </div>
+
+            <div class="flip-face flip-back">
+              <h2>Back Face</h2>
+              <ul>
+                <li>Perspective: 1200px</li>
+                <li>Transform: rotateY(180deg)</li>
+                <li>Preserve-3D layering</li>
+                <li>Smooth hardware-accelerated motion</li>
+              </ul>
+              <small>Back Face</small>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="showcase-card glass-card" style="--span: 32;">
+        <h2 class="card-heading">Glassmorphism Card</h2>
+        <p class="card-text">This card uses translucent layers, blur filters, soft borders, and light glow accents.</p>
+
+        <figure class="zoom-frame">
+          <img src="assets/images/glass-visual.svg" alt="Glass style card visual with gradient elements">
+          <figcaption>Image zoom effect on hover.</figcaption>
+        </figure>
+
+        <p class="card-text">The card remains readable while blending smoothly with the animated background.</p>
+      </article>
+
+      <article class="showcase-card gradient-card" style="--span: 34;">
+        <h2 class="card-heading">Animated Gradient Border</h2>
+        <p class="card-text">The border ring is animated via a rotating conic gradient and pseudo-element masking.</p>
+
+        <footer class="progress-footer">
+          <h3>Skill Progress</h3>
+
+          <div class="progress-item" style="--value: 88%; --delay: .15s;">
+            <span>3D Transform</span>
+            <div class="track"><div class="fill"></div></div>
+          </div>
+
+          <div class="progress-item" style="--value: 91%; --delay: .35s;">
+            <span>Glassmorphism</span>
+            <div class="track"><div class="fill"></div></div>
+          </div>
+
+          <div class="progress-item" style="--value: 84%; --delay: .55s;">
+            <span>Responsive Grid</span>
+            <div class="track"><div class="fill"></div></div>
+          </div>
+        </footer>
+      </article>
+
+      <article class="showcase-card accordion-card" style="--span: 40;">
+        <h2 class="card-heading">CSS-Only Accordion</h2>
+        <p class="card-text">Built with the radio hack (no JavaScript), with 3 interactive items.</p>
+
+        <div class="accordion">
+          <input type="radio" name="faq" id="faq-1" checked>
+          <label for="faq-1">How does this accordion open and close?</label>
+          <div class="panel">
+            <p>Hidden radio buttons control each section. CSS selectors toggle max-height and spacing for smooth transitions.</p>
+          </div>
+
+          <input type="radio" name="faq" id="faq-2">
+          <label for="faq-2">Why use CSS Grid repeat(auto-fit)?</label>
+          <div class="panel">
+            <p>It automatically creates responsive columns and reflows cards cleanly as screen size changes, including mobile layouts.</p>
+          </div>
+
+          <input type="radio" name="faq" id="faq-3">
+          <label for="faq-3">Where is the image zoom effect?</label>
+          <div class="panel">
+            <p>The Glassmorphism card includes a clipped image wrapper with scale transform on hover for a smooth zoom interaction.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
