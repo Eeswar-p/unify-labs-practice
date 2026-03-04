@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DAY22 - Modular ES6 App with API, UI Rendering, and Persistence" />
+    <title>DAY22 - Crypto Watchlist Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <header class="page-header">
+        <div class="container">
+            <h1>DAY22 - Crypto Watchlist Pro</h1>
+            <p>Modular ES6 architecture, async data flow, high-performance rendering, and persistent state.</p>
+            <div class="badge-row">
+                <span class="badge">API.js</span>
+                <span class="badge">UI.js</span>
+                <span class="badge">App.js</span>
+                <span class="badge">map / filter / reduce</span>
+                <span class="badge">localStorage</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container app-layout">
+        <section class="panel controls-panel">
+            <div class="control-grid">
+                <label class="field">
+                    <span>Search</span>
+                    <input id="searchInput" type="text" placeholder="Search by name or symbol..." autocomplete="off" />
+                </label>
+
+                <label class="field">
+                    <span>Sort By</span>
+                    <select id="sortSelect">
+                        <option value="market_cap_desc">Market Cap (High → Low)</option>
+                        <option value="market_cap_asc">Market Cap (Low → High)</option>
+                        <option value="price_desc">Price (High → Low)</option>
+                        <option value="price_asc">Price (Low → High)</option>
+                        <option value="change_desc">24h Change (High → Low)</option>
+                        <option value="change_asc">24h Change (Low → High)</option>
+                        <option value="name_asc">Name (A → Z)</option>
+                        <option value="name_desc">Name (Z → A)</option>
+                    </select>
+                </label>
+
+                <label class="field toggle-field">
+                    <span>Favorites Only</span>
+                    <input id="favoritesOnly" type="checkbox" />
+                </label>
+
+                <label class="field toggle-field">
+                    <span>Theme</span>
+                    <div class="theme-toggle-wrap">
+                        <span id="themeLabel" class="theme-chip">Light</span>
+                        <input id="themeToggle" type="checkbox" />
+                    </div>
+                </label>
+            </div>
+
+            <div class="actions-row">
+                <button id="refreshBtn" class="btn btn-primary" type="button">Refresh Data</button>
+                <p class="hint">Data source: CoinGecko Markets API</p>
+            </div>
+        </section>
+
+        <section class="panel stats-panel">
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <p>Visible Assets</p>
+                    <h3 id="visibleCount">0</h3>
+                </article>
+                <article class="stat-card">
+                    <p>Favorites</p>
+                    <h3 id="favoriteCount">0</h3>
+                </article>
+                <article class="stat-card">
+                    <p>Total Market Cap</p>
+                    <h3 id="totalMarketCap">$0</h3>
+                </article>
+                <article class="stat-card">
+                    <p>Avg 24h Change</p>
+                    <h3 id="avgChange">0.00%</h3>
+                </article>
+            </div>
+        </section>
+
+        <section id="notification" class="notification hidden" role="status" aria-live="polite"></section>
+
+        <section id="loader" class="panel loading-panel hidden" aria-live="polite">
+            <div class="spinner"></div>
+            <p>Loading crypto market data...</p>
+            <div class="skeleton-grid">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+        </section>
+
+        <section id="emptyState" class="panel empty-state hidden">
+            <h3>No items match your filters</h3>
+            <p>Try a different search query or sort mode.</p>
+        </section>
+
+        <section id="coinsGrid" class="coins-grid"></section>
+    </main>
+
+    <script type="module" src="js/App.js"></script>
+</body>
+</html>
