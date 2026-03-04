@@ -1,0 +1,466 @@
+/* ============================================
+   DAY10 - Instagram Clone Auth Page Styles
+   Precise color matching and typography
+   ============================================ */
+
+/* CSS Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Instagram Color Palette - Exact Match */
+    --ig-primary-button: #0095f6;
+    --ig-primary-button-hover: #1877f2;
+    --ig-secondary-button: #4267b2;
+    --ig-border-color: #dbdbdb;
+    --ig-background: #fafafa;
+    --ig-box-background: #ffffff;
+    --ig-text-primary: #262626;
+    --ig-text-secondary: #8e8e8e;
+    --ig-link-color: #00376b;
+    --ig-error-color: #ed4956;
+    --ig-input-background: #fafafa;
+    --ig-disabled-button: #b2dffc;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--ig-background);
+    color: var(--ig-text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+/* Container Layout - Perfectly Centered */
+.container {
+    max-width: 350px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 32px 20px 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Auth Box */
+.auth-box {
+    background-color: var(--ig-box-background);
+    border: 1px solid var(--ig-border-color);
+    border-radius: 1px;
+    padding: 40px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.auth-box.secondary {
+    padding: 24px 40px;
+    text-align: center;
+}
+
+/* Instagram Logo */
+.logo {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.logo svg {
+    height: 51px;
+    color: var(--ig-text-primary);
+}
+
+/* Tagline */
+.tagline {
+    color: var(--ig-text-secondary);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 0 40px 10px;
+    text-align: center;
+}
+
+/* Form Styles */
+.auth-form {
+    margin-top: 24px;
+}
+
+/* Facebook Button */
+.btn-facebook {
+    background-color: var(--ig-secondary-button);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-facebook:hover {
+    background-color: #365899;
+}
+
+.btn-facebook svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 10px 0 18px;
+    gap: 18px;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background-color: var(--ig-border-color);
+}
+
+.divider-text {
+    color: var(--ig-text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Input Groups with Floating Labels */
+.input-group {
+    position: relative;
+    margin-bottom: 6px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 9px 8px 7px;
+    background-color: var(--ig-input-background);
+    border: 1px solid var(--ig-border-color);
+    border-radius: 3px;
+    font-size: 12px;
+    color: var(--ig-text-primary);
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+/* Focus State with Glow */
+.form-input:focus {
+    border-color: var(--ig-text-secondary);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Floating Label Animation */
+.floating-label {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ig-text-secondary);
+    font-size: 12px;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background-color: transparent;
+}
+
+/* When input has focus or content */
+.form-input:focus + .floating-label,
+.form-input:not(:placeholder-shown) + .floating-label {
+    top: 4px;
+    font-size: 10px;
+    transform: translateY(0);
+    color: var(--ig-text-secondary);
+}
+
+/* Error States */
+.form-input:invalid:not(:placeholder-shown) {
+    border-color: var(--ig-error-color);
+}
+
+.error-message {
+    display: none;
+    color: var(--ig-error-color);
+    font-size: 11px;
+    margin-top: 4px;
+    padding-left: 8px;
+}
+
+.form-input:invalid:not(:placeholder-shown) ~ .error-message {
+    display: block;
+}
+
+/* Password Toggle Button */
+.toggle-password {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--ig-text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.toggle-password:hover {
+    opacity: 0.7;
+}
+
+/* Terms Text */
+.terms {
+    color: var(--ig-text-secondary);
+    font-size: 12px;
+    line-height: 16px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.link {
+    color: var(--ig-link-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* Submit Button */
+.btn-submit {
+    background-color: var(--ig-primary-button);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 0;
+    transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: var(--ig-primary-button-hover);
+}
+
+.btn-submit:disabled {
+    background-color: var(--ig-disabled-button);
+    cursor: not-allowed;
+}
+
+/* Secondary Box - Login Link */
+.link-bold {
+    color: var(--ig-primary-button);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.link-bold:hover {
+    color: var(--ig-primary-button-hover);
+}
+
+/* Get the App Section */
+.get-app {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.get-app p {
+    font-size: 14px;
+    margin-bottom: 16px;
+    color: var(--ig-text-primary);
+}
+
+.app-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.app-store img,
+.google-play img {
+    height: 40px;
+    cursor: pointer;
+}
+
+/* Team Section Link */
+.nav-link {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.team-link {
+    color: var(--ig-primary-button);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid var(--ig-border-color);
+    border-radius: 8px;
+    background-color: var(--ig-box-background);
+    transition: all 0.2s ease;
+}
+
+.team-link:hover {
+    background-color: var(--ig-input-background);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+    margin-top: auto;
+    padding: 24px 0;
+    width: 100%;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 16px;
+    max-width: 935px;
+    margin: 0 auto 12px;
+    padding: 0 16px;
+}
+
+.footer-nav a {
+    color: var(--ig-text-secondary);
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    color: var(--ig-text-secondary);
+    font-size: 12px;
+    flex-wrap: wrap;
+}
+
+.language-selector {
+    background-color: transparent;
+    border: 1px solid var(--ig-border-color);
+    border-radius: 3px;
+    color: var(--ig-text-secondary);
+    font-size: 12px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.copyright {
+    font-size: 12px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   Mobile-First Approach
+   ============================================ */
+
+/* Small Mobile Devices */
+@media (max-width: 450px) {
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .auth-box {
+        border: none;
+        padding: 32px 20px;
+        margin-bottom: 0;
+    }
+
+    .auth-box.secondary {
+        border: none;
+        border-top: 1px solid var(--ig-border-color);
+        padding: 20px;
+    }
+
+    .tagline {
+        margin: 0 20px 10px;
+        font-size: 16px;
+    }
+
+    .app-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-nav {
+        gap: 12px;
+    }
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+    .container {
+        padding-top: 60px;
+    }
+}
+
+/* Focus-Visible for Accessibility */
+*:focus-visible {
+    outline: 2px solid var(--ig-primary-button);
+    outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.form-input.error {
+    animation: shake 0.3s ease;
+}
+
+/* Loading State */
+.btn-submit.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-submit.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
