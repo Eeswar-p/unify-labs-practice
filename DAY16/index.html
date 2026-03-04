@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAY16 - String Utilities & Arrow Functions - Interactive text transformation tools">
+    <title>DAY16 - String Utilities & Arrow Functions</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">
+                    <span class="icon">🔧</span>
+                    String Utilities Lab
+                </h1>
+                <p class="header-subtitle">Master Arrow Functions & String Methods</p>
+            </div>
+            
+            <div class="learning-badges">
+                <span class="badge badge-primary">
+                    <span class="badge-icon">✓</span>
+                    Arrow Functions
+                </span>
+                <span class="badge badge-success">
+                    <span class="badge-icon">✓</span>
+                    String Methods
+                </span>
+                <span class="badge badge-info">
+                    <span class="badge-icon">✓</span>
+                    Math Object
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Utility 1: Title Case Converter -->
+            <section class="utility-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="number">1</span>
+                        Title Case Converter
+                    </h2>
+                    <p class="card-description">Trims whitespace and capitalizes the first letter of every word</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="input-group">
+                        <label for="titleInput" class="input-label">
+                            Enter Text
+                            <span class="label-hint">(Try: "  hello world from javascript  ")</span>
+                        </label>
+                        <textarea 
+                            id="titleInput" 
+                            class="input-field textarea-field" 
+                            placeholder="Type or paste your text here..."
+                            rows="3"
+                        ></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="convertTitleBtn" class="btn btn-primary">
+                            <span class="btn-icon">✨</span>
+                            Convert to Title Case
+                        </button>
+                        <button id="clearTitleBtn" class="btn btn-secondary">
+                            <span class="btn-icon">🗑️</span>
+                            Clear
+                        </button>
+                    </div>
+
+                    <div id="titleResult" class="result-box" style="display: none;">
+                        <div class="result-header">
+                            <span class="result-icon">✅</span>
+                            <strong>Result:</strong>
+                        </div>
+                        <div id="titleOutput" class="result-output"></div>
+                        <div id="titleStats" class="stats-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Utility 2: Vowel Counter -->
+            <section class="utility-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="number">2</span>
+                        Vowel Counter
+                    </h2>
+                    <p class="card-description">Counts how many vowels (a, e, i, o, u) are in your text</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="input-group">
+                        <label for="vowelInput" class="input-label">
+                            Enter Text
+                            <span class="label-hint">(Try: "Beautiful JavaScript Arrow Functions")</span>
+                        </label>
+                        <textarea 
+                            id="vowelInput" 
+                            class="input-field textarea-field" 
+                            placeholder="Type your text to count vowels..."
+                            rows="3"
+                        ></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="countVowelsBtn" class="btn btn-success">
+                            <span class="btn-icon">🔢</span>
+                            Count Vowels
+                        </button>
+                        <button id="clearVowelBtn" class="btn btn-secondary">
+                            <span class="btn-icon">🗑️</span>
+                            Clear
+                        </button>
+                    </div>
+
+                    <div id="vowelResult" class="result-box" style="display: none;">
+                        <div class="result-header">
+                            <span class="result-icon">✅</span>
+                            <strong>Analysis:</strong>
+                        </div>
+                        <div id="vowelOutput" class="result-output"></div>
+                        <div id="vowelStats" class="stats-grid"></div>
+                        <div id="vowelBreakdown" class="vowel-breakdown"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Utility 3: Secret Message Generator -->
+            <section class="utility-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="number">3</span>
+                        Secret Message Generator
+                    </h2>
+                    <p class="card-description">Replaces specific words with '***' to create censored text</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="input-group">
+                        <label for="secretInput" class="input-label">
+                            Enter Your Message
+                            <span class="label-hint">(Try: "The secret code is alpha and the password is beta")</span>
+                        </label>
+                        <textarea 
+                            id="secretInput" 
+                            class="input-field textarea-field" 
+                            placeholder="Type your message here..."
+                            rows="3"
+                        ></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="censorWords" class="input-label">
+                            Words to Censor
+                            <span class="label-hint">(Comma-separated, e.g., "secret, password, alpha, beta")</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="censorWords" 
+                            class="input-field" 
+                            placeholder="word1, word2, word3..."
+                        />
+                    </div>
+
+                    <div class="button-group">
+                        <button id="generateSecretBtn" class="btn btn-warning">
+                            <span class="btn-icon">🔒</span>
+                            Generate Secret Message
+                        </button>
+                        <button id="clearSecretBtn" class="btn btn-secondary">
+                            <span class="btn-icon">🗑️</span>
+                            Clear
+                        </button>
+                    </div>
+
+                    <div id="secretResult" class="result-box" style="display: none;">
+                        <div class="result-header">
+                            <span class="result-icon">✅</span>
+                            <strong>Secret Message:</strong>
+                        </div>
+                        <div id="secretOutput" class="result-output"></div>
+                        <div id="secretStats" class="stats-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bonus: Combined Demo -->
+            <section class="utility-card demo-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="number">💡</span>
+                        Combined Demo
+                    </h2>
+                    <p class="card-description">See all three utilities working together on the same text</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="input-group">
+                        <label for="demoInput" class="input-label">
+                            Enter Sample Text
+                        </label>
+                        <textarea 
+                            id="demoInput" 
+                            class="input-field textarea-field" 
+                            placeholder="Type your text and apply all transformations..."
+                            rows="4"
+                        >  hello world! this is javascript with amazing arrow functions and secret passwords  </textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="demoCensorWords" class="input-label">
+                            Words to Censor for Secret Message
+                        </label>
+                        <input 
+                            type="text" 
+                            id="demoCensorWords" 
+                            class="input-field" 
+                            placeholder="secret, password, javascript"
+                            value="secret, password, javascript"
+                        />
+                    </div>
+
+                    <div class="button-group">
+                        <button id="runAllBtn" class="btn btn-gradient">
+                            <span class="btn-icon">⚡</span>
+                            Run All Utilities
+                        </button>
+                        <button id="clearDemoBtn" class="btn btn-secondary">
+                            <span class="btn-icon">🗑️</span>
+                            Clear
+                        </button>
+                    </div>
+
+                    <div id="demoResults" class="demo-results" style="display: none;">
+                        <!-- Results will be dynamically inserted here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Examples Section -->
+            <section class="code-examples-section">
+                <h2 class="section-title">
+                    <span class="icon">📚</span>
+                    How It Works: Arrow Functions
+                </h2>
+
+                <div class="code-grid">
+                    <div class="code-card">
+                        <h3 class="code-title">1️⃣ Title Case Function</h3>
+                        <pre class="code-block"><code>const toTitleCase = (str) => {
+  return str
+    .trim()
+    .split(' ')
+    .filter(word => word.length > 0)
+    .map(word => 
+      word[0].toUpperCase() + 
+      word.slice(1).toLowerCase()
+    )
+    .join(' ');
+};</code></pre>
+                        <p class="code-description">Uses <code>trim()</code>, <code>split()</code>, <code>map()</code>, and <code>join()</code> to transform text.</p>
+                    </div>
+
+                    <div class="code-card">
+                        <h3 class="code-title">2️⃣ Vowel Counter Function</h3>
+                        <pre class="code-block"><code>const countVowels = (str) => {
+  const vowels = 'aeiouAEIOU';
+  return str
+    .split('')
+    .filter(char => vowels.includes(char))
+    .length;
+};</code></pre>
+                        <p class="code-description">Uses <code>split()</code>, <code>filter()</code>, and <code>includes()</code> to count vowels.</p>
+                    </div>
+
+                    <div class="code-card">
+                        <h3 class="code-title">3️⃣ Secret Message Function</h3>
+                        <pre class="code-block"><code>const censorWords = (str, words) => {
+  let result = str;
+  words.forEach(word => {
+    const regex = new RegExp(
+      word.trim(), 
+      'gi'
+    );
+    result = result.replace(regex, '***');
+  });
+  return result;
+};</code></pre>
+                        <p class="code-description">Uses <code>RegExp</code>, <code>replace()</code>, and <code>forEach()</code> for censoring.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="learning-section">
+                <h2 class="section-title">
+                    <span class="icon">🎓</span>
+                    Learning Outcomes
+                </h2>
+
+                <div class="outcomes-grid">
+                    <div class="outcome-card">
+                        <div class="outcome-icon">✓</div>
+                        <h3>Arrow Functions</h3>
+                        <p>Master concise function syntax with arrow notation (<code>=></code>)</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">✓</div>
+                        <h3>String Methods</h3>
+                        <p>Apply <code>trim()</code>, <code>split()</code>, <code>join()</code>, <code>replace()</code>, <code>includes()</code></p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">✓</div>
+                        <h3>Array Methods</h3>
+                        <p>Use <code>map()</code>, <code>filter()</code>, <code>forEach()</code> for transformations</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">✓</div>
+                        <h3>Math Object</h3>
+                        <p>Calculate statistics with <code>Math.round()</code>, <code>Math.max()</code>, <code>Math.min()</code></p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">✓</div>
+                        <h3>Regular Expressions</h3>
+                        <p>Pattern matching with <code>RegExp</code> for advanced text manipulation</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">✓</div>
+                        <h3>Functional Programming</h3>
+                        <p>Write pure, reusable utility functions with clear inputs/outputs</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                <strong>DAY16</strong> - String Utilities & Arrow Functions
+                <span class="separator">|</span>
+                Mastering JavaScript Fundamentals
+                <span class="separator">|</span>
+                <span class="year">2026</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
