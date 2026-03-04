@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAY7 - Responsive Navbar, Animated Buttons & Theme Switch">
+    <title>DAY7 - Advanced CSS Components</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- THEME TOGGLE -->
+    <div class="theme-toggle-container">
+        <input type="checkbox" id="theme-toggle" class="theme-toggle-checkbox">
+        <label for="theme-toggle" class="theme-toggle-label">
+            <span class="toggle-inner"></span>
+            <span class="toggle-switch"></span>
+        </label>
+    </div>
+
+    <!-- NAVBAR WITH HAMBURGER MENU (Checkbox Hack) -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">⚡ DevLab</div>
+            
+            <!-- Checkbox hack for hamburger menu (NO JavaScript needed) -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox">
+            <label for="menu-toggle" class="hamburger-menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </label>
+
+            <!-- Navigation Menu -->
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#buttons" class="nav-link">Buttons</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- HERO SECTION -->
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>Advanced CSS Components</h1>
+                <p>Responsive Navigation • Animated Buttons • Dark/Light Mode</p>
+            </div>
+        </section>
+
+        <!-- BUTTONS SECTION -->
+        <section id="buttons" class="section">
+            <div class="container">
+                <h2>Animated Button Showcase</h2>
+                
+                <div class="buttons-grid">
+                    <!-- BUTTON 1: Neon Glow Button -->
+                    <div class="button-demo">
+                        <h3>Neon Glow Button</h3>
+                        <button class="btn btn-neon">Click Me</button>
+                        <p class="description">Glowing neon effect with smooth hover animation</p>
+                    </div>
+
+                    <!-- BUTTON 2: Rotating Border Button -->
+                    <div class="button-demo">
+                        <h3>Rotating Border Button</h3>
+                        <button class="btn btn-rotating">Click Me</button>
+                        <p class="description">Border rotates on hover with gradient effect</p>
+                    </div>
+
+                    <!-- BUTTON 3: Custom Hover Micro-animation -->
+                    <div class="button-demo">
+                        <h3>Micro-animation Button</h3>
+                        <button class="btn btn-micro">Click Me</button>
+                        <p class="description">Icon slides in with smooth bounce animation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section id="about" class="section section-alt">
+            <div class="container">
+                <h2>Key Features</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Responsive Navbar</h3>
+                        <p>Hamburger menu using checkbox hack. No JavaScript required!</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <h3>Animated Buttons</h3>
+                        <p>High-end CSS animations with pseudo-elements for interactive buttons</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🌙</div>
+                        <h3>Theme Switch</h3>
+                        <p>Dark/Light mode toggle using CSS variables for instant theming</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>CSS Variables</h3>
+                        <p>Modular design with CSS custom properties for easy customization</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Get Started</h2>
+                <p>Explore the responsive navigation, animated buttons, and theme switcher below.</p>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-neon">Get Started</button>
+                    <button class="btn btn-rotating">Learn More</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 DAY7 - Advanced CSS Components | Responsive • Animated • Themeable</p>
+        </div>
+    </footer>
+
+    <!-- 
+        NOTE: This project uses pure CSS for interactivity!
+        - Hamburger menu: Checkbox hack (no JavaScript for toggle)
+        - Theme toggle: CSS variables + JavaScript for persistence
+        - Button animations: CSS @keyframes and pseudo-elements
+        - Hover effects: CSS :hover pseudo-class
+    -->
+    <script src="js/main.js"></script>
+</body>
+</html>
