@@ -1,0 +1,183 @@
+# Git Practice - .gitignore Template
+
+# ==========================================
+# Operating System Files
+# ==========================================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.directory
+
+# ==========================================
+# IDE and Editor Files
+# ==========================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Atom
+.atom/
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ==========================================
+# Node.js / JavaScript
+# ==========================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+out/
+
+# Package manager lock files (optional to ignore)
+# package-lock.json
+# yarn.lock
+
+# ==========================================
+# Python
+# ==========================================
+
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+
+# NEVER commit these!
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# API keys, tokens, credentials
+secrets.txt
+config/secrets.json
+*.pem
+*.key
+*.cert
+
+# ==========================================
+# Logs
+# ==========================================
+
+*.log
+logs/
+*.log.*
+
+# ==========================================
+# Temporary Files
+# ==========================================
+
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*.cache
+
+# ==========================================
+# Build Tools
+# ==========================================
+
+# Webpack
+.cache/
+
+# Parcel
+.parcel-cache/
+
+# Next.js
+.next/
+
+# Nuxt.js
+.nuxt/
+
+# Gatsby
+.cache/
+public/
+
+# ==========================================
+# Testing
+# ==========================================
+
+coverage/
+.nyc_output/
+*.lcov
+
+# ==========================================
+# Database
+# ==========================================
+
+*.sqlite
+*.sqlite3
+*.db
+
+# ==========================================
+# Compressed Files
+# ==========================================
+
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# ==========================================
+# Custom Ignores (Add your own below)
+# ==========================================
+
+# Example: Ignore all PDF files
+# *.pdf
+
+# Example: Ignore specific folder
+# my-secret-folder/
