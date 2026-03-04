@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Alice Johnson",
+    "role": "Frontend Developer",
+    "joinedDate": "2024-01-15"
+  },
+  {
+    "name": "Bob Smith",
+    "role": "Backend Developer",
+    "joinedDate": "2024-02-01"
+  },
+  {
+    "name": "Carol Martinez",
+    "role": "Full Stack Developer",
+    "joinedDate": "2024-03-10"
+  }
+]

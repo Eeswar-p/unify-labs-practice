@@ -1,0 +1,26 @@
+{
+  "name": "day23-mongodb-setup",
+  "version": "1.0.0",
+  "description": "DAY23: MongoDB Installation & Setup Verification",
+  "main": "verify-setup.js",
+  "scripts": {
+    "verify": "node verify-setup.js",
+    "check": "node check-database.js"
+  },
+  "keywords": [
+    "mongodb",
+    "database",
+    "nosql",
+    "setup",
+    "verification"
+  ],
+  "author": "Unify Labs",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^6.3.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

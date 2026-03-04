@@ -1,0 +1,297 @@
+# MongoDB Shell (mongosh) Commands Cheat Sheet
+# DAY23: Quick Reference
+
+# ==================================================
+# BASIC CONNECTION
+# ==================================================
+
+# Start MongoDB Shell
+mongosh
+
+# Connect to specific host and port
+mongosh "mongodb://localhost:27017"
+
+# Exit MongoDB Shell
+exit
+
+# ==================================================
+# DATABASE OPERATIONS
+# ==================================================
+
+# Show all databases
+show dbs
+
+# Switch to (or create) a database
+use unify_labs
+
+# Show current database
+db
+
+# Drop current database
+db.dropDatabase()
+
+# ==================================================
+# COLLECTION OPERATIONS
+# ==================================================
+
+# Show all collections in current database
+show collections
+
+# Create a collection explicitly
+db.createCollection("interns")
+
+# Drop a collection
+db.interns.drop()
+
+# ==================================================
+# INSERT OPERATIONS (CREATE)
+# ==================================================
+
+# Insert single document
+db.interns.insertOne({
+  name: "Alice Johnson",
+  role: "Frontend Developer",
+  joinedDate: "2024-01-15"
+})
+
+# Insert multiple documents
+db.interns.insertMany([
+  {
+    name: "Alice Johnson",
+    role: "Frontend Developer",
+    joinedDate: "2024-01-15"
+  },
+  {
+    name: "Bob Smith",
+    role: "Backend Developer",
+    joinedDate: "2024-02-01"
+  },
+  {
+    name: "Carol Martinez",
+    role: "Full Stack Developer",
+    joinedDate: "2024-03-10"
+  }
+])
+
+# ==================================================
+# READ OPERATIONS (QUERY)
+# ==================================================
+
+# Find all documents
+db.interns.find()
+
+# Find all documents (pretty formatted)
+db.interns.find().pretty()
+
+# Find with condition
+db.interns.find({ role: "Frontend Developer" })
+
+# Find one document
+db.interns.findOne()
+
+# Find with specific field
+db.interns.findOne({ name: "Alice Johnson" })
+
+# Count all documents
+db.interns.countDocuments()
+
+# Count with condition
+db.interns.countDocuments({ role: "Frontend Developer" })
+
+# Limit results
+db.interns.find().limit(2)
+
+# Sort results (1 = ascending, -1 = descending)
+db.interns.find().sort({ joinedDate: -1 })
+
+# Skip and limit (pagination)
+db.interns.find().skip(1).limit(2)
+
+# ==================================================
+# UPDATE OPERATIONS
+# ==================================================
+
+# Update one document
+db.interns.updateOne(
+  { name: "Alice Johnson" },
+  { $set: { role: "Senior Frontend Developer" } }
+)
+
+# Update multiple documents
+db.interns.updateMany(
+  { role: "Frontend Developer" },
+  { $set: { department: "Engineering" } }
+)
+
+# Replace entire document
+db.interns.replaceOne(
+  { name: "Bob Smith" },
+  {
+    name: "Bob Smith",
+    role: "Lead Backend Developer",
+    joinedDate: "2024-02-01",
+    team: "Core API"
+  }
+)
+
+# Update or insert (upsert)
+db.interns.updateOne(
+  { name: "David Lee" },
+  { $set: { role: "DevOps Engineer", joinedDate: "2024-04-01" } },
+  { upsert: true }
+)
+
+# ==================================================
+# DELETE OPERATIONS
+# ==================================================
+
+# Delete one document
+db.interns.deleteOne({ name: "Alice Johnson" })
+
+# Delete multiple documents
+db.interns.deleteMany({ role: "Frontend Developer" })
+
+# Delete all documents (but keep collection)
+db.interns.deleteMany({})
+
+# ==================================================
+# QUERY OPERATORS
+# ==================================================
+
+# Greater than
+db.interns.find({ joinedDate: { $gt: "2024-02-01" } })
+
+# Greater than or equal
+db.interns.find({ joinedDate: { $gte: "2024-02-01" } })
+
+# Less than
+db.interns.find({ joinedDate: { $lt: "2024-03-01" } })
+
+# Less than or equal
+db.interns.find({ joinedDate: { $lte: "2024-03-01" } })
+
+# Not equal
+db.interns.find({ role: { $ne: "Frontend Developer" } })
+
+# In array
+db.interns.find({ role: { $in: ["Frontend Developer", "Backend Developer"] } })
+
+# Not in array
+db.interns.find({ role: { $nin: ["Intern"] } })
+
+# AND condition
+db.interns.find({
+  $and: [
+    { role: "Frontend Developer" },
+    { joinedDate: { $gte: "2024-01-01" } }
+  ]
+})
+
+# OR condition
+db.interns.find({
+  $or: [
+    { role: "Frontend Developer" },
+    { role: "Backend Developer" }
+  ]
+})
+
+# ==================================================
+# PROJECTION (Select Specific Fields)
+# ==================================================
+
+# Include only specific fields (1 = include)
+db.interns.find({}, { name: 1, role: 1 })
+
+# Exclude specific fields (0 = exclude)
+db.interns.find({}, { joinedDate: 0 })
+
+# Exclude _id field
+db.interns.find({}, { _id: 0, name: 1, role: 1 })
+
+# ==================================================
+# INDEXING
+# ==================================================
+
+# Create index on single field
+db.interns.createIndex({ name: 1 })
+
+# Create compound index
+db.interns.createIndex({ role: 1, joinedDate: -1 })
+
+# Create unique index
+db.interns.createIndex({ email: 1 }, { unique: true })
+
+# Show all indexes
+db.interns.getIndexes()
+
+# Drop index
+db.interns.dropIndex("name_1")
+
+# ==================================================
+# AGGREGATION
+# ==================================================
+
+# Group by role and count
+db.interns.aggregate([
+  { $group: { _id: "$role", count: { $sum: 1 } } }
+])
+
+# Match and group
+db.interns.aggregate([
+  { $match: { joinedDate: { $gte: "2024-01-01" } } },
+  { $group: { _id: "$role", count: { $sum: 1 } } }
+])
+
+# Sort aggregation results
+db.interns.aggregate([
+  { $group: { _id: "$role", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
+
+# ==================================================
+# UTILITY COMMANDS
+# ==================================================
+
+# Get collection statistics
+db.interns.stats()
+
+# Explain query execution
+db.interns.find({ role: "Frontend Developer" }).explain()
+
+# Get MongoDB version
+db.version()
+
+# Get server status
+db.serverStatus()
+
+# Clear screen
+cls
+
+# ==================================================
+# BACKUP & RESTORE (Run in regular terminal, not mongosh)
+# ==================================================
+
+# Backup all databases
+mongodump --out="C:\mongodb-backup"
+
+# Backup specific database
+mongodump --db=unify_labs --out="C:\mongodb-backup"
+
+# Restore all databases
+mongorestore "C:\mongodb-backup"
+
+# Restore specific database
+mongorestore --db=unify_labs "C:\mongodb-backup\unify_labs"
+
+# ==================================================
+# EXPORT & IMPORT (Run in regular terminal, not mongosh)
+# ==================================================
+
+# Export collection to JSON
+mongoexport --db=unify_labs --collection=interns --out="interns.json"
+
+# Import collection from JSON
+mongoimport --db=unify_labs --collection=interns --file="interns.json"
+
+# Import with JSON array format
+mongoimport --db=unify_labs --collection=interns --file="interns.json" --jsonArray
