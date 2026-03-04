@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Laptop Pro 15",
+    "category": "Electronics",
+    "price": 1299.99,
+    "stock": 25,
+    "specs": {
+      "color": "Silver",
+      "weight": "1.8kg",
+      "processor": "Intel i7",
+      "ram": "16GB"
+    }
+  },
+  {
+    "name": "Wireless Mouse",
+    "category": "Electronics",
+    "price": 29.99,
+    "stock": 150,
+    "specs": {
+      "color": "Black",
+      "weight": "0.1kg",
+      "connectivity": "Bluetooth",
+      "battery": "AA x2"
+    }
+  },
+  {
+    "name": "Office Chair",
+    "category": "Furniture",
+    "price": 249.99,
+    "stock": 40,
+    "specs": {
+      "color": "Black",
+      "weight": "12kg",
+      "material": "Leather",
+      "adjustable": true
+    }
+  },
+  {
+    "name": "Cotton T-Shirt",
+    "category": "Clothing",
+    "price": 19.99,
+    "stock": 200,
+    "specs": {
+      "color": "Blue",
+      "weight": "0.2kg",
+      "size": "M",
+      "material": "100% Cotton"
+    }
+  },
+  {
+    "name": "Wooden Desk",
+    "category": "Furniture",
+    "price": 399.99,
+    "stock": 15,
+    "specs": {
+      "color": "Oak",
+      "weight": "25kg",
+      "dimensions": "120x60x75cm",
+      "material": "Solid Wood"
+    }
+  }
+]

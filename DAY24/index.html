@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY24: MongoDB CRUD Operations Demo</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍃 DAY24: MongoDB CRUD Operations</h1>
+            <p>Interactive demonstration of insertMany(), queries, sort(), and limit()</p>
+        </header>
+
+        <div class="objectives">
+            <h2>📚 Learning Objectives</h2>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <span class="icon">📦</span>
+                    <h3>insertMany()</h3>
+                    <p>Add 5 products with bulk insert</p>
+                </div>
+                <div class="objective-card">
+                    <span class="icon">🔍</span>
+                    <h3>Nested Objects</h3>
+                    <p>Implement specs with color, weight</p>
+                </div>
+                <div class="objective-card">
+                    <span class="icon">⬇️</span>
+                    <h3>Sort & Limit</h3>
+                    <p>Find top 2 expensive products</p>
+                </div>
+                <div class="objective-card">
+                    <span class="icon">🎯</span>
+                    <h3>Query Filters</h3>
+                    <p>Filter by category (Electronics)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🚀 Interactive Demo</h2>
+            
+            <div class="button-group">
+                <button id="showAllBtn" class="btn btn-primary">Show All Products (5)</button>
+                <button id="electronicsBtn" class="btn btn-secondary">Electronics Only</button>
+                <button id="top2Btn" class="btn btn-accent">Top 2 Most Expensive</button>
+                <button id="resetBtn" class="btn btn-outline">Reset View</button>
+            </div>
+
+            <div class="info-panel">
+                <div class="query-display">
+                    <h3>Current Query:</h3>
+                    <pre id="queryText">db.products.find().limit(5)</pre>
+                </div>
+                <div class="result-count">
+                    <h3>Results:</h3>
+                    <span id="resultCount">0</span> documents
+                </div>
+            </div>
+
+            <div id="productsGrid" class="products-grid">
+                <!-- Products will be rendered here -->
+            </div>
+        </div>
+
+        <div class="code-section">
+            <h2>💻 Code Examples</h2>
+            
+            <div class="code-tabs">
+                <button class="tab-btn active" data-tab="insert">insertMany()</button>
+                <button class="tab-btn" data-tab="query">find()</button>
+                <button class="tab-btn" data-tab="sort">sort() & limit()</button>
+                <button class="tab-btn" data-tab="nested">Nested Query</button>
+            </div>
+
+            <div class="tab-content active" id="insert">
+                <h3>Insert 5 Products with insertMany()</h3>
+                <pre><code>db.products.insertMany([
+  {
+    name: "Laptop Pro 15",
+    category: "Electronics",
+    price: 1299.99,
+    stock: 25,
+    specs: {
+      color: "Silver",
+      weight: "1.8kg",
+      processor: "Intel i7",
+      ram: "16GB"
+    }
+  },
+  {
+    name: "Wireless Mouse",
+    category: "Electronics",
+    price: 29.99,
+    stock: 150,
+    specs: {
+      color: "Black",
+      weight: "0.1kg",
+      connectivity: "Bluetooth",
+      battery: "AA x2"
+    }
+  },
+  // ... 3 more products
+])</code></pre>
+            </div>
+
+            <div class="tab-content" id="query">
+                <h3>Find All Electronics</h3>
+                <pre><code>// Query by category
+db.products.find({ category: "Electronics" })
+
+// Expected: 2 products
+// - Laptop Pro 15
+// - Wireless Mouse</code></pre>
+            </div>
+
+            <div class="tab-content" id="sort">
+                <h3>Sort by Price & Limit to Top 2</h3>
+                <pre><code>// Sort descending (-1) and limit to 2
+db.products.find().sort({ price: -1 }).limit(2)
+
+// Expected:
+// 1. Laptop Pro 15 - $1299.99
+// 2. Wooden Desk - $399.99</code></pre>
+            </div>
+
+            <div class="tab-content" id="nested">
+                <h3>Query Nested Objects (specs)</h3>
+                <pre><code>// Find products by color (nested field)
+db.products.find({ "specs.color": "Black" })
+
+// Find by weight (using regex for patterns)
+db.products.find({ "specs.weight": /^0\./ })
+
+// Multiple nested conditions
+db.products.find({
+  "specs.color": "Silver",
+  "specs.processor": "Intel i7"
+})</code></pre>
+            </div>
+        </div>
+
+        <div class="requirements-section">
+            <h2>✅ Requirements Checklist</h2>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <input type="checkbox" id="req1" checked disabled>
+                    <label for="req1">Use insertMany() to add 5 products</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req2" checked disabled>
+                    <label for="req2">Include 'Electronics', 'Clothing', 'Furniture' categories</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req3" checked disabled>
+                    <label for="req3">Each document has 'price' (number) and 'stock' (number)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req4" checked disabled>
+                    <label for="req4">Implement nested 'specs' object (color, weight, etc.)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req5" checked disabled>
+                    <label for="req5">Query finds all Electronics (2 products)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="req6" checked disabled>
+                    <label for="req6">Sort by price descending & limit to 2</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-start">
+            <h2>🏃 Quick Start Guide</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        <h3>Start MongoDB</h3>
+                        <p>Ensure MongoDB service is running</p>
+                        <code>Get-Service MongoDB</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        <h3>Open mongosh</h3>
+                        <p>Connect to MongoDB Shell</p>
+                        <code>mongosh</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        <h3>Run Commands</h3>
+                        <p>Copy code examples from above</p>
+                        <code>use unify_labs</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <div class="step-content">
+                        <h3>Or Use Scripts</h3>
+                        <p>Automated with Node.js</p>
+                        <code>npm run populate</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>DAY24 Complete</strong> | MongoDB CRUD Operations Mastered</p>
+            <p>Next: Build a REST API with Express + MongoDB 🚀</p>
+            <div class="links">
+                <a href="README.md">📖 Full Documentation</a>
+                <a href="https://www.mongodb.com/docs/manual/crud/" target="_blank">MongoDB CRUD Docs</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "name": "day24-mongodb-crud",
+  "version": "1.0.0",
+  "description": "DAY24: MongoDB CRUD Operations - insertMany, queries, sort, limit",
+  "main": "populate-products.js",
+  "scripts": {
+    "start": "node populate-products.js && node query-products.js",
+    "populate": "node populate-products.js",
+    "queries": "node query-products.js",
+    "demo": "node demo-all.js"
+  },
+  "keywords": [
+    "mongodb",
+    "crud",
+    "insertMany",
+    "queries",
+    "sort",
+    "limit",
+    "nested-objects"
+  ],
+  "author": "Unify Labs",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^6.3.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

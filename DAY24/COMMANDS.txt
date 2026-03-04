@@ -1,0 +1,355 @@
+# DAY24: MongoDB CRUD Commands Reference
+
+## Quick Command Guide
+
+### 1. INSERT OPERATIONS
+
+# insertMany() - Bulk insert 5 products
+db.products.insertMany([
+  {
+    name: "Laptop Pro 15",
+    category: "Electronics",
+    price: 1299.99,
+    stock: 25,
+    specs: { color: "Silver", weight: "1.8kg", processor: "Intel i7", ram: "16GB" }
+  },
+  {
+    name: "Wireless Mouse",
+    category: "Electronics",
+    price: 29.99,
+    stock: 150,
+    specs: { color: "Black", weight: "0.1kg", connectivity: "Bluetooth", battery: "AA x2" }
+  },
+  {
+    name: "Office Chair",
+    category: "Furniture",
+    price: 249.99,
+    stock: 40,
+    specs: { color: "Black", weight: "12kg", material: "Leather", adjustable: true }
+  },
+  {
+    name: "Cotton T-Shirt",
+    category: "Clothing",
+    price: 19.99,
+    stock: 200,
+    specs: { color: "Blue", weight: "0.2kg", size: "M", material: "100% Cotton" }
+  },
+  {
+    name: "Wooden Desk",
+    category: "Furniture",
+    price: 399.99,
+    stock: 15,
+    specs: { color: "Oak", weight: "25kg", dimensions: "120x60x75cm", material: "Solid Wood" }
+  }
+])
+
+### 2. READ OPERATIONS (QUERIES)
+
+# Find all products
+db.products.find()
+
+# Find all Electronics
+db.products.find({ category: "Electronics" })
+
+# Find with pretty formatting
+db.products.find({ category: "Electronics" }).pretty()
+
+# Count Electronics
+db.products.countDocuments({ category: "Electronics" })
+
+### 3. SORT OPERATIONS
+
+# Sort by price ascending (lowest first)
+db.products.find().sort({ price: 1 })
+
+# Sort by price descending (highest first)
+db.products.find().sort({ price: -1 })
+
+# Sort by category, then price
+db.products.find().sort({ category: 1, price: -1 })
+
+### 4. LIMIT OPERATIONS
+
+# Top 2 most expensive products
+db.products.find().sort({ price: -1 }).limit(2)
+
+# Top 3 cheapest products
+db.products.find().sort({ price: 1 }).limit(3)
+
+# Pagination example (skip and limit)
+db.products.find().skip(2).limit(2)
+
+### 5. NESTED OBJECT QUERIES
+
+# Find products with specific color
+db.products.find({ "specs.color": "Black" })
+
+# Find products with Silver color
+db.products.find({ "specs.color": "Silver" })
+
+# Find by multiple nested fields
+db.products.find({ "specs.color": "Black", "specs.material": "Leather" })
+
+### 6. RANGE QUERIES
+
+# Products under $100
+db.products.find({ price: { $lt: 100 } })
+
+# Products between $50 and $500
+db.products.find({ price: { $gte: 50, $lte: 500 } })
+
+# Low stock items (less than 30)
+db.products.find({ stock: { $lt: 30 } })
+
+### 7. COMPLEX FILTERS
+
+# Electronics OR Furniture
+db.products.find({ category: { $in: ["Electronics", "Furniture"] } })
+
+# NOT Clothing
+db.products.find({ category: { $ne: "Clothing" } })
+
+# Price > 100 AND category is Electronics
+db.products.find({ price: { $gt: 100 }, category: "Electronics" })
+
+### 8. UPDATE OPERATIONS
+
+# Update single product's stock
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $inc: { stock: 10 } }
+)
+
+# Add discount field to all Clothing
+db.products.updateMany(
+  { category: "Clothing" },
+  { $set: { discount: 10 } }
+)
+
+# Update nested field
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $set: { "specs.warranty": "2 years" } }
+)
+
+### 9. DELETE OPERATIONS
+
+# Delete a specific product
+db.products.deleteOne({ name: "Cotton T-Shirt" })
+
+# Delete all out-of-stock products
+db.products.deleteMany({ stock: 0 })
+
+# Clear entire collection (careful!)
+db.products.deleteMany({})
+
+### 10. AGGREGATION
+
+# Count products per category
+db.products.aggregate([
+  { $group: { _id: "$category", count: { $sum: 1 } } }
+])
+
+# Average price per category
+db.products.aggregate([
+  { $group: { _id: "$category", avgPrice: { $avg: "$price" } } }
+])
+
+# Most expensive product in each category
+db.products.aggregate([
+  { $sort: { price: -1 } },
+  { $group: {
+      _id: "$category",
+      mostExpensive: { $first: "$name" },
+      price: { $first: "$price" }
+    }
+  }
+])
+
+# Total inventory value
+db.products.aggregate([
+  {
+    $group: {
+      _id: null,
+      totalValue: { $sum: { $multiply: ["$price", "$stock"] } }
+    }
+  }
+])
+
+### 11. PROJECTION (Select Specific Fields)
+
+# Only show name and price
+db.products.find({}, { name: 1, price: 1, _id: 0 })
+
+# Exclude specs field
+db.products.find({}, { specs: 0 })
+
+# Combine with query and projection
+db.products.find(
+  { category: "Electronics" },
+  { name: 1, price: 1, _id: 0 }
+)
+
+### 12. UTILITY COMMANDS
+
+# Count all documents
+db.products.countDocuments()
+
+# Get distinct categories
+db.products.distinct("category")
+
+# Get distinct colors from specs
+db.products.distinct("specs.color")
+
+# Display collection stats
+db.products.stats()
+
+# Drop the collection
+db.products.drop()
+
+### 13. COMPLETE WORKFLOW EXAMPLE
+
+# 1. Switch to database
+use unify_labs
+
+# 2. Insert products
+db.products.insertMany([...products...])
+
+# 3. Verify insertion
+db.products.countDocuments()
+
+# 4. Query Electronics
+db.products.find({ category: "Electronics" })
+
+# 5. Top 2 expensive
+db.products.find().sort({ price: -1 }).limit(2)
+
+# 6. Update stock
+db.products.updateOne(
+  { name: "Wireless Mouse" },
+  { $inc: { stock: -5 } }
+)
+
+# 7. Check result
+db.products.findOne({ name: "Wireless Mouse" })
+
+### 14. PRACTICAL EXERCISES
+
+# Exercise 1: Find all Furniture sorted by price
+db.products.find({ category: "Furniture" }).sort({ price: -1 })
+
+# Exercise 2: Add new product
+db.products.insertOne({
+  name: "Smartphone",
+  category: "Electronics",
+  price: 699.99,
+  stock: 50,
+  specs: { color: "Black", weight: "0.18kg", storage: "128GB" }
+})
+
+# Exercise 3: Update all products - add featured field
+db.products.updateMany({}, { $set: { featured: false } })
+
+# Exercise 4: Mark expensive items as premium
+db.products.updateMany(
+  { price: { $gt: 500 } },
+  { $set: { premium: true } }
+)
+
+# Exercise 5: Find premium Electronics
+db.products.find({ premium: true, category: "Electronics" })
+
+# Exercise 6: Calculate average stock per category
+db.products.aggregate([
+  { $group: { _id: "$category", avgStock: { $avg: "$stock" } } }
+])
+
+# Exercise 7: Find products with low stock and high price
+db.products.find({ stock: { $lt: 50 }, price: { $gt: 200 } })
+
+# Exercise 8: Update product with new specs
+db.products.updateOne(
+  { name: "Laptop Pro 15" },
+  { $set: { "specs.screen": "15.6 inch", "specs.resolution": "4K" } }
+)
+
+### 15. VALIDATION QUERIES
+
+# Verify all required fields exist
+db.products.find({
+  $or: [
+    { name: { $exists: false } },
+    { category: { $exists: false } },
+    { price: { $exists: false } },
+    { stock: { $exists: false } },
+    { specs: { $exists: false } }
+  ]
+})
+
+# Should return empty array if all documents are valid
+
+# Check for documents missing nested specs.color
+db.products.find({ "specs.color": { $exists: false } })
+
+### 16. EXPORT & IMPORT
+
+# Export to JSON (run in terminal, not mongosh)
+mongoexport --db=unify_labs --collection=products --out=products-backup.json
+
+# Import from JSON
+mongoimport --db=unify_labs --collection=products --file=products-backup.json --jsonArray
+
+### 17. INDEXES (for better query performance)
+
+# Create index on category
+db.products.createIndex({ category: 1 })
+
+# Create index on price
+db.products.createIndex({ price: -1 })
+
+# Create compound index
+db.products.createIndex({ category: 1, price: -1 })
+
+# View all indexes
+db.products.getIndexes()
+
+# Drop an index
+db.products.dropIndex("category_1")
+
+### 18. TEXT SEARCH
+
+# Create text index on name
+db.products.createIndex({ name: "text" })
+
+# Search for products
+db.products.find({ $text: { $search: "Laptop" } })
+
+# Text search with score
+db.products.find(
+  { $text: { $search: "Mouse Chair" } },
+  { score: { $meta: "textScore" } }
+).sort({ score: { $meta: "textScore" } })
+
+---
+
+## COPY-PASTE READY COMMANDS
+
+### Setup Database
+```javascript
+use unify_labs
+```
+
+### Insert All 5 Products
+```javascript
+db.products.insertMany([{name:"Laptop Pro 15",category:"Electronics",price:1299.99,stock:25,specs:{color:"Silver",weight:"1.8kg",processor:"Intel i7",ram:"16GB"}},{name:"Wireless Mouse",category:"Electronics",price:29.99,stock:150,specs:{color:"Black",weight:"0.1kg",connectivity:"Bluetooth",battery:"AA x2"}},{name:"Office Chair",category:"Furniture",price:249.99,stock:40,specs:{color:"Black",weight:"12kg",material:"Leather",adjustable:true}},{name:"Cotton T-Shirt",category:"Clothing",price:19.99,stock:200,specs:{color:"Blue",weight:"0.2kg",size:"M",material:"100% Cotton"}},{name:"Wooden Desk",category:"Furniture",price:399.99,stock:15,specs:{color:"Oak",weight:"25kg",dimensions:"120x60x75cm",material:"Solid Wood"}}])
+```
+
+### Find Electronics
+```javascript
+db.products.find({category:"Electronics"})
+```
+
+### Top 2 Expensive
+```javascript
+db.products.find().sort({price:-1}).limit(2)
+```
