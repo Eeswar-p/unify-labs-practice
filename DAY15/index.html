@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY15 - Virtual Core v1.0 | State Machine & Advanced Logic</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Boot Screen / PIN Login -->
+    <div id="bootScreen" class="boot-screen active">
+        <div class="boot-container">
+            <pre class="ascii-banner">
+  ╔═══════════════════════════════════════╗
+  ║    VIRTUAL CORE v1.0 - BOOT INIT      ║
+  ║    Manufacturing Date: 2026-03-04     ║
+  ║    Status: AWAITING AUTHORIZATION     ║
+  ╚═══════════════════════════════════════╝
+            </pre>
+            
+            <div class="boot-content">
+                <div class="boot-step">
+                    <p class="boot-label">STEP 1: System Security Verification</p>
+                    <p class="boot-description">Enter Master PIN to initialize core systems</p>
+                    <div class="pin-input-group">
+                        <input 
+                            type="password" 
+                            id="pinInput" 
+                            class="pin-input" 
+                            placeholder="••••"
+                            maxlength="4"
+                            aria-label="Master PIN input"
+                        >
+                        <button id="submitPinBtn" class="pin-button">
+                            🔐 AUTHORIZE
+                        </button>
+                    </div>
+                    <div id="pinAttempts" class="attempts-display">
+                        Attempts Remaining: <span id="attemptsLeft">3</span>/3
+                    </div>
+                    <div id="pinError" class="error-message" style="display: none;"></div>
+                </div>
+
+                <div class="boot-info">
+                    <p class="info-hint">💡 Hint: Think of a common security number (9999)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main System -->
+    <div id="mainSystem" class="main-system" style="display: none;">
+        <!-- Header -->
+        <header class="system-header">
+            <div class="header-title">
+                <span class="title-text">VIRTUAL CORE v1.0</span>
+                <span class="status-indicator" id="statusIndicator">● ONLINE</span>
+            </div>
+            <div class="header-info">
+                <span class="info-item">User: ADMIN | Balance: <span id="balanceDisplay">$1,000.00</span></span>
+            </div>
+        </header>
+
+        <!-- Terminal Display -->
+        <main class="terminal-container">
+            <!-- Terminal Output -->
+            <div class="terminal-section">
+                <div class="terminal-header">
+                    <h2>TERMINAL OUTPUT</h2>
+                    <button id="clearTerminal" class="clear-btn" title="Clear terminal">🗑️</button>
+                </div>
+                <div id="terminalOutput" class="terminal-output">
+                    <div class="boot-message">
+                        <pre id="welcomeBanner"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Command Interface -->
+            <div class="command-section">
+                <div class="command-input-group">
+                    <span class="prompt">[V-CORE]&gt;</span>
+                    <input 
+                        type="text" 
+                        id="commandInput" 
+                        class="command-input" 
+                        placeholder="Type command: bank, shop, vault, exit"
+                        aria-label="Command input"
+                        disabled
+                    >
+                    <button id="executeBtn" class="execute-btn" disabled>⚡ EXECUTE</button>
+                </div>
+                <div class="available-commands">
+                    <span class="command-option">bank</span>
+                    <span class="command-option">shop</span>
+                    <span class="command-option">vault</span>
+                    <span class="command-option">help</span>
+                    <span class="command-option">exit</span>
+                </div>
+            </div>
+
+            <!-- Bank Module -->
+            <div id="bankModule" class="module-container" style="display: none;">
+                <div class="module-header">
+                    <h3>💰 BANKING KERNEL v2.1</h3>
+                    <button class="close-module" data-module="bank">✕</button>
+                </div>
+                <div class="module-content">
+                    <div class="bank-stats">
+                        <div class="stat">
+                            <span class="stat-label">Current Balance:</span>
+                            <span class="stat-value" id="bankBalance">$1,000.00</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Account Status:</span>
+                            <span class="stat-value active">ACTIVE</span>
+                        </div>
+                    </div>
+
+                    <div class="bank-menu">
+                        <p class="menu-label">Banking Commands:</p>
+                        <div class="button-grid">
+                            <button class="bank-cmd" data-cmd="deposit">💵 Deposit</button>
+                            <button class="bank-cmd" data-cmd="withdraw">🏧 Withdraw</button>
+                            <button class="bank-cmd" data-cmd="balance">📊 Balance</button>
+                            <button class="bank-cmd" data-cmd="back">🔙 Back</button>
+                        </div>
+                    </div>
+
+                    <div id="bankInput" class="input-section" style="display: none;">
+                        <input 
+                            type="number" 
+                            id="bankAmount" 
+                            class="amount-input" 
+                            placeholder="Enter amount ($)"
+                            step="0.01"
+                            min="0"
+                            aria-label="Amount for transaction"
+                        >
+                        <button id="bankActionBtn" class="action-btn">Submit</button>
+                        <button id="bankCancelBtn" class="cancel-btn">Cancel</button>
+                    </div>
+
+                    <div id="bankResult" class="result-display" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Shop Module -->
+            <div id="shopModule" class="module-container" style="display: none;">
+                <div class="module-header">
+                    <h3>🛍️ SMART SHOP v1.5</h3>
+                    <button class="close-module" data-module="shop">✕</button>
+                </div>
+                <div class="module-content">
+                    <div class="shop-product">
+                        <div class="product-info">
+                            <h4>Premium Item</h4>
+                            <p class="product-price">Unit Price: <span class="price-tag">$50.00</span></p>
+                        </div>
+                    </div>
+
+                    <div class="quantity-input-group">
+                        <label for="quantityInput">How many items? (Quantity):</label>
+                        <input 
+                            type="number" 
+                            id="quantityInput" 
+                            class="quantity-input" 
+                            min="1" 
+                            placeholder="1-100"
+                            aria-label="Item quantity"
+                        >
+                    </div>
+
+                    <div class="discount-info">
+                        <p class="discount-title">Dynamic Discount Schedule:</p>
+                        <div class="discount-tiers">
+                            <div class="tier">
+                                <span class="tier-range">0-5 items</span>
+                                <span class="tier-discount">0% discount</span>
+                            </div>
+                            <div class="tier">
+                                <span class="tier-range">6-10 items</span>
+                                <span class="tier-discount">10% discount</span>
+                            </div>
+                            <div class="tier">
+                                <span class="tier-range">11+ items</span>
+                                <span class="tier-discount">20% discount</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="shop-actions">
+                        <button id="calculateBtn" class="action-btn">📊 Calculate Price</button>
+                        <button id="purchaseBtn" class="purchase-btn" style="display: none;">💳 Purchase</button>
+                        <button id="shopCancelBtn" class="cancel-btn">🔙 Back</button>
+                    </div>
+
+                    <div id="shopResult" class="result-display" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Vault Module -->
+            <div id="vaultModule" class="module-container" style="display: none;">
+                <div class="module-header">
+                    <h3>🔐 SECURE VAULT v3.0</h3>
+                    <button class="close-module" data-module="vault">✕</button>
+                </div>
+                <div class="module-content">
+                    <div class="vault-lock">
+                        <div class="lock-icon">🔒</div>
+                        <p class="vault-status">VAULT LOCKED</p>
+                    </div>
+
+                    <div class="vault-info">
+                        <p class="vault-message">A secret word is hidden within the vault.</p>
+                        <p class="vault-hint-label">Hint: Think of something you use for security</p>
+                    </div>
+
+                    <div class="vault-input-group">
+                        <input 
+                            type="text" 
+                            id="vaultGuess" 
+                            class="vault-input" 
+                            placeholder="Type your guess..."
+                            aria-label="Secret word guess"
+                        >
+                        <button id="vaultGuessBtn" class="action-btn">🔑 Guess</button>
+                    </div>
+
+                    <div id="vaultResult" class="result-display" style="display: none;"></div>
+                    
+                    <button id="vaultBackBtn" class="cancel-btn" style="margin-top: 1rem;">🔙 Back</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Help Panel -->
+        <div id="helpPanel" class="help-panel" style="display: none;">
+            <div class="help-header">
+                <h3>📖 SYSTEM HELP</h3>
+                <button id="closeHelp" class="close-btn">✕</button>
+            </div>
+            <div class="help-content">
+                <div class="help-section">
+                    <h4>Available Commands</h4>
+                    <ul>
+                        <li><strong>bank</strong> - Access banking services (deposit, withdraw, check balance)</li>
+                        <li><strong>shop</strong> - Purchase items with dynamic discounts</li>
+                        <li><strong>vault</strong> - Unlock the secure vault with a secret word</li>
+                        <li><strong>help</strong> - Show this help panel</li>
+                        <li><strong>exit</strong> - Shutdown the system</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>Banking Commands</h4>
+                    <ul>
+                        <li><strong>deposit [amount]</strong> - Add money to your account</li>
+                        <li><strong>withdraw [amount]</strong> - Remove money from your account</li>
+                        <li><strong>balance</strong> - Check current balance</li>
+                        <li><strong>back</strong> - Return to main menu</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>Shop Information</h4>
+                    <ul>
+                        <li>Unit Price: $50.00</li>
+                        <li>0-5 items: 0% discount</li>
+                        <li>6-10 items: 10% discount</li>
+                        <li>11+ items: 20% discount</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>Tips</h4>
+                    <ul>
+                        <li>Enter lowercase commands (e.g., "bank", "shop")</li>
+                        <li>Cannot withdraw more than your current balance</li>
+                        <li>Shop purchases are automatically deducted from balance</li>
+                        <li>The vault secret word is something related to security</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide Section (Educational Content) -->
+    <aside id="guidePanel" class="guide-panel" style="display: none;">
+        <div class="guide-header">
+            <h3>📚 Learning Guide</h3>
+            <button id="closeGuide" class="close-btn">✕</button>
+        </div>
+        <div class="guide-content">
+            <div class="guide-section">
+                <h4>State Machine Pattern</h4>
+                <p>This system uses a state machine to track:</p>
+                <ul>
+                    <li>Boot state (PIN verification)</li>
+                    <li>Main menu state (command input)</li>
+                    <li>Module states (bank, shop, vault)</li>
+                    <li>System terminated state</li>
+                </ul>
+            </div>
+            <div class="guide-section">
+                <h4>Security Layers</h4>
+                <p>Multiple security mechanisms implemented:</p>
+                <ul>
+                    <li>PIN authentication with limited attempts</li>
+                    <li>Session management</li>
+                    <li>Input validation</li>
+                    <li>Error handling</li>
+                </ul>
+            </div>
+            <div class="guide-section">
+                <h4>Nested Conditional Logic</h4>
+                <p>Complex decision trees in:</p>
+                <ul>
+                    <li>Bank module (deposit/withdraw checks)</li>
+                    <li>Shop module (discount tier calculations)</li>
+                    <li>Vault module (secret word verification)</li>
+                </ul>
+            </div>
+            <div class="guide-section">
+                <h4>Error Handling</h4>
+                <p>Graceful handling of:</p>
+                <ul>
+                    <li>Invalid inputs (non-numeric, negative)</li>
+                    <li>Insufficient funds</li>
+                    <li>Out-of-range values</li>
+                    <li>Unknown commands</li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Engineering Guide -->
+    <section id="engineeringSection" class="engineering-section" style="display: none;">
+        <div class="engineering-container">
+            <h2>🏗️ System Architecture</h2>
+            <p style="margin-top: 1rem; color: #cbd5e1;">This interactive system demonstrates advanced state machine programming patterns.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="display: none;">
+        <p class="footer-text">
+            <span class="code-comment">// State Machine: Boot → Menu → Module → Boot</span>
+        </p>
+        <p class="footer-meta">DAY15 | State Machine & Advanced Logic | March 2026</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>
