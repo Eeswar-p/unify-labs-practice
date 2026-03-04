@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAY19 - To-Do List Master: DOM Manipulation with querySelector and addEventListener">
+    <title>DAY19 - To-Do List Master | DOM Manipulation</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">
+                    <span class="icon">✅</span>
+                    To-Do List Master
+                </h1>
+                <p class="header-subtitle">Master DOM Manipulation with querySelector & addEventListener</p>
+            </div>
+            
+            <div class="learning-badges">
+                <span class="badge badge-dom">
+                    <span class="badge-icon">🌳</span>
+                    <span>DOM</span>
+                </span>
+                <span class="badge badge-query">
+                    <span class="badge-icon">🔍</span>
+                    <span>querySelector</span>
+                </span>
+                <span class="badge badge-events">
+                    <span class="badge-icon">⚡</span>
+                    <span>Events</span>
+                </span>
+                <span class="badge badge-dynamic">
+                    <span class="badge-icon">✨</span>
+                    <span>Dynamic</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- To-Do List Section -->
+            <section class="list-card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <span class="method-badge list-badge">My Tasks</span>
+                        Interactive To-Do List
+                    </h2>
+                    <p class="card-description">
+                        Add tasks, toggle completion status, and delete items. This project demonstrates DOM manipulation, event handling, and dynamic element creation.
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <!-- Input Section -->
+                    <div class="input-section">
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                id="taskInput" 
+                                class="input-field" 
+                                placeholder="Add a new task... (Press Enter or click Add)"
+                                autocomplete="off"
+                            />
+                            <button id="addBtn" class="btn btn-add">
+                                <span class="btn-icon">➕</span>
+                                Add Task
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Buttons -->
+                    <div class="filter-section">
+                        <div class="button-group">
+                            <button id="filterAll" class="btn btn-filter active">
+                                <span class="btn-icon">📋</span>
+                                All
+                            </button>
+                            <button id="filterActive" class="btn btn-filter">
+                                <span class="btn-icon">⏳</span>
+                                Active
+                            </button>
+                            <button id="filterCompleted" class="btn btn-filter">
+                                <span class="btn-icon">✅</span>
+                                Completed
+                            </button>
+                            <button id="clearCompleted" class="btn btn-secondary">
+                                <span class="btn-icon">🗑️</span>
+                                Clear Completed
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Section -->
+                    <div class="stats-section">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-label">Total Tasks</div>
+                                <div class="stat-value" id="totalCount">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Completed</div>
+                                <div class="stat-value completed-color" id="completedCount">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Remaining</div>
+                                <div class="stat-value active-color" id="remainingCount">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Progress</div>
+                                <div class="stat-value" id="progressPercent">0%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- To-Do List Container -->
+                    <div class="list-container">
+                        <div id="taskList" class="task-list">
+                            <!-- Tasks will be dynamically added here -->
+                        </div>
+                        
+                        <div id="emptyState" class="empty-state">
+                            <div class="empty-icon">📝</div>
+                            <p>No tasks yet! Add one to get started.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DOM Methods Reference Section -->
+            <section class="code-examples-section">
+                <h2 class="section-title">
+                    <span class="icon">💻</span>
+                    DOM Methods Reference
+                </h2>
+
+                <div class="code-grid">
+                    <!-- querySelector -->
+                    <div class="code-card query-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🔍</span>
+                            querySelector
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Select element by CSS selector
+const element = document.querySelector(selector);
+
+// Examples
+const input = document.querySelector('#taskInput');
+const list = document.querySelector('.task-list');
+const items = document.querySelector('li.task-item');
+
+// Returns: First matching element
+// Returns: null if not found</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Selects the FIRST element matching a CSS selector. Most flexible method for selection.
+                        </p>
+                    </div>
+
+                    <!-- querySelectorAll -->
+                    <div class="code-card query-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🔍</span>
+                            querySelectorAll
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Select all matching elements
+const elements = document.querySelectorAll(selector);
+
+// Examples
+const allItems = document.querySelectorAll('.task-item');
+const btns = document.querySelectorAll('button');
+
+// Returns: NodeList of all matches
+// Returns: Empty NodeList if none found
+
+// Iterate over results
+allItems.forEach(item => {
+    console.log(item);
+});</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Selects ALL elements matching a CSS selector. Returns a NodeList you can loop through.
+                        </p>
+                    </div>
+
+                    <!-- getElementById -->
+                    <div class="code-card id-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🏷️</span>
+                            getElementById
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Select element by ID
+const element = document.getElementById(id);
+
+// Examples
+const input = document.getElementById('taskInput');
+const btn = document.getElementById('addBtn');
+
+// Returns: Element with matching ID
+// Returns: null if not found
+
+// Quick & fast (best for unique IDs)
+const taskList = document.getElementById('taskList');</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Selects element by unique ID. Fastest method for selecting by ID (more specific than querySelector).
+                        </p>
+                    </div>
+
+                    <!-- addEventListener -->
+                    <div class="code-card event-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">⚡</span>
+                            addEventListener
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Add event listener
+element.addEventListener(event, handler);
+
+// Examples
+const btn = document.querySelector('#addBtn');
+btn.addEventListener('click', () => {
+    console.log('Button clicked!');
+});
+
+const input = document.querySelector('#taskInput');
+input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Attaches an event listener to an element. Called when specified event occurs.
+                        </p>
+                    </div>
+
+                    <!-- createElement & appendChild -->
+                    <div class="code-card create-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">✨</span>
+                            Create & Append
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Create new element
+const newElement = document.createElement(tag);
+
+// Set properties
+newElement.textContent = 'Hello';
+newElement.className = 'task-item';
+newElement.id = 'task-1';
+
+// Add to DOM
+const container = document.querySelector('#taskList');
+container.appendChild(newElement);
+
+// Add multiple children
+newElement.innerHTML = `<span>Task</span>
+<button>Delete</button>`;</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Create new DOM elements dynamically and add them to the page.
+                        </p>
+                    </div>
+
+                    <!-- classList Toggle -->
+                    <div class="code-card class-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🎨</span>
+                            classList Methods
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Toggle class
+element.classList.toggle('completed');
+
+// Add class
+element.classList.add('active');
+
+// Remove class
+element.classList.remove('active');
+
+// Check if has class
+if (element.classList.contains('completed')) {
+    console.log('Task is completed');
+}
+
+// Replace class
+element.classList.replace('active', 'inactive');</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Manipulate CSS classes on elements. Perfect for toggling styles dynamically.
+                        </p>
+                    </div>
+
+                    <!-- removeChild & remove -->
+                    <div class="code-card remove-card">
+                        <h3 class="code-title">
+                            <span class="badge-icon">🗑️</span>
+                            Remove Methods
+                        </h3>
+                        <div class="code-block">
+                            <pre><code>// Remove element (modern)
+element.remove();
+
+// Remove child (legacy)
+parent.removeChild(child);
+
+// Examples
+const item = document.querySelector('#task-1');
+item.remove(); // Removes from DOM
+
+// Or with parent
+const list = document.querySelector('#taskList');
+const item = list.querySelector('.task-item');
+list.removeChild(item);</code></pre>
+                        </div>
+                        <p class="code-description">
+                            Remove elements from the DOM. Use remove() for modern browsers (simpler).
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="learning-section">
+                <h2 class="section-title">
+                    <span class="icon">🎓</span>
+                    Learning Outcomes
+                </h2>
+
+                <div class="outcomes-grid">
+                    <div class="outcome-card">
+                        <div class="outcome-icon dom-icon">
+                            <span>🌳</span>
+                        </div>
+                        <h3>DOM Mastery</h3>
+                        <p>Understand the Document Object Model and how JavaScript interacts with HTML.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon query-icon">
+                            <span>🔍</span>
+                        </div>
+                        <h3>Element Selection</h3>
+                        <p>Use querySelector, querySelectorAll, and getElementById correctly.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon event-icon">
+                            <span>⚡</span>
+                        </div>
+                        <h3>Event Handling</h3>
+                        <p>Implement addEventListener for user interactions and event responses.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon dynamic-icon">
+                            <span>✨</span>
+                        </div>
+                        <h3>Dynamic Content</h3>
+                        <p>Create and remove DOM elements dynamically based on user actions.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon style-icon">
+                            <span>🎨</span>
+                        </div>
+                        <h3>CSS Class Toggle</h3>
+                        <p>Use classList to dynamically change element styling.</p>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon app-icon">
+                            <span>🚀</span>
+                        </div>
+                        <h3>Build Apps</h3>
+                        <p>Create real-world interactive web applications with JavaScript.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Examples & Tips -->
+            <section class="tips-section">
+                <h2 class="section-title">
+                    <span class="icon">💡</span>
+                    Common Patterns
+                </h2>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3 class="tip-title">Toggle Completion</h3>
+                        <div class="tip-code">
+                            <code>// Click to toggle 'completed' class
+taskItem.addEventListener('click', () => {
+    taskItem.classList.toggle('completed');
+});</code>
+                        </div>
+                        <p class="tip-description">Simple pattern for toggling CSS classes on elements.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Delete Item</h3>
+                        <div class="tip-code">
+                            <code>// Delete button removes item from DOM
+deleteBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    taskItem.remove();
+});</code>
+                        </div>
+                        <p class="tip-description">Use e.stopPropagation() to prevent event bubbling.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Create List Item</h3>
+                        <div class="tip-code">
+                            <code>// Create task item with Delete button
+const li = document.createElement('li');
+li.className = 'task-item';
+li.innerHTML = `<span>${text}</span>
+    <button class="delete-btn">Delete</button>`;</code>
+                        </div>
+                        <p class="tip-description">Combine createElement and innerHTML for complex elements.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Event Delegation</h3>
+                        <div class="tip-code">
+                            <code>// One listener on parent catches child clicks
+list.addEventListener('click', (e) => {
+    if (e.target.classList.contains('delete-btn')) {
+        e.target.parentElement.remove();
+    }
+});</code>
+                        </div>
+                        <p class="tip-description">Attach one listener to parent instead of many to children.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Keyboard Events</h3>
+                        <div class="tip-code">
+                            <code>// Detect Enter key for form submission
+input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});</code>
+                        </div>
+                        <p class="tip-description">Handle keyboard input for better user experience.</p>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3 class="tip-title">Update UI State</h3>
+                        <div class="tip-code">
+                            <code>// Update statistics after each change
+function updateStats() {
+    const total = document.querySelectorAll('.task-item').length;
+    const completed = document.querySelectorAll('.task-item.completed').length;
+    document.getElementById('totalCount').textContent = total;
+}</code>
+                        </div>
+                        <p class="tip-description">Keep UI in sync with data by updating after changes.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                DAY19 - To-Do List Master
+                <span class="separator">|</span>
+                DOM Manipulation & Events
+                <span class="separator">|</span>
+                <span class="year">2026</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
