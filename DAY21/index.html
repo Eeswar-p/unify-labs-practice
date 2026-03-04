@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DAY21 - localStorage + ES6 Modules + Settings UI" />
+    <title>DAY21 - Settings Persistence Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <header class="page-header">
+        <div class="container">
+            <h1>DAY21 - Settings Persistence Lab</h1>
+            <p>Use localStorage with JSON serialization and ES6 modules</p>
+            <div class="badges">
+                <span>localStorage</span>
+                <span>JSON.stringify / JSON.parse</span>
+                <span>ES6 Modules</span>
+                <span>Dark/Light Mode</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container page-main">
+        <section class="card settings-card">
+            <div class="card-header">
+                <h2>Settings UI</h2>
+                <p>Changes are persisted in <strong>localStorage</strong> as one JSON object.</p>
+            </div>
+
+            <div class="settings-list">
+                <label class="setting-row" for="themeToggle">
+                    <div>
+                        <h3>Dark Mode</h3>
+                        <p>Switch between light and dark theme.</p>
+                    </div>
+                    <div class="control-inline">
+                        <span id="themeValue" class="chip">Light</span>
+                        <input id="themeToggle" type="checkbox" class="switch-input" />
+                    </div>
+                </label>
+
+                <label class="setting-row" for="compactToggle">
+                    <div>
+                        <h3>Compact Layout</h3>
+                        <p>Reduce spacing for a denser UI layout.</p>
+                    </div>
+                    <input id="compactToggle" type="checkbox" class="switch-input" />
+                </label>
+
+                <label class="setting-row" for="tipsToggle">
+                    <div>
+                        <h3>Show Learning Tips</h3>
+                        <p>Show/hide tips panel below.</p>
+                    </div>
+                    <input id="tipsToggle" type="checkbox" class="switch-input" />
+                </label>
+            </div>
+
+            <div class="actions">
+                <button id="saveBtn" class="btn btn-primary" type="button">Save Settings</button>
+                <button id="resetBtn" class="btn btn-secondary" type="button">Reset to Defaults</button>
+                <p id="saveStatus" class="save-status" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <section id="tipsPanel" class="card tips-card">
+            <h2>Learning Tips</h2>
+            <ul>
+                <li><code>JSON.stringify(settings)</code> converts object to string for storage.</li>
+                <li><code>JSON.parse(savedString)</code> restores it back to object.</li>
+                <li>Keep one settings object instead of many isolated keys.</li>
+            </ul>
+        </section>
+
+        <section class="card preview-card">
+            <h2>Current Saved Settings Object</h2>
+            <pre id="settingsPreview" class="code-preview">{}</pre>
+        </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+:root {
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+    --surface-muted: #f8fafc;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --border: #dbe3ee;
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --chip-bg: #e0e7ff;
+    --chip-text: #3730a3;
+    --shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme='dark'] {
+    --bg: #0b1220;
+    --surface: #111b2f;
+    --surface-muted: #1a2740;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: #2b3a59;
+    --primary: #818cf8;
+    --primary-hover: #a5b4fc;
+    --chip-bg: #312e81;
+    --chip-text: #e0e7ff;
+    --shadow: 0 10px 24px rgba(2, 6, 23, 0.45);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+body {
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+.container {
+    width: min(980px, 92vw);
+    margin: 0 auto;
+}
+
+.page-header {
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--surface), var(--surface-muted));
+    padding: 2rem 0 1.5rem;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+}
+
+.page-header p {
+    margin: 0.4rem 0 1rem;
+    color: var(--text-muted);
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.badges span {
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    color: var(--chip-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.page-main {
+    padding: 1.5rem 0 2.5rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 1rem;
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.card-header p {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.settings-list {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.7rem;
+}
+
+.setting-row {
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    border-radius: 12px;
+    padding: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.setting-row h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.setting-row p {
+    margin: 0.2rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
+.control-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.switch-input {
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.chip {
+    background: var(--chip-bg);
+    color: var(--chip-text);
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    min-width: 3.7rem;
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 1rem;
+}
+
+.btn {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 0.55rem 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--surface-muted);
+}
+
+.save-status {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.save-status.success {
+    color: #059669;
+}
+
+.save-status.info {
+    color: var(--text-muted);
+}
+
+.tips-card ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.15rem;
+}
+
+.tips-card li {
+    margin-bottom: 0.4rem;
+}
+
+code,
+.code-preview {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+}
+
+.code-preview {
+    margin: 0;
+    background: #0b1020;
+    color: #dbeafe;
+    border-radius: 12px;
+    padding: 0.9rem;
+    overflow: auto;
+    border: 1px solid #1f2a44;
+    min-height: 120px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+body.compact .card {
+    padding: 0.75rem;
+}
+
+body.compact .setting-row {
+    padding: 0.65rem;
+}
+
+@media (max-width: 720px) {
+    .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actions {
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
