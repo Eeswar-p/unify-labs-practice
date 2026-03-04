@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAY13 - JavaScript Variables & Math. Master variable declaration, arithmetic operations, string concatenation, and template literals.">
+    <meta name="theme-color" content="#6366f1">
+    
+    <title>DAY13 - JavaScript Variables & Math</title>
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <h1 class="header__title">
+                    <span class="code-syntax">const</span> DAY13 = <span class="code-string">"Variables & Math"</span>
+                </h1>
+                <p class="header__subtitle">
+                    Master JavaScript variable declaration, arithmetic operations, and string manipulation
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Section 1: Variables Basics -->
+            <section class="section" id="variables-section">
+                <div class="section__header">
+                    <h2 class="section__title">Variables Explained</h2>
+                    <p class="section__description">Three ways to declare variables in JavaScript</p>
+                </div>
+
+                <div class="variables-grid">
+                    <!-- const Card -->
+                    <article class="variable-card" id="const-card">
+                        <div class="variable-card__header">
+                            <h3 class="variable-card__title">const</h3>
+                            <span class="badge badge--green">Recommended</span>
+                        </div>
+                        <div class="variable-card__content">
+                            <p class="variable-card__description">
+                                Block-scoped, cannot be reassigned after initialization
+                            </p>
+                            <div class="code-block">
+                                <code><span class="keyword">const</span> age = <span class="number">25</span>;</code>
+                            </div>
+                            <ul class="feature-list">
+                                <li>✅ Prevents accidental reassignment</li>
+                                <li>✅ Block-scoped (safer)</li>
+                                <li>✅ Must be initialized</li>
+                                <li>✅ Best for most cases</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- let Card -->
+                    <article class="variable-card" id="let-card">
+                        <div class="variable-card__header">
+                            <h3 class="variable-card__title">let</h3>
+                            <span class="badge badge--blue">For Loops</span>
+                        </div>
+                        <div class="variable-card__content">
+                            <p class="variable-card__description">
+                                Block-scoped, can be reassigned but not redeclared
+                            </p>
+                            <div class="code-block">
+                                <code><span class="keyword">let</span> counter = <span class="number">0</span>;<br>counter = <span class="number">1</span>;</code>
+                            </div>
+                            <ul class="feature-list">
+                                <li>✅ Can be reassigned</li>
+                                <li>✅ Block-scoped</li>
+                                <li>✅ Use in loops</li>
+                                <li>⚠️ Use when value changes</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- var Card -->
+                    <article class="variable-card" id="var-card">
+                        <div class="variable-card__header">
+                            <h3 class="variable-card__title">var</h3>
+                            <span class="badge badge--red">Legacy</span>
+                        </div>
+                        <div class="variable-card__content">
+                            <p class="variable-card__description">
+                                Function-scoped, can be reassigned and redeclared
+                            </p>
+                            <div class="code-block">
+                                <code><span class="keyword">var</span> name = <span class="string">"John"</span>;<br>name = <span class="string">"Jane"</span>;</code>
+                            </div>
+                            <ul class="feature-list">
+                                <li>⚠️ Hoisting confusion</li>
+                                <li>⚠️ Function-scoped (less safe)</li>
+                                <li>⚠️ Can cause bugs</li>
+                                <li>❌ Avoid in modern code</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Section 2: Math Operations -->
+            <section class="section">
+                <div class="section__header">
+                    <h2 class="section__title">Arithmetic Operations</h2>
+                    <p class="section__description">Perform calculations with variables</p>
+                </div>
+
+                <div class="demo-container">
+                    <div class="demo-panel">
+                        <h3 class="demo-panel__title">Interactive Math Calculator</h3>
+                        
+                        <form class="form" id="math-form" onsubmit="return false">
+                            <div class="form-group">
+                                <label for="num1" class="form-label">First Number:</label>
+                                <input 
+                                    type="number" 
+                                    id="num1" 
+                                    class="form-input" 
+                                    value="15"
+                                    placeholder="Enter first number"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="num2" class="form-label">Second Number:</label>
+                                <input 
+                                    type="number" 
+                                    id="num2" 
+                                    class="form-input" 
+                                    value="7"
+                                    placeholder="Enter second number"
+                                >
+                            </div>
+
+                            <button type="button" class="btn btn--primary" id="calculate-btn">
+                                Calculate All Operations
+                            </button>
+                        </form>
+
+                        <div id="math-results" class="results-grid" style="display: none;">
+                            <!-- Results injected by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="code-panel">
+                        <h3 class="code-panel__title">How It Works</h3>
+                        <pre class="code-display"><code><span class="keyword">const</span> num1 = <span class="number">15</span>;
+<span class="keyword">const</span> num2 = <span class="number">7</span>;
+
+<span class="comment">// Addition</span>
+<span class="keyword">const</span> sum = num1 + num2;  <span class="comment">// 22</span>
+
+<span class="comment">// Subtraction</span>
+<span class="keyword">const</span> difference = num1 - num2;  <span class="comment">// 8</span>
+
+<span class="comment">// Multiplication</span>
+<span class="keyword">const</span> product = num1 * num2;  <span class="comment">// 105</span>
+
+<span class="comment">// Division</span>
+<span class="keyword">const</span> quotient = num1 / num2;  <span class="comment">// 2.14...</span>
+
+<span class="comment">// Remainder (Modulo)</span>
+<span class="keyword">const</span> remainder = num1 % num2;  <span class="comment">// 1</span>
+
+<span class="comment">// Exponentiation</span>
+<span class="keyword">const</span> power = num1 ** 2;  <span class="comment">// 225</span></code></pre>
+                    </div>
+                </div>
+
+                <!-- Operations Explanation -->
+                <div class="operations-grid">
+                    <div class="operation-card">
+                        <h4 class="operation-card__title">➕ Addition (+)</h4>
+                        <p>Adds two numbers together</p>
+                        <code class="code-inline">15 + 7 = 22</code>
+                    </div>
+
+                    <div class="operation-card">
+                        <h4 class="operation-card__title">➖ Subtraction (-)</h4>
+                        <p>Subtracts second from first</p>
+                        <code class="code-inline">15 - 7 = 8</code>
+                    </div>
+
+                    <div class="operation-card">
+                        <h4 class="operation-card__title">✖️ Multiplication (*)</h4>
+                        <p>Multiplies two numbers</p>
+                        <code class="code-inline">15 * 7 = 105</code>
+                    </div>
+
+                    <div class="operation-card">
+                        <h4 class="operation-card__title">➗ Division (/)</h4>
+                        <p>Divides first by second</p>
+                        <code class="code-inline">15 / 7 ≈ 2.14</code>
+                    </div>
+
+                    <div class="operation-card">
+                        <h4 class="operation-card__title">🔢 Remainder (%)</h4>
+                        <p>Returns remainder after division</p>
+                        <code class="code-inline">15 % 7 = 1</code>
+                    </div>
+
+                    <div class="operation-card">
+                        <h4 class="operation-card__title">⚡ Exponent (**)</h4>
+                        <p>Raises to power</p>
+                        <code class="code-inline">2 ** 3 = 8</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: String Concatenation -->
+            <section class="section">
+                <div class="section__header">
+                    <h2 class="section__title">String Manipulation</h2>
+                    <p class="section__description">Combine strings with concatenation and template literals</p>
+                </div>
+
+                <div class="demo-container">
+                    <div class="demo-panel">
+                        <h3 class="demo-panel__title">Welcome Message Builder</h3>
+                        
+                        <form class="form" id="name-form" onsubmit="return false">
+                            <div class="form-group">
+                                <label for="user-name" class="form-label">Your Name:</label>
+                                <input 
+                                    type="text" 
+                                    id="user-name" 
+                                    class="form-input" 
+                                    value="Developer"
+                                    placeholder="Enter your name"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="user-role" class="form-label">Your Role:</label>
+                                <input 
+                                    type="text" 
+                                    id="user-role" 
+                                    class="form-input" 
+                                    value="JavaScript Learner"
+                                    placeholder="Enter your role"
+                                >
+                            </div>
+
+                            <button type="button" class="btn btn--primary" id="generate-btn">
+                                Generate Messages
+                            </button>
+                        </form>
+
+                        <div id="string-results" class="string-results" style="display: none;">
+                            <!-- Results injected by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="code-panel">
+                        <h3 class="code-panel__title">Methods Demonstrated</h3>
+                        <pre class="code-display"><code><span class="keyword">const</span> name = <span class="string">"Alice"</span>;
+<span class="keyword">const</span> role = <span class="string">"Developer"</span>;
+
+<span class="comment">// Method 1: Concatenation (+)</span>
+<span class="keyword">const</span> msg1 = <span class="string">"Welcome, "</span> + name + <span class="string">"!"</span>;
+
+<span class="comment">// Method 2: Template Literals (backticks)</span>
+<span class="keyword">const</span> msg2 = <span class="string">`Hi ${name}!`</span>;
+
+<span class="comment">// Method 3: Multiple variables</span>
+<span class="keyword">const</span> msg3 = 
+  <span class="string">`${name} is a ${role}`</span>;
+
+<span class="comment">// Method 4: With expressions</span>
+<span class="keyword">const</span> msg4 = 
+  <span class="string">`Age: ${2024 - 2000}`</span>;</code></pre>
+                    </div>
+                </div>
+
+                <!-- String Methods Grid -->
+                <div class="string-methods-grid">
+                    <div class="method-card">
+                        <h4 class="method-card__title">Concatenation (+)</h4>
+                        <p class="method-card__desc">Combines strings with + operator</p>
+                        <code class="code-inline">"Hello" + " " + "World"</code>
+                        <p class="method-card__result">Result: "Hello World"</p>
+                        <span class="method-card__note">⚠️ Can be messy with many strings</span>
+                    </div>
+
+                    <div class="method-card">
+                        <h4 class="method-card__title">Template Literals</h4>
+                        <p class="method-card__desc">Uses backticks and ${} for interpolation</p>
+                        <code class="code-inline">`Hello ${name}`</code>
+                        <p class="method-card__result">Result: "Hello Alice"</p>
+                        <span class="method-card__note">✅ Preferred modern approach</span>
+                    </div>
+
+                    <div class="method-card">
+                        <h4 class="method-card__title">.concat()</h4>
+                        <p class="method-card__desc">Method to join multiple strings</p>
+                        <code class="code-inline">"Hello".concat(" ", name)</code>
+                        <p class="method-card__result">Result: "Hello Alice"</p>
+                        <span class="method-card__note">✔️ Clean but less common</span>
+                    </div>
+
+                    <div class="method-card">
+                        <h4 class="method-card__title">With Expressions</h4>
+                        <p class="method-card__desc">Execute code inside template literals</p>
+                        <code class="code-inline">`Total: ${10 + 5}`</code>
+                        <p class="method-card__result">Result: "Total: 15"</p>
+                        <span class="method-card__note">✅ Very powerful feature</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Real-World Examples -->
+            <section class="section">
+                <div class="section__header">
+                    <h2 class="section__title">Real-World Examples</h2>
+                    <p class="section__description">Practical applications of variables and math</p>
+                </div>
+
+                <div class="examples-grid">
+                    <!-- Example 1: Shopping Cart -->
+                    <article class="example-card">
+                        <h3 class="example-card__title">🛒 Shopping Cart</h3>
+                        <div class="example-card__content">
+                            <p>Calculate total with tax and discount</p>
+                            <pre class="code-display"><code><span class="keyword">const</span> price = <span class="number">100</span>;
+<span class="keyword">const</span> quantity = <span class="number">3</span>;
+<span class="keyword">const</span> taxRate = <span class="number">0.08</span>;
+
+<span class="keyword">const</span> subtotal = price * quantity;
+<span class="keyword">const</span> tax = subtotal * taxRate;
+<span class="keyword">const</span> total = subtotal + tax;
+
+<span class="comment">// Result: $324</span></code></pre>
+                        </div>
+                    </article>
+
+                    <!-- Example 2: Age Calculator -->
+                    <article class="example-card">
+                        <h3 class="example-card__title">🎂 Age Calculator</h3>
+                        <div class="example-card__content">
+                            <p>Calculate age from birth year</p>
+                            <pre class="code-display"><code><span class="keyword">const</span> birthYear = <span class="number">2000</span>;
+<span class="keyword">const</span> currentYear = <span class="number">2024</span>;
+
+<span class="keyword">const</span> age = currentYear - birthYear;
+<span class="keyword">const</span> msg = 
+  <span class="string">`You are ${age} years old`</span>;
+
+<span class="comment">// Result: "You are 24 years old"</span></code></pre>
+                        </div>
+                    </article>
+
+                    <!-- Example 3: Temperature Conversion -->
+                    <article class="example-card">
+                        <h3 class="example-card__title">🌡️ Temperature Conversion</h3>
+                        <div class="example-card__content">
+                            <p>Convert Celsius to Fahrenheit</p>
+                            <pre class="code-display"><code><span class="keyword">const</span> celsius = <span class="number">25</span>;
+
+<span class="keyword">const</span> fahrenheit = 
+  (celsius * <span class="number">9</span> / <span class="number">5</span>) + <span class="number">32</span>;
+
+<span class="keyword">const</span> msg = 
+  <span class="string">`${celsius}°C = ${fahrenheit}°F`</span>;
+
+<span class="comment">// Result: "25°C = 77°F"</span></code></pre>
+                        </div>
+                    </article>
+
+                    <!-- Example 4: Grade Calculator -->
+                    <article class="example-card">
+                        <h3 class="example-card__title">📊 Grade Average</h3>
+                        <div class="example-card__content">
+                            <p>Calculate average from test scores</p>
+                            <pre class="code-display"><code><span class="keyword">const</span> score1 = <span class="number">85</span>;
+<span class="keyword">const</span> score2 = <span class="number">92</span>;
+<span class="keyword">const</span> score3 = <span class="number">78</span>;
+
+<span class="keyword">const</span> average = 
+  (score1 + score2 + score3) / <span class="number">3</span>;
+
+<span class="comment">// Result: 85 (average)</span></code></pre>
+                        </div>
+                    </article>
+
+                    <!-- Example 5: Distance Calculator -->
+                    <article class="example-card">
+                        <h3 class="example-card__title">📏 Distance Calculator</h3>
+                        <div class="example-card__content">
+                            <p>Calculate distance with speed and time</p>
+                            <pre class="code-display"><code><span class="keyword">const</span> speed = <span class="number">60</span>; <span class="comment">// km/h</span>
+<span class="keyword">const</span> time = <span class="number">2.5</span>; <span class="comment">// hours</span>
+
+<span class="keyword">const</span> distance = speed * time;
+
+<span class="keyword">const</span> msg = 
+  <span class="string">`Distance: ${distance} km`</span>;
+
+<span class="comment">// Result: "Distance: 150 km"</span></code></pre>
+                        </div>
+                    </article>
+
+                    <!-- Example 6: Name Formatter -->
+                    <article class="example-card">
+                        <h3 class="example-card__title">✍️ Name Formatter</h3>
+                        <div class="example-card__content">
+                            <p>Format names and create personalized messages</p>
+                            <pre class="code-display"><code><span class="keyword">const</span> firstName = <span class="string">"John"</span>;
+<span class="keyword">const</span> lastName = <span class="string">"Doe"</span>;
+
+<span class="keyword">const</span> fullName = 
+  <span class="string">`${firstName} ${lastName}`</span>;
+
+<span class="keyword">const</span> greeting = 
+  <span class="string">`Hello, ${fullName}!`</span>;
+
+<span class="comment">// Result: "Hello, John Doe!"</span></code></pre>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Section 5: Challenge Quiz -->
+            <section class="section">
+                <div class="section__header">
+                    <h2 class="section__title">Quick Challenge Quiz</h2>
+                    <p class="section__description">Test your understanding</p>
+                </div>
+
+                <div class="quiz-grid">
+                    <div class="quiz-card">
+                        <h4 class="quiz-card__question">What is 15 % 7?</h4>
+                        <div class="quiz-card__options">
+                            <button class="quiz-option" data-answer="wrong">2</button>
+                            <button class="quiz-option" data-answer="correct">1</button>
+                            <button class="quiz-option" data-answer="wrong">7</button>
+                            <button class="quiz-option" data-answer="wrong">15</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <h4 class="quiz-card__question">Which is NOT reassignable?</h4>
+                        <div class="quiz-card__options">
+                            <button class="quiz-option" data-answer="correct">const</button>
+                            <button class="quiz-option" data-answer="wrong">let</button>
+                            <button class="quiz-option" data-answer="wrong">var</button>
+                            <button class="quiz-option" data-answer="wrong">All can</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <h4 class="quiz-card__question">What does ** do?</h4>
+                        <div class="quiz-card__options">
+                            <button class="quiz-option" data-answer="wrong">Division</button>
+                            <button class="quiz-option" data-answer="correct">Exponent</button>
+                            <button class="quiz-option" data-answer="wrong">Multiply</button>
+                            <button class="quiz-option" data-answer="wrong">Power of 2</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-card">
+                        <h4 class="quiz-card__question">What is template literal?</h4>
+                        <div class="quiz-card__options">
+                            <button class="quiz-option" data-answer="wrong">Single quotes</button>
+                            <button class="quiz-option" data-answer="correct">Backticks with ${}</button>
+                            <button class="quiz-option" data-answer="wrong">Double quotes</button>
+                            <button class="quiz-option" data-answer="wrong">concat()</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="quiz-results" style="display: none;">
+                    <!-- Results injected by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer__text">
+                DAY13 - Master JavaScript fundamentals with variables and math operations
+            </p>
+            <p class="footer__code">
+                <code>const learning = true; // Keep coding! 🚀</code>
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+</body>
+</html>
