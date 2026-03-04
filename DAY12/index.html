@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAY12 - Accessibility Audit & CSS Architecture. Master semantic HTML, ARIA labels, OOCSS methodology, and advanced layout techniques.">
+    <meta name="theme-color" content="#1a1a2e">
+    
+    <title>DAY12 - Accessibility Audit & CSS Architecture</title>
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Skip to main content link for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Navigation -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="header__inner">
+                <div class="logo">
+                    <svg class="logo__icon" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+                        <circle cx="16" cy="16" r="14" stroke="currentColor" fill="none" stroke-width="2"/>
+                        <path d="M16 8v16M8 16h16" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span class="logo__text">DAY12</span>
+                </div>
+                
+                <nav class="nav" arial-label="Main navigation">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <a href="#audit" class="nav__link">Audit</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#architecture" class="nav__link">Architecture</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#layout" class="nav__link">Layout</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#performance" class="nav__link">Performance</a>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <button class="btn btn--icon theme-toggle" 
+                        aria-label="Toggle dark mode"
+                        aria-pressed="false"
+                        id="themeToggle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero__background">
+                <div class="hero__gradient hero__gradient--top"></div>
+                <div class="hero__gradient hero__gradient--bottom"></div>
+            </div>
+            
+            <div class="container">
+                <div class="hero__content">
+                    <h1 id="hero-title" class="hero__title">
+                        Accessibility Audit &<br>CSS Architecture
+                    </h1>
+                    <p class="hero__subtitle">
+                        Master semantic HTML, ARIA labels, OOCSS methodology, and advanced layout techniques for production-ready web applications.
+                    </p>
+                    <div class="hero__ctas">
+                        <button class="btn btn--primary" aria-describedby="cta-desc">
+                            Start Audit Tool
+                        </button>
+                        <button class="btn btn--secondary" aria-label="Download accessibility checklist PDF">
+                            Download Checklist
+                        </button>
+                    </div>
+                    <p id="cta-desc" class="text-small text-muted">
+                        Interactive tool to audit your project for accessibility and performance issues
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Semantic Audit Section -->
+        <section id="audit" class="section section--audit" aria-labelledby="audit-title">
+            <div class="container">
+                <div class="section__header">
+                    <h2 id="audit-title" class="section__title">Semantic Audit</h2>
+                    <p class="section__description">
+                        Comprehensive checklist for HTML semantic standards and accessibility compliance
+                    </p>
+                </div>
+
+                <div class="audit-grid">
+                    <!-- Audit Card 1: Images -->
+                    <article class="card audit-card" aria-labelledby="audit-images-title">
+                        <div class="card__header">
+                            <h3 id="audit-images-title" class="card__title">
+                                <span class="icon icon--check" aria-hidden="true">✓</span>
+                                Image Alt Attributes
+                            </h3>
+                        </div>
+                        <div class="card__content">
+                            <p class="card__description">
+                                Every image must have a meaningful <code>&lt;alt&gt;</code> attribute that describes its content for screen readers.
+                            </p>
+                            <div class="code-block">
+                                <code class="code-block__text">
+                                    &lt;img src="hero.jpg" alt="Team collaboration meeting in modern office"&gt;
+                                </code>
+                            </div>
+                            <ul class="checklist">
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-alt-1" class="checklist__input" checked disabled>
+                                    <label for="check-alt-1" class="checklist__label">Decorative images: <code>alt=""</code></label>
+                                </li>
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-alt-2" class="checklist__input" checked disabled>
+                                    <label for="check-alt-2" class="checklist__label">Content images: descriptive text</label>
+                                </li>
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-alt-3" class="checklist__input" checked disabled>
+                                    <label for="check-alt-3" class="checklist__label">Avoid "image of" or "picture of"</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Audit Card 2: Heading Structure -->
+                    <article class="card audit-card" aria-labelledby="audit-headings-title">
+                        <div class="card__header">
+                            <h3 id="audit-headings-title" class="card__title">
+                                <span class="icon icon--check" aria-hidden="true">✓</span>
+                                Heading Structure
+                            </h3>
+                        </div>
+                        <div class="card__content">
+                            <p class="card__description">
+                                Heading hierarchy should never skip levels (H1 → H2 → H3, never H1 → H3).
+                            </p>
+                            <div class="code-block">
+                                <code class="code-block__text">
+                                    &lt;h1&gt;Page Title&lt;/h1&gt;<br>
+                                    &lt;h2&gt;Section&lt;/h2&gt;<br>
+                                    &lt;h3&gt;Subsection&lt;/h3&gt;
+                                </code>
+                            </div>
+                            <ul class="checklist">
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-h-1" class="checklist__input" checked disabled>
+                                    <label for="check-h-1" class="checklist__label">One H1 per page</label>
+                                </li>
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-h-2" class="checklist__input" checked disabled>
+                                    <label for="check-h-2" class="checklist__label">No skipped levels</label>
+                                </li>
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-h-3" class="checklist__input" checked disabled>
+                                    <label for="check-h-3" class="checklist__label">Logical nesting order</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Audit Card 3: ARIA Labels -->
+                    <article class="card audit-card" aria-labelledby="audit-aria-title">
+                        <div class="card__header">
+                            <h3 id="audit-aria-title" class="card__title">
+                                <span class="icon icon--check" aria-hidden="true">✓</span>
+                                ARIA Labels for Icons
+                            </h3>
+                        </div>
+                        <div class="card__content">
+                            <p class="card__description">
+                                Icon-only buttons must have <code>aria-label</code> to describe their purpose.
+                            </p>
+                            <div class="code-block">
+                                <code class="code-block__text">
+                                    &lt;button aria-label="Close menu"&gt;<br>
+                                    &nbsp;&nbsp;&lt;svg&gt;...&lt;/svg&gt;<br>
+                                    &lt;/button&gt;
+                                </code>
+                            </div>
+                            <ul class="checklist">
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-aria-1" class="checklist__input" checked disabled>
+                                    <label for="check-aria-1" class="checklist__label">Icon buttons have <code>aria-label</code></label>
+                                </li>
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-aria-2" class="checklist__input" checked disabled>
+                                    <label for="check-aria-2" class="checklist__label"><code>aria-hidden="true"</code> on SVG icons</label>
+                                </li>
+                                <li class="checklist__item">
+                                    <input type="checkbox" id="check-aria-3" class="checklist__input" checked disabled>
+                                    <label for="check-aria-3" class="checklist__label">Interactive elements have roles</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Architecture Section -->
+        <section id="architecture" class="section section--architecture" aria-labelledby="arch-title">
+            <div class="container">
+                <div class="section__header">
+                    <h2 id="arch-title" class="section__title">CSS Architecture</h2>
+                    <p class="section__description">
+                        OOCSS methodology with CSS variables for maintainable, scalable stylesheets
+                    </p>
+                </div>
+
+                <div class="architecture-grid">
+                    <!-- Architecture Column 1: OOCSS -->
+                    <div class="architecture-column">
+                        <h3 class="architecture-column__title">OOCSS Principles</h3>
+                        
+                        <div class="principle-card">
+                            <h4 class="principle-card__title">Separate Structure & Skin</h4>
+                            <p class="principle-card__description">
+                                Keep layout (structure) separate from styling (skin) using reusable classes.
+                            </p>
+                            <div class="code-block code-block--small">
+                                <code class="code-block__text">
+                                    /* Structure */<br>
+                                    .button { padding: 12px 24px; }<br>
+                                    <br>
+                                    /* Skin */<br>
+                                    .button--primary { bg: var(--color-primary); }
+                                </code>
+                            </div>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4 class="principle-card__title">Separate Container & Content</h4>
+                            <p class="principle-card__description">
+                                Styles should not depend on where elements are located in the DOM.
+                            </p>
+                            <div class="code-block code-block--small">
+                                <code class="code-block__text">
+                                    /* Bad */<br>
+                                    .header .button { color: white; }<br>
+                                    <br>
+                                    /* Good */<br>
+                                    .button { color: white; }
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Architecture Column 2: CSS Variables -->
+                    <div class="architecture-column">
+                        <h3 class="architecture-column__title">CSS Variables System</h3>
+                        
+                        <div class="principle-card">
+                            <h4 class="principle-card__title">Color Palette</h4>
+                            <div class="color-grid">
+                                <div class="color-swatch" style="background-color: var(--color-primary);" aria-label="Primary color">
+                                    <span class="color-swatch__label">--color-primary</span>
+                                </div>
+                                <div class="color-swatch" style="background-color: var(--color-secondary);" aria-label="Secondary color">
+                                    <span class="color-swatch__label">--color-secondary</span>
+                                </div>
+                                <div class="color-swatch" style="background-color: var(--color-success);" aria-label="Success color">
+                                    <span class="color-swatch__label">--color-success</span>
+                                </div>
+                                <div class="color-swatch" style="background-color: var(--color-error);" aria-label="Error color">
+                                    <span class="color-swatch__label">--color-error</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4 class="principle-card__title">Spacing & Typography</h4>
+                            <div class="code-block code-block--small">
+                                <code class="code-block__text">
+                                    --spacing-xs: 4px<br>
+                                    --spacing-sm: 8px<br>
+                                    --spacing-md: 16px<br>
+                                    --spacing-lg: 24px<br>
+                                    --font-size-body: 16px<br>
+                                    --font-size-heading: 32px
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Architecture Column 3: BEM Naming -->
+                    <div class="architecture-column">
+                        <h3 class="architecture-column__title">BEM Naming Convention</h3>
+                        
+                        <div class="principle-card">
+                            <h4 class="principle-card__title">Block-Element-Modifier</h4>
+                            <div class="bem-example">
+                                <div class="bem-example__block">
+                                    <span class="bem-example__label">.button</span>
+                                    <span class="bem-example__desc">Block</span>
+                                </div>
+                                <div class="bem-example__connector">→</div>
+                                <div class="bem-example__block">
+                                    <span class="bem-example__label">.button__text</span>
+                                    <span class="bem-example__desc">Element</span>
+                                </div>
+                                <div class="bem-example__connector">→</div>
+                                <div class="bem-example__block">
+                                    <span class="bem-example__label">.button--primary</span>
+                                    <span class="bem-example__desc">Modifier</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4 class="principle-card__title">Benefits</h4>
+                            <ul class="benefits-list">
+                                <li class="benefits-list__item">Clear hierarchy and relationships</li>
+                                <li class="benefits-list__item">Namespace collisions prevented</li>
+                                <li class="benefits-list__item">Reusable and scalable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layout Challenges Section -->
+        <section id="layout" class="section section--layout" aria-labelledby="layout-title">
+            <div class="container">
+                <div class="section__header">
+                    <h2 id="layout-title" class="section__title">Advanced Layouts</h2>
+                    <p class="section__description">
+                        Responsive Grid and Flexbox techniques for complex layouts
+                    </p>
+                </div>
+
+                <div class="layout-examples">
+                    <!-- Grid Example 1: Auto-fit Columns -->
+                    <article class="card layout-example" aria-labelledby="grid-autofit-title">
+                        <h3 id="grid-autofit-title" class="card__title">Auto-fit Columns</h3>
+                        <p class="card__description">
+                            Responsive grid without media queries using <code>auto-fit</code>
+                        </p>
+                        
+                        <div class="demo-grid demo-grid--autofit">
+                            <div class="grid-item" aria-label="Grid item 1">Item 1</div>
+                            <div class="grid-item" aria-label="Grid item 2">Item 2</div>
+                            <div class="grid-item" aria-label="Grid item 3">Item 3</div>
+                            <div class="grid-item" aria-label="Grid item 4">Item 4</div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <code class="code-block__text">
+                                .grid { display: grid; <br>
+                                &nbsp;&nbsp;grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }<br>
+                            </code>
+                        </div>
+                    </article>
+
+                    <!-- Grid Example 2: Named Grid Areas -->
+                    <article class="card layout-example" aria-labelledby="grid-areas-title">
+                        <h3 id="grid-areas-title" class="card__title">Named Grid Areas</h3>
+                        <p class="card__description">
+                            Semantic layout using named grid areas for readability
+                        </p>
+                        
+                        <div class="demo-grid demo-grid--areas" role="img" aria-label="Grid layout with header, sidebar, main, and footer">
+                            <div class="grid-area--header">Header</div>
+                            <div class="grid-area--sidebar">Sidebar</div>
+                            <div class="grid-area--main">Main</div>
+                            <div class="grid-area--footer">Footer</div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <code class="code-block__text">
+                                .grid { grid-template-areas:<br>
+                                &nbsp;&nbsp;"header header"<br>
+                                &nbsp;&nbsp;"sidebar main"<br>
+                                &nbsp;&nbsp;"footer footer"; }
+                            </code>
+                        </div>
+                    </article>
+
+                    <!-- Flexbox Example: Sticky Flex Items -->
+                    <article class="card layout-example" aria-labelledby="flex-sticky-title">
+                        <h3 id="flex-sticky-title" class="card__title">Sticky Positioning</h3>
+                        <p class="card__description">
+                            Combining flexbox with sticky positioning for headers
+                        </p>
+                        
+                        <div class="demo-flex-sticky">
+                            <div class="sticky-header">Sticky Title</div>
+                            <div class="flex-content">
+                                <span class="flex-content__item">✓ Cross-browser stable</span>
+                                <span class="flex-content__item">✓ Respects overflow parents</span>
+                                <span class="flex-content__item">✓ Works with flex containers</span>
+                            </div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <code class="code-block__text">
+                                .header { position: sticky;<br>
+                                &nbsp;&nbsp;top: 0; z-index: 10; }<br>
+                            </code>
+                        </div>
+                    </article>
+
+                    <!-- Flexbox Example: Center Everything -->
+                    <article class="card layout-example" aria-labelledby="flex-center-title">
+                        <h3 id="flex-center-title" class="card__title">Perfect Centering</h3>
+                        <p class="card__description">
+                            Flexbox solution for centering content both axes
+                        </p>
+                        
+                        <div class="demo-flex-center">
+                            <div class="centered-box">
+                                Centered
+                                <br>
+                                Both Axes
+                            </div>
+                        </div>
+                        
+                        <div class="code-block">
+                            <code class="code-block__text">
+                                .flex-center {<br>
+                                &nbsp;&nbsp;display: flex;<br>
+                                &nbsp;&nbsp;justify-content: center;<br>
+                                &nbsp;&nbsp;align-items: center; }
+                            </code>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="performance" class="section section--performance" aria-labelledby="perf-title">
+            <div class="container">
+                <div class="section__header">
+                    <h2 id="perf-title" class="section__title">Performance Optimization</h2>
+                    <p class="section__description">
+                        Essential techniques for animation and rendering performance
+                    </p>
+                </div>
+
+                <div class="performance-grid">
+                    <!-- Performance Card 1: Animation Properties -->
+                    <article class="card performance-card" aria-labelledby="perf-anim-title">
+                        <h3 id="perf-anim-title" class="card__title">
+                            <span class="icon icon--rocket" aria-hidden="true">🚀</span>
+                            Optimal Animation Properties
+                        </h3>
+                        <p class="card__description">
+                            Animate only <code>transform</code> and <code>opacity</code> for 60fps performance
+                        </p>
+                        
+                        <table class="performance-table" aria-label="Animation property performance">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Performance</th>
+                                    <th>Usage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>transform</code></td>
+                                    <td class="text-success">✓ Excellent</td>
+                                    <td>Position, scale, rotate</td>
+                                </tr>
+                                <tr>
+                                    <td><code>opacity</code></td>
+                                    <td class="text-success">✓ Excellent</td>
+                                    <td>Fade in/out</td>
+                                </tr>
+                                <tr>
+                                    <td><code>width</code>, <code>height</code></td>
+                                    <td class="text-error">✗ Poor</td>
+                                    <td>Triggers layout reflow</td>
+                                </tr>
+                                <tr>
+                                    <td><code>left</code>, <code>top</code></td>
+                                    <td class="text-error">✗ Poor</td>
+                                    <td>Triggers layout reflow</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </article>
+
+                    <!-- Performance Card 2: Will-Change -->
+                    <article class="card performance-card" aria-labelledby="perf-willchange-title">
+                        <h3 id="perf-willchange-title" class="card__title">
+                            <span class="icon icon--zap" aria-hidden="true">⚡</span>
+                            will-change Property
+                        </h3>
+                        <p class="card__description">
+                            Hint to browser about upcoming animations on an element
+                        </p>
+                        
+                        <div class="code-block">
+                            <code class="code-block__text">
+                                /* Before animation */<br>
+                                .element { will-change: transform, opacity; }<br>
+                                <br>
+                                /* After animation ends */<br>
+                                .element { will-change: auto; }
+                            </code>
+                        </div>
+                        
+                        <div class="alert alert--info" role="note" aria-labelledby="will-change-note">
+                            <strong id="will-change-note">Note:</strong> Use sparingly. Overuse causes memory overhead.
+                        </div>
+                    </article>
+
+                    <!-- Performance Card 3: GPU Acceleration -->
+                    <article class="card performance-card" aria-labelledby="perf-gpu-title">
+                        <h3 id="perf-gpu-title" class="card__title">
+                            <span class="icon icon--layers" aria-hidden="true">📊</span>
+                            GPU Acceleration
+                        </h3>
+                        <p class="card__description">
+                            Create new rendering layers for complex animations
+                        </p>
+                        
+                        <div class="code-block">
+                            <code class="code-block__text">
+                                .animated {<br>
+                                &nbsp;&nbsp;transform: translateZ(0);<br>
+                                &nbsp;&nbsp;/* Creates new stacking context */
+                                <br>
+                                &nbsp;&nbsp;backface-visibility: hidden;<br>
+                                &nbsp;&nbsp;/* Prevent flickering */
+                                <br>
+                                }
+                            </code>
+                        </div>
+                    </article>
+
+                    <!-- Performance Card 4: DevTools Tips -->
+                    <article class="card performance-card" aria-labelledby="perf-devtools-title">
+                        <h3 id="perf-devtools-title" class="card__title">
+                            <span class="icon icon--tools" aria-hidden="true">🔧</span>
+                            DevTools Analysis
+                        </h3>
+                        <p class="card__description">
+                            Tools to measure and optimize animation performance
+                        </p>
+                        
+                        <ul class="tools-list">
+                            <li class="tools-list__item">
+                                <strong>Performance tab</strong> - Record animations and check FPS
+                            </li>
+                            <li class="tools-list__item">
+                                <strong>Rendering settings</strong> - Show paint events and compositing
+                            </li>
+                            <li class="tools-list__item">
+                                <strong>Lighthouse</strong> - Audit performance score
+                            </li>
+                            <li class="tools-list__item">
+                                <strong>Frame rate monitor</strong> - Target 60fps consistently
+                            </li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deep Dive Sections -->
+        <section class="section section--deep-dive" aria-labelledby="deepdive-title">
+            <div class="container">
+                <div class="section__header">
+                    <h2 id="deepdive-title" class="section__title">Deep Dive Examples</h2>
+                    <p class="section__description">Production-ready code patterns</p>
+                </div>
+
+                <!-- Tabs Component -->
+                <div class="tabs-wrapper">
+                    <div class="tabs" role="tablist" aria-label="Code examples">
+                        <button class="tab" role="tab" aria-selected="true" aria-controls="panel-form" id="tab-form">
+                            Form
+                        </button>
+                        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-card" id="tab-card">
+                            Card
+                        </button>
+                        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-nav" id="tab-nav">
+                            Navigation
+                        </button>
+                    </div>
+
+                    <div id="panel-form" role="tabpanel" aria-labelledby="tab-form" class="tab-panel">
+                        <div class="code-block">
+                            <code class="code-block__text">
+&lt;form class="form"&gt;<br>
+&nbsp;&nbsp;&lt;div class="form__group"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email" class="form__label"&gt;Email&lt;/label&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email" id="email" name="email"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="form__input" required<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aria-invalid="false" aria-required="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;span class="form__error" role="alert" id="email-error"&gt;&lt;/span&gt;<br>
+&nbsp;&nbsp;&lt;/div&gt;<br>
+&lt;/form&gt;
+                            </code>
+                        </div>
+                    </div>
+
+                    <div id="panel-card" role="tabpanel" aria-labelledby="tab-card" class="tab-panel" hidden>
+                        <div class="code-block">
+                            <code class="code-block__text">
+&lt;article class="card" aria-labelledby="card-title"&gt;<br>
+&nbsp;&nbsp;&lt;div class="card__header"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="thumb.jpg" alt="Card preview"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class="card__image"&gt;<br>
+&nbsp;&nbsp;&lt;/div&gt;<br>
+&nbsp;&nbsp;&lt;div class="card__content"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3 id="card-title" class="card__title"&gt;Title&lt;/h3&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="card__description"&gt;...&lt;/p&gt;<br>
+&nbsp;&nbsp;&lt;/div&gt;<br>
+&lt;/article&gt;
+                            </code>
+                        </div>
+                    </div>
+
+                    <div id="panel-nav" role="tabpanel" aria-labelledby="tab-nav" class="tab-panel" hidden>
+                        <div class="code-block">
+                            <code class="code-block__text">
+&lt;nav aria-label="Main navigation"&gt;<br>
+&nbsp;&nbsp;&lt;ul class="nav__list"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav__item"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="/" class="nav__link"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aria-current="page"&gt;Home&lt;/a&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/li&gt;<br>
+&nbsp;&nbsp;&lt;/ul&gt;<br>
+&lt;/nav&gt;
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lighthouse Checklist Section -->
+        <section class="section section--checklist" aria-labelledby="checklist-title">
+            <div class="container">
+                <div class="section__header">
+                    <h2 id="checklist-title" class="section__title">Lighthouse Audit Checklist</h2>
+                    <p class="section__description">
+                        Complete checklist for achieving excellent Lighthouse scores
+                    </p>
+                </div>
+
+                <form class="checklist-form" onsubmit="return false">
+                    <div class="checklist-group">
+                        <h3 class="checklist-group__title">
+                            <span class="checklist-group__icon">📊</span>
+                            Performance
+                        </h3>
+                        <div class="checklist-items">
+                            <div class="checklist-item">
+                                <input type="checkbox" id="perf-animate-transform" class="checklist-item__input">
+                                <label for="perf-animate-transform" class="checklist-item__label">Animate only transform and opacity</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="perf-minimize-reflow" class="checklist-item__input">
+                                <label for="perf-minimize-reflow" class="checklist-item__label">Minimize layout reflows</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="perf-lazy-load" class="checklist-item__input">
+                                <label for="perf-lazy-load" class="checklist-item__label">Lazy load images and media</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-group">
+                        <h3 class="checklist-group__title">
+                            <span class="checklist-group__icon">♿</span>
+                            Accessibility
+                        </h3>
+                        <div class="checklist-items">
+                            <div class="checklist-item">
+                                <input type="checkbox" id="a11y-alt-text" class="checklist-item__input">
+                                <label for="a11y-alt-text" class="checklist-item__label">All images have alt text</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="a11y-semantic" class="checklist-item__input">
+                                <label for="a11y-semantic" class="checklist-item__label">Semantic HTML structure</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="a11y-contrast" class="checklist-item__input">
+                                <label for="a11y-contrast" class="checklist-item__label">Color contrast ≥ 4.5:1</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-group">
+                        <h3 class="checklist-group__title">
+                            <span class="checklist-group__icon">🔒</span>
+                            Best Practices
+                        </h3>
+                        <div class="checklist-items">
+                            <div class="checklist-item">
+                                <input type="checkbox" id="bp-https" class="checklist-item__input">
+                                <label for="bp-https" class="checklist-item__label">HTTPS enabled</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="bp-csp" class="checklist-item__input">
+                                <label for="bp-csp" class="checklist-item__label">Content Security Policy</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="bp-no-console" class="checklist-item__input">
+                                <label for="bp-no-console" class="checklist-item__label">No console errors</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-group">
+                        <h3 class="checklist-group__title">
+                            <span class="checklist-group__icon">🔍</span>
+                            SEO
+                        </h3>
+                        <div class="checklist-items">
+                            <div class="checklist-item">
+                                <input type="checkbox" id="seo-meta" class="checklist-item__input">
+                                <label for="seo-meta" class="checklist-item__label">Meta description present</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="seo-viewport" class="checklist-item__input">
+                                <label for="seo-viewport" class="checklist-item__label">Viewport meta tag</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" id="seo-robots" class="checklist-item__input">
+                                <label for="seo-robots" class="checklist-item__label">robots.txt configured</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title">Resources</h3>
+                    <ul class="footer__links">
+                        <li><a href="https://www.w3.org/WAI/" target="_blank" rel="noopener noreferrer">W3C Accessibility</a></li>
+                        <li><a href="https://developers.google.com/web/tools/lighthouse" target="_blank" rel="noopener noreferrer">Lighthouse</a></li>
+                        <li><a href="https://web.dev/" target="_blank" rel="noopener noreferrer">web.dev</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Tools</h3>
+                    <ul class="footer__links">
+                        <li><a href="https://www.webAIM.org/articles/contrast/" target="_blank" rel="noopener noreferrer">Contrast Checker</a></li>
+                        <li><a href="https://axe.deque.com/" target="_blank" rel="noopener noreferrer">axe DevTools</a></li>
+                        <li><a href="https://wave.webaim.org/" target="_blank" rel="noopener noreferrer">WAVE</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright">
+                    © 2026 DAY12 - Accessibility Audit & CSS Architecture. 
+                    <span aria-label="Built with care">💚</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js" defer></script>
+</body>
+</html>
