@@ -1,0 +1,31 @@
+{
+  "name": "day29-blog-app",
+  "version": "1.0.0",
+  "description": "DAY29: Full-Stack Blog Application with MongoDB Atlas & Vercel",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "dev:win": "set NODE_OPTIONS=--openssl-legacy-provider&& set NODE_TLS_REJECT_UNAUTHORIZED=0&& node server.js",
+    "build": "echo 'Build complete'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "blog",
+    "mongodb",
+    "atlas",
+    "vercel",
+    "serverless",
+    "fullstack"
+  ],
+  "author": "Unify Labs",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
+    "express": "^4.18.0",
+    "mongodb": "^4.17.2"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

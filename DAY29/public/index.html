@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Modern Blogging Platform</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-content">
+        <h1 class="nav-logo">
+          <span class="logo-icon">✍️</span>
+          BlogSpace
+        </h1>
+        <div class="nav-actions">
+          <a href="/editor.html" class="btn btn-primary">
+            <span class="btn-icon">+</span>
+            New Post
+          </a>
+          <button id="theme-toggle" class="btn btn-icon" title="Toggle theme">
+            <span class="theme-icon">🌙</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container">
+      <h2 class="hero-title">Welcome to BlogSpace</h2>
+      <p class="hero-subtitle">Discover stories, thinking, and expertise from writers on any topic.</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Loading State -->
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading posts...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="error" class="error-message" style="display: none;">
+        <div class="error-content">
+          <span class="error-icon">⚠️</span>
+          <h3>Oops! Something went wrong</h3>
+          <p id="error-text"></p>
+          <button onclick="location.reload()" class="btn btn-primary">Try Again</button>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty" class="empty-state" style="display: none;">
+        <div class="empty-content">
+          <span class="empty-icon">📝</span>
+          <h3>No posts yet</h3>
+          <p>Be the first to share your thoughts!</p>
+          <a href="/editor.html" class="btn btn-primary">Create First Post</a>
+        </div>
+      </div>
+
+      <!-- Posts Grid -->
+      <div id="posts-grid" class="posts-grid" style="display: none;">
+        <!-- Posts will be inserted here dynamically -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 BlogSpace. Built with 💙 for DAY29 Challenge.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/theme.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
